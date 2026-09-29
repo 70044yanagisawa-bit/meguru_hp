@@ -1,6 +1,7 @@
 /* ==========================================================
    Meguru Yanagisawa — motion
    外部ライブラリなし。スクロール連動はすべて1本の rAF ループで回す。
+   トップ（index.html）と経歴（career.html）の両方で読み込む。
    ========================================================== */
 (() => {
   const body = document.body;
@@ -15,27 +16,26 @@
   let vh = innerHeight;
 
   /* ---------- 遅延（stagger）用のインデックスを振る ---------- */
-  $$('[data-reveal], .hero__copy, .loader__name, .loader__inner, .menu nav').forEach(box => {
+  $$('[data-reveal], [data-intro], .loader__name, .loader__inner, .menu nav').forEach(box => {
     $$(':scope .mask', box).forEach((m, i) => m.style.setProperty('--i', i));
   });
-  $$('.about__text, .contact__body').forEach(box => {
+  $$('.about__text, .contact__body, .teaser__body').forEach(box => {
     $$(':scope > [data-reveal="up"]', box).forEach((el, i) => el.style.setProperty('--i', i));
   });
 
-  /* ---------- オープニング ---------- */
+  /* ---------- オープニング（トップのみ） ---------- */
   const loader = $('.loader');
-  const badge = $('.badge');
-  const contact = $('#contact');
 
   const finishLoading = () => {
     body.classList.add('is-loaded');
+    if (!loader) return;
     loader.classList.add('is-done');
     loader.addEventListener('transitionend', () => loader.remove(), { once: true });
     setTimeout(() => loader.isConnected && loader.remove(), 2000);
   };
 
-  if (reduce || sessionStorage.getItem('opened')) {
-    finishLoading();
+  if (!loader || reduce || sessionStorage.getItem('opened')) {
+    requestAnimationFrame(() => requestAnimationFrame(finishLoading));
   } else {
     requestAnimationFrame(() => loader.classList.add('is-in'));
     const count = $('.loader__count span');
@@ -84,19 +84,22 @@
   }
   let lit = -1;
 
-  /* ---------- パララックス対象 ---------- */
+  /* ---------- パララックス ----------
+     data-speed：枠の中で写真だけが動く
+     data-float：写真の枠ごと、固定背景の上を違う速さで流れる */
   const parallax = $$('[data-speed]').map(el => ({ el, box: el.parentElement, speed: parseFloat(el.dataset.speed) }));
-  const drift = $$('[data-drift]').map(el => ({ el, speed: parseFloat(el.dataset.drift) }));
+  const floats = $$('[data-float]').map(el => ({ el, speed: parseFloat(el.dataset.float) }));
 
-  /* ---------- Story：縦スクロールを横移動に変換 ---------- */
+  /* ---------- Story：縦スクロールを横移動に変換（経歴ページ） ---------- */
   const story = $('.story');
   const track = $('.story__track');
   const storyBar = $('.story__progress span');
   let storyDist = 0;
 
-  const layoutStory = () => {
+  const layout = () => {
     vw = innerWidth;
     vh = innerHeight;
+    if (!story) return;
     if (wide.matches) {
       storyDist = Math.max(0, track.scrollWidth - vw);
       story.style.height = `${storyDist + vh}px`;
@@ -106,15 +109,17 @@
       track.style.transform = '';
     }
   };
-  layoutStory();
-  addEventListener('resize', layoutStory);
-  addEventListener('load', layoutStory);
-  document.fonts?.ready.then(layoutStory);
+  layout();
+  addEventListener('resize', layout);
+  addEventListener('load', layout);
+  document.fonts?.ready.then(layout);
 
   /* ---------- ヘッダー・メニュー ---------- */
   const header = $('.header');
   const menu = $('.menu');
   const menuBtn = $('.header__menu');
+  const badge = $('.badge');
+  const contact = $('#contact') || $('.footer');
   const setMenu = open => {
     menu.classList.toggle('is-open', open);
     menu.setAttribute('aria-hidden', String(!open));
@@ -125,15 +130,15 @@
   menuBtn.addEventListener('click', () => setMenu(!menu.classList.contains('is-open')));
   $$('a', menu).forEach(a => a.addEventListener('click', () => setMenu(false)));
 
-  /* ---------- Work：カーソルについてくる写真 ---------- */
-  const preview = $('.work__preview');
-  const previewInner = $('.work__preview-inner');
+  /* ---------- Service：カーソルについてくる写真 ---------- */
+  const preview = $('.preview');
+  const previewInner = $('.preview__inner');
   const pointer = { x: vw / 2, y: vh / 2 };
   const pv = { x: vw / 2, y: vh / 2 };
   addEventListener('pointermove', e => { pointer.x = e.clientX; pointer.y = e.clientY; }, { passive: true });
 
   if (canHover && preview) {
-    $$('.work__row').forEach(row => {
+    $$('.service__row').forEach(row => {
       let url = null;
       const img = new Image();
       img.onload = () => { url = row.dataset.img; };
@@ -153,10 +158,10 @@
 
   /* ---------- ファーストビューの糸 ---------- */
   const canvas = $('.threads');
-  const ctx = canvas.getContext('2d');
+  const hero = $('.hero');
+  const ctx = canvas?.getContext('2d');
   const COLORS = ['#3355ff', '#00b4d8', '#2fbf71', '#ffd23f', '#ff7a1a', '#ff2e63', '#8e44ff'];
   const LINES = 56;
-  const hero = $('.hero');
   const heroPointer = { x: -9999, y: -9999, tx: -9999, ty: -9999 };
   let cw = 0;
   let ch = 0;
@@ -169,14 +174,16 @@
     canvas.height = ch * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   };
-  sizeCanvas();
-  addEventListener('resize', sizeCanvas);
-  hero.addEventListener('pointermove', e => {
-    const r = hero.getBoundingClientRect();
-    heroPointer.tx = e.clientX - r.left;
-    heroPointer.ty = e.clientY - r.top;
-  });
-  hero.addEventListener('pointerleave', () => { heroPointer.tx = heroPointer.ty = -9999; });
+  if (canvas) {
+    sizeCanvas();
+    addEventListener('resize', sizeCanvas);
+    hero.addEventListener('pointermove', e => {
+      const r = hero.getBoundingClientRect();
+      heroPointer.tx = e.clientX - r.left;
+      heroPointer.ty = e.clientY - r.top;
+    });
+    hero.addEventListener('pointerleave', () => { heroPointer.tx = heroPointer.ty = -9999; });
+  }
 
   const drawThreads = t => {
     ctx.clearRect(0, 0, cw, ch);
@@ -195,7 +202,7 @@
       for (let x = -40; x <= cw + 40; x += step) {
         const u = x / cw;
         // 左下から右上へ流れる軸
-        const axis = narrow ? ch * (.9 - u * .35) : ch * (.96 - u * .7);
+        const axis = narrow ? ch * (.62 - u * .3) : ch * (.92 - u * .7);
         const wave = Math.sin(u * 4.2 + t * .35) * ch * .06 + Math.sin(u * 9 - t * .5) * ch * .02;
         // ねじれ：束が細くなったり広がったりする
         const twist = Math.sin(u * 5.5 + t * .45 + k * .6);
@@ -229,17 +236,15 @@
       if (dy < 0 || y < 120) headerY = 0;
       header.classList.toggle('is-hidden', headerY > 80);
     }
-    // Contact が見えてきたら丸いリンクは引っ込める
+
+    // 丸いリンク：少しスクロールしたら出し、Contact が見えたら引っ込める
     const nearContact = contact.getBoundingClientRect().top < vh * .8;
     badge.classList.toggle('is-shown', body.classList.contains('is-loaded') && y > vh * .5 && !nearContact);
 
     // 糸（ファーストビューが見えている間だけ）
-    if (y < ch) drawThreads(reduce ? 0 : now / 1000);
+    if (canvas && y < ch) drawThreads(reduce ? 0 : now / 1000);
 
     if (!reduce) {
-      drift.forEach(({ el, speed }) => {
-        el.style.transform = `translate3d(${y * speed}px,0,0)`;
-      });
       parallax.forEach(({ el, box, speed }) => {
         if (!el.isConnected) return;               // 写真未設定で img が外れたとき
         const r = box.getBoundingClientRect();
@@ -248,13 +253,21 @@
         const off = clamp((r.top + r.height / 2 - vh / 2) * speed, -limit, limit);
         el.style.transform = `translate3d(0,${off}px,0)`;
       });
+      floats.forEach(({ el, speed }) => {
+        // 自分の transform を除いた位置で計算する
+        const r = el.parentElement.getBoundingClientRect();
+        if (r.bottom < -200 || r.top > vh + 200) return;
+        el.style.transform = `translate3d(0,${(r.top + r.height / 2 - vh / 2) * speed}px,0)`;
+      });
 
       // Marquee：スクロールの向きと速さに反応
-      const half = marquee.scrollWidth / 2;
-      mx += mDir * (0.6 + Math.min(velocity, 60) * .25);
-      if (mx <= -half) mx += half;
-      if (mx > 0) mx -= half;
-      marquee.style.transform = `translate3d(${mx}px,0,0)`;
+      if (marquee) {
+        const half = marquee.scrollWidth / 2;
+        mx += mDir * (0.6 + Math.min(velocity, 60) * .25);
+        if (mx <= -half) mx += half;
+        if (mx > 0) mx -= half;
+        marquee.style.transform = `translate3d(${mx}px,0,0)`;
+      }
     }
 
     // About の文字
@@ -276,7 +289,7 @@
       storyBar.style.transform = `scaleX(${p})`;
     }
 
-    // Work のプレビュー
+    // Service のプレビュー
     if (preview) {
       pv.x += (pointer.x - pv.x) * .14;
       pv.y += (pointer.y - pv.y) * .14;

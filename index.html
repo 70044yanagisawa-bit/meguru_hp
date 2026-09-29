@@ -6,7 +6,7 @@
   <title>柳沢恵瑠 | Meguru Yanagisawa</title>
   <meta name="description" content="柳沢恵瑠のホームページ。AIの導入支援と業務効率化、ホームページ制作からLINE構築、運用までをしています。">
   <meta property="og:title" content="柳沢恵瑠 | Meguru Yanagisawa">
-  <meta property="og:description" content="AIの導入支援と業務効率化、ホームページの制作と運用をしています。">
+  <meta property="og:description" content="AIの導入支援と業務効率化、ホームページ制作からLINE構築、運用までをしています。">
   <meta property="og:type" content="website">
   <meta property="og:image" content="images/ogp.jpg">
   <meta name="theme-color" content="#0d0d0c">
@@ -31,12 +31,20 @@
     <p class="loader__count"><span>0</span></p>
   </div>
 
+  <!-- 固定の背景：この上をページがスクロールしていく -->
+  <div class="stage" aria-hidden="true">
+    <span class="stage__shape stage__shape--a"></span>
+    <span class="stage__shape stage__shape--b"></span>
+    <p class="stage__word">AI&thinsp;×&thinsp;HUMAN</p>
+  </div>
+
   <header class="header">
-    <a class="header__logo" href="#top">Meguru<br>Yanagisawa</a>
+    <a class="header__logo" href="index.html">Meguru<br>Yanagisawa</a>
     <nav class="header__nav" aria-label="メインメニュー">
       <a href="#about">About</a>
-      <a href="#story">Story</a>
-      <a href="#work">Work</a>
+      <a href="#works">Works</a>
+      <a href="#service">Service</a>
+      <a href="career.html">Career</a>
       <a href="#contact">Contact</a>
     </nav>
     <button class="header__menu" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
@@ -45,8 +53,9 @@
   <div class="menu" id="menu" aria-hidden="true">
     <nav>
       <a href="#about"><span class="mask"><span>About</span></span></a>
-      <a href="#story"><span class="mask"><span>Story</span></span></a>
-      <a href="#work"><span class="mask"><span>Work</span></span></a>
+      <a href="#works"><span class="mask"><span>Works</span></span></a>
+      <a href="#service"><span class="mask"><span>Service</span></span></a>
+      <a href="career.html"><span class="mask"><span>Career</span></span></a>
       <a href="#contact"><span class="mask"><span>Contact</span></span></a>
     </nav>
   </div>
@@ -59,19 +68,15 @@
     <span class="badge__dot"></span>
   </a>
 
-  <main id="top">
+  <main>
 
     <!-- ファーストビュー -->
-    <section class="hero" data-theme="dark">
-      <p class="hero__bg" aria-hidden="true" data-drift="-0.25">MEGURU</p>
-
-      <figure class="hero__photo ph" data-label="hero.jpg — 本人の写真（縦長）">
-        <img src="images/hero.jpg" alt="柳沢恵瑠" onerror="this.remove()" data-speed="-0.12">
+    <section class="hero" data-intro>
+      <figure class="hero__photo ph intro-clip" data-label="hero.jpg — 本人の写真（横長）">
+        <img src="images/hero.jpg" alt="柳沢恵瑠" onerror="this.remove()" data-speed="-0.1">
       </figure>
 
-      <canvas class="threads" aria-hidden="true"></canvas>
-
-      <div class="hero__copy">
+      <div class="hero__panel">
         <p class="hero__eyebrow"><span class="mask"><span>AI導入支援 / 業務効率化 / HP制作・LINE構築</span></span></p>
         <h1 class="hero__title">
           <span class="mask"><span>AIと、</span></span>
@@ -81,17 +86,18 @@
         <p class="hero__name"><span class="mask"><span>柳沢恵瑠 <em>Meguru Yanagisawa</em></span></span></p>
       </div>
 
+      <canvas class="threads" aria-hidden="true"></canvas>
       <p class="hero__scroll" aria-hidden="true"><span>Scroll</span></p>
     </section>
 
     <!-- 自己紹介 -->
-    <section class="about" id="about" data-theme="light">
+    <section class="about" id="about">
       <p class="label" data-reveal><span>About</span></p>
 
       <p class="about__statement" data-fill>消防士、訪問販売、Webマーケティング、コーチング。遠回りに見えるかもしれません。でも振り返ると、やってきたことはずっと同じでした。目の前の人の「困った」を、動ける形にすること。</p>
 
       <div class="about__body">
-        <figure class="about__photo ph clip" data-reveal data-label="about.jpg — 人柄が伝わる写真">
+        <figure class="about__photo ph clip" data-reveal data-float="-0.12" data-label="about.jpg — 人柄が伝わる写真">
           <img src="images/about.jpg" alt="" onerror="this.remove()" data-speed="0.08">
         </figure>
         <div class="about__text">
@@ -102,10 +108,10 @@
       </div>
     </section>
 
-    <!-- 大きな写真 -->
-    <section class="band" data-theme="dark">
+    <!-- 固定写真の上を文字が通り過ぎる -->
+    <section class="band">
       <figure class="band__photo ph" data-label="wide.jpg — 横長の写真（作業風景・街・手元など）">
-        <img src="images/wide.jpg" alt="" onerror="this.remove()" data-speed="0.18">
+        <img src="images/wide.jpg" alt="" onerror="this.remove()">
       </figure>
       <p class="band__text" data-reveal>
         <span class="mask"><span>道具より先に、</span></span>
@@ -113,122 +119,114 @@
       </p>
     </section>
 
-    <!-- これまで -->
-    <section class="story" id="story" data-theme="dark">
-      <div class="story__sticky">
-        <div class="story__track">
+    <!-- 導入実績 -->
+    <!-- ※ 下書きです。社名・業種の出し方、内容は公開前に本人確認が必要 -->
+    <section class="works" id="works">
+      <p class="label" data-reveal><span>Works</span></p>
+      <h2 class="works__heading" data-reveal>
+        <span class="mask"><span>導入実績</span></span>
+      </h2>
+      <p class="works__lead" data-reveal="up">これまでに関わった仕事の一部です。どれも「毎月のあの作業、なんとかならないかな」という一言から始まりました。</p>
 
-          <div class="story__intro">
-            <p class="label"><span>Story</span></p>
-            <h2 class="story__heading" data-reveal>
-              <span class="mask"><span>遠回りの</span></span>
-              <span class="mask"><span>記録。</span></span>
-            </h2>
-            <p class="story__lead" data-reveal="up">公務員を目指していた18歳から、いまの仕事にたどり着くまで。</p>
-          </div>
-
-          <article class="chapter">
-            <figure class="chapter__photo ph clip" data-reveal data-label="story-01.jpg — 消防・自衛隊時代">
-              <img src="images/story-01.jpg" alt="" onerror="this.remove()">
-            </figure>
-            <div class="chapter__text">
-              <p class="chapter__no">01</p>
-              <h3 class="chapter__word">守る</h3>
-              <p class="chapter__sub">陸上自衛隊 / 常総地方広域消防</p>
-              <p>高校を出て、公務員を目指して専門学校で2年間勉強しました。最後の試験で落ちて、陸上自衛隊へ。それでも消防士をあきらめきれず、初期教育を終えた夏に辞めて、実家で勉強し直しました。</p>
-              <p>翌年から3年半、消火、救急、救助、予防の現場にいました。準備していないことは、本番では絶対にできない。いまも仕事の土台になっている感覚です。</p>
-            </div>
-          </article>
-
-          <article class="chapter">
-            <figure class="chapter__photo ph clip" data-reveal data-label="story-02.jpg — 営業時代">
-              <img src="images/story-02.jpg" alt="" onerror="this.remove()">
-            </figure>
-            <div class="chapter__text">
-              <p class="chapter__no">02</p>
-              <h3 class="chapter__word">売る</h3>
-              <p class="chapter__sub">アプコグループジャパン</p>
-              <p>年功序列のなかで、この先の自分が見えなくなっていた頃、高校の親友に誘われました。完全歩合の訪問販売。まだ誰も欲しいと言っていないところに、欲しい理由をつくる仕事です。</p>
-              <p>Weeklyで全国1位をとり、半年でコアメンバーに入りました。4人で12人のチームを見ながら、1年半、玄関の前に立ち続けました。</p>
-            </div>
-          </article>
-
-          <article class="chapter">
-            <figure class="chapter__photo ph clip" data-reveal data-label="story-03.jpg — Webマーケ時代">
-              <img src="images/story-03.jpg" alt="" onerror="this.remove()">
-            </figure>
-            <div class="chapter__text">
-              <p class="chapter__no">03</p>
-              <h3 class="chapter__word">届ける</h3>
-              <p class="chapter__sub">株式会社3well</p>
-              <p>玄関で一人ずつ話すのと、1タップで一万人に届くのと。Webの世界を知りたくて、SNS運用の仕事に移りました。数字を追い続けて、2023年には社内75人のうち3人だけの幹部評価をもらい、1年でリーダーになりました。</p>
-              <p>法人営業部に移ってからは、人に頼りきりだった仕事をSalesforceで見えるようにして、代理店ごとの数字と担当の組み方を一から見直しました。単月2億円の目標を、新卒2人を含む4人のチームで追っていました。</p>
-            </div>
-          </article>
-
-          <article class="chapter">
-            <figure class="chapter__photo ph clip" data-reveal data-label="story-04.jpg — コーチングの様子">
-              <img src="images/story-04.jpg" alt="" onerror="this.remove()">
-            </figure>
-            <div class="chapter__text">
-              <p class="chapter__no">04</p>
-              <h3 class="chapter__word">聴く</h3>
-              <p class="chapter__sub">株式会社ミズカラ（旧GOAL-B）</p>
-              <p>もう一皮むけたくて、1年間コーチングを受けました。自分が変わっていくのに驚いて、今度は誰かの変化に関わりたいと思い、副業でコーチになりました。</p>
-              <p>年間でおよそ250人と話し、自己理解プログラム「リブースト」やセルフコア合宿でサポートコーチをしています。人が動けないとき、その奥にはたいてい、本人も気づいていない思い込みがあります。</p>
-            </div>
-          </article>
-
-          <article class="chapter chapter--now">
-            <figure class="chapter__photo ph clip" data-reveal data-label="story-05.jpg — いまの仕事の様子">
-              <img src="images/story-05.jpg" alt="" onerror="this.remove()">
-            </figure>
-            <div class="chapter__text">
-              <p class="chapter__no">05</p>
-              <h3 class="chapter__word">いま</h3>
-              <p class="chapter__sub">AI導入支援 / HP制作 / LINE構築</p>
-              <p>そしていま、AIを仕事に入れるお手伝いをしています。ツールは毎月のように新しくなります。でも使うのは人で、現場には現場の事情があります。</p>
-              <p>数字を追って、仕組みを変えて、人の話を聴いてきた。どれも遠回りだと思っていた経験が、いちばん役に立っているのはここかもしれません。</p>
-            </div>
-          </article>
-
+      <article class="case">
+        <figure class="case__photo ph clip" data-reveal data-float="0.1" data-label="case-01.jpg">
+          <img src="images/case-01.jpg" alt="" onerror="this.remove()">
+        </figure>
+        <div class="case__text" data-reveal="up">
+          <p class="case__meta"><span>01</span>美容室グループ ／ 広島・東京</p>
+          <h3 class="case__title">月末の報告メールを、<br>写真を置くだけで下書きまで。</h3>
+          <p>スタッフの交通費の領収書と、シフト表の数字を見比べながら、店長が毎月手で書いていた稼働報告。領収書の写真をAIで読み取って、報告メールの下書きができあがるところまでを自動にしました。人がやるのは、最後に目を通して送ることだけです。</p>
+          <p class="case__tags">AI業務効率化 · 画像読み取り · Gmail</p>
         </div>
-        <div class="story__progress" aria-hidden="true"><span></span></div>
-      </div>
+      </article>
+
+      <article class="case case--rev">
+        <figure class="case__photo ph clip" data-reveal data-float="0.1" data-label="case-02.jpg">
+          <img src="images/case-02.jpg" alt="" onerror="this.remove()">
+        </figure>
+        <div class="case__text" data-reveal="up">
+          <p class="case__meta"><span>02</span>美容室 ／ 口コミ返信</p>
+          <h3 class="case__title">スタイリスト本人の口調で、<br>口コミの返信を。</h3>
+          <p>予約サイトとGoogleの口コミに、忙しくて返信が追いつかない。過去の返信を読み込ませて、担当スタイリストの言葉づかいで下書きをつくる仕組みにしました。投稿の前には必ず人が確認します。AIに任せきりにしないことも、仕組みの一部です。</p>
+          <p class="case__tags">AI導入支援 · 文章生成 · 運用ルールづくり</p>
+        </div>
+      </article>
+
+      <article class="case">
+        <figure class="case__photo ph clip" data-reveal data-float="0.1" data-label="case-03.jpg">
+          <img src="images/case-03.jpg" alt="" onerror="this.remove()">
+        </figure>
+        <div class="case__text" data-reveal="up">
+          <p class="case__meta"><span>03</span>美容室 ／ 予約システム</p>
+          <h3 class="case__title">スプレッドシートのシフトを、<br>予約システムへそのまま。</h3>
+          <p>毎月、スプレッドシートのシフトを見ながら、予約システムに一人ずつ入力していた作業。シートを読み取って予約システムへ反映するところまでを自動にして、ネット予約の受付開始を毎月同じ日にそろえられるようにしました。</p>
+          <p class="case__tags">AI業務効率化 · ブラウザ自動操作</p>
+        </div>
+      </article>
+
+      <article class="case case--rev">
+        <figure class="case__photo ph clip" data-reveal data-float="0.1" data-label="case-04.jpg">
+          <img src="images/case-04.jpg" alt="" onerror="this.remove()">
+        </figure>
+        <div class="case__text" data-reveal="up">
+          <p class="case__meta"><span>04</span>サロン ／ ホームページ</p>
+          <h3 class="case__title">ヒアリングから公開、<br>ドメインの管理まで。</h3>
+          <p>お店の雰囲気と、来てほしいお客さまの話を聞くところから始めて、デザイン、修正、公開、ドメインの管理までをひとりで担当しました。公開したあとも、更新と改善を続けています。</p>
+          <p class="case__tags">HP制作 · 運用</p>
+        </div>
+      </article>
     </section>
 
     <!-- 仕事 -->
-    <section class="work" id="work" data-theme="light">
-      <p class="label" data-reveal><span>Work</span></p>
-      <h2 class="work__heading" data-reveal>
+    <section class="service" id="service">
+      <p class="label" data-reveal><span>Service</span></p>
+      <h2 class="service__heading" data-reveal>
         <span class="mask"><span>いま、引き受けて</span></span>
         <span class="mask"><span>いること。</span></span>
       </h2>
 
-      <div class="work__list">
-        <div class="work__row" data-reveal data-img="images/work-01.jpg">
-          <h3 class="work__title"><span class="mask"><span>AI導入支援</span></span></h3>
-          <p class="work__text">何から始めればいいかわからない、という段階から一緒に考えます。まずは業務の話を聞かせてもらって、AIに任せられるところと、人が持っておくべきところを分けるところから。入れたあと、現場で使われ続けるところまで付き合います。</p>
+      <div class="service__list">
+        <div class="service__row" data-reveal data-img="images/work-01.jpg">
+          <h3 class="service__title"><span class="mask"><span>AI導入支援</span></span></h3>
+          <p class="service__text">何から始めればいいかわからない、という段階から一緒に考えます。まずは業務の話を聞かせてもらって、AIに任せられるところと、人が持っておくべきところを分けるところから。入れたあと、現場で使われ続けるところまで付き合います。</p>
         </div>
-        <div class="work__row" data-reveal data-img="images/work-02.jpg">
-          <h3 class="work__title"><span class="mask"><span>AI業務効率化</span></span></h3>
-          <p class="work__text">毎日の報告、集計、メールの返信、資料づくり。繰り返している作業を、AIとツールで少しずつ手放していきます。仕組みはブラックボックスにせず、使う人が自分で直せる形で残します。</p>
+        <div class="service__row" data-reveal data-img="images/work-02.jpg">
+          <h3 class="service__title"><span class="mask"><span>AI業務効率化</span></span></h3>
+          <p class="service__text">毎日の報告、集計、メールの返信、資料づくり。繰り返している作業を、AIとツールで少しずつ手放していきます。仕組みはブラックボックスにせず、使う人が自分で直せる形で残します。</p>
         </div>
-        <div class="work__row" data-reveal data-img="images/work-03.jpg">
-          <h3 class="work__title"><span class="mask"><span>HP制作</span></span></h3>
-          <p class="work__text">このサイトも自分でつくりました。最初のヒアリングから、デザインの修正（3回まで）、公開、ドメインの管理まで。途中で誰かに引き継ぐことはなく、最後まで私が見ます。きれいに見えることより、その人らしさが伝わることを大事にしています。</p>
+        <div class="service__row" data-reveal data-img="images/work-03.jpg">
+          <h3 class="service__title"><span class="mask"><span>HP制作</span></span></h3>
+          <p class="service__text">このサイトも自分でつくりました。最初のヒアリングから、デザインの修正（3回まで）、公開、ドメインの管理まで。途中で誰かに引き継ぐことはなく、最後まで私が見ます。きれいに見えることより、その人らしさが伝わることを大事にしています。</p>
         </div>
-        <div class="work__row" data-reveal data-img="images/work-05.jpg">
-          <h3 class="work__title"><span class="mask"><span>LINE構築</span></span></h3>
-          <p class="work__text">ホームページを見てくれた人と、そのあとどうつながっていくか。LINE公式アカウントの設計から、自動の返信、予約やお知らせの流れまで、HPとひと続きのものとして組み立てます。</p>
+        <div class="service__row" data-reveal data-img="images/work-05.jpg">
+          <h3 class="service__title"><span class="mask"><span>LINE構築</span></span></h3>
+          <p class="service__text">ホームページを見てくれた人と、そのあとどうつながっていくか。LINE公式アカウントの設計から、自動の返信、予約やお知らせの流れまで、HPとひと続きのものとして組み立てます。</p>
         </div>
-        <div class="work__row" data-reveal data-img="images/work-04.jpg">
-          <h3 class="work__title"><span class="mask"><span>運用</span></span></h3>
-          <p class="work__text">つくって終わりにはしません。更新、改善、数字の見方まで。公開してからのほうが、長い付き合いになると思っています。</p>
+        <div class="service__row" data-reveal data-img="images/work-04.jpg">
+          <h3 class="service__title"><span class="mask"><span>運用</span></span></h3>
+          <p class="service__text">つくって終わりにはしません。更新、改善、数字の見方まで。公開してからのほうが、長い付き合いになると思っています。</p>
         </div>
       </div>
 
-      <div class="work__preview" aria-hidden="true"><div class="work__preview-inner"></div></div>
+      <div class="preview" aria-hidden="true"><div class="preview__inner"></div></div>
+    </section>
+
+    <!-- 経歴への入口 -->
+    <section class="teaser">
+      <a class="teaser__link" href="career.html">
+        <figure class="teaser__photo ph clip" data-reveal data-label="career.jpg — 経歴ページの入口">
+          <img src="images/career.jpg" alt="" onerror="this.remove()" data-speed="0.12">
+        </figure>
+        <div class="teaser__body">
+          <p class="label" data-reveal><span>Career</span></p>
+          <h2 class="teaser__heading" data-reveal>
+            <span class="mask"><span>消防士から、</span></span>
+            <span class="mask"><span>AIの仕事まで。</span></span>
+          </h2>
+          <p class="teaser__text" data-reveal="up">自衛隊、消防、訪問販売、Webマーケティング、コーチング。いまの仕事にたどり着くまでの話を、別のページにまとめました。</p>
+          <p class="teaser__more" data-reveal="up"><span>経歴を読む</span><i aria-hidden="true">→</i></p>
+        </div>
+      </a>
     </section>
 
     <div class="marquee" aria-hidden="true">
@@ -239,7 +237,7 @@
     </div>
 
     <!-- 連絡 -->
-    <section class="contact" id="contact" data-theme="dark">
+    <section class="contact" id="contact">
       <figure class="contact__photo ph clip" data-reveal data-label="contact.jpg — 笑顔の写真など">
         <img src="images/contact.jpg" alt="" onerror="this.remove()" data-speed="0.1">
       </figure>
@@ -256,11 +254,11 @@
 
   </main>
 
-  <footer class="footer" data-theme="dark">
+  <footer class="footer">
     <p class="footer__big" aria-hidden="true">Meguru Yanagisawa</p>
     <div class="footer__row">
       <p>柳沢恵瑠</p>
-      <a href="#top">Back to top ↑</a>
+      <a href="#">Back to top ↑</a>
       <p><small>&copy; <span class="year">2026</span> Meguru Yanagisawa</small></p>
     </div>
   </footer>
