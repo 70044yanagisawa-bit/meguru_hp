@@ -439,6 +439,41 @@ main, .footer { position: relative; z-index: 1; }
 }
 
 /* ==========================================================
+   Message（AI × HUMAN）
+   ========================================================== */
+.message {
+  padding: clamp(120px, 22vh, 240px) var(--gutter) clamp(40px, 8vh, 96px);
+}
+.message__title {
+  font: 600 clamp(56px, 11vw, 190px)/1 var(--en);
+  letter-spacing: -.04em;
+  white-space: nowrap;
+}
+.message__title i {
+  font-style: normal;
+  font-weight: 400;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.message__lead {
+  margin-top: clamp(40px, 7vh, 80px);
+  font-size: clamp(24px, 3.2vw, 50px);
+  font-weight: 700;
+  line-height: 1.6;
+}
+.message__body {
+  max-width: 34em;
+  margin: clamp(48px, 9vh, 100px) 0 0 auto;
+}
+.message__body p + p { margin-top: 1.6em; }
+.message__close {
+  font-size: clamp(20px, 1.8vw, 26px);
+  font-weight: 700;
+}
+
+/* ==========================================================
    About
    ========================================================== */
 .about {
@@ -1007,7 +1042,9 @@ main, .footer { position: relative; z-index: 1; }
   .hero__name { margin-top: 20px; font-size: 13px; }
   .hero__scroll { display: none; }
 
-  .about, .works, .service, .record, .next { padding-left: 16px; padding-right: 16px; }
+  .message, .about, .works, .service, .record, .next { padding-left: 16px; padding-right: 16px; }
+  .message__lead { font-size: clamp(21px, 5.8vw, 30px); }
+  .message__body { margin-left: 0; }
   .about__statement { font-size: clamp(21px, 5.8vw, 30px); }
   .about__body { grid-template-columns: 1fr; gap: 48px; margin-top: 72px; }
   .about__photo, .about__text { grid-column: 1; }

@@ -20,7 +20,7 @@
   $$('[data-reveal], [data-intro], .loader__name, .loader__inner, .menu nav').forEach(box => {
     $$(':scope .mask', box).forEach((m, i) => m.style.setProperty('--i', i));
   });
-  $$('.about__text, .contact__body, .bo__body').forEach(box => {
+  $$('.about__text, .contact__body, .bo__body, .message__body').forEach(box => {
     $$(':scope > [data-reveal="up"]', box).forEach((el, i) => el.style.setProperty('--i', i));
   });
 
