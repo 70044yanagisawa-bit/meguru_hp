@@ -2,7 +2,9 @@
 
 柳沢恵瑠（Meguru Yanagisawa）のホームページ。ビルド不要の静的サイト（HTML / CSS / JS のみ）。
 
-- `index.html` … トップ（About / Back Office / Works 制作サイト / Service / Contact）
+- `index.html` … トップ（About / Service＝2つのサービスの入口 / Works 制作サイト / Contact）
+- `ai.html` … サービス01：AI導入・業務効率化（裏方の作業の図解あり）
+- `web.html` … サービス02：HP制作・LINE構築（進め方の流れあり）
 - `history.html` … 経歴（フッターとAboutからだけリンク。興味がある人向け）
 
 ## 写真の入れ方
@@ -16,7 +18,8 @@ JPG・横幅 2000px 前後・1枚 500KB 以下が目安。
 | about.jpg | About | 縦長 4:5 |
 | wide.jpg | 「道具より先に、人の話を聞く。」の背景 | 横長 16:9 |
 | works/site-01.jpg 〜 site-04.jpg | 制作したサイトのサムネイル（トップ画面のスクリーンショット） | 横長 16:10 |
-| work-01.jpg 〜 work-05.jpg | Service の行にカーソルを乗せたとき（PCのみ） | 縦長 3:4 |
+| service-ai.jpg / service-web.jpg | トップの Service（2つのサービスの入口） | 横長 16:10 |
+| ai-hero.jpg / web-hero.jpg | 各サービスページの最初の大きな写真 | 横長 |
 | history-hero.jpg | 経歴ページの最初の大きな写真 | 横長 |
 | story-01.jpg 〜 story-05.jpg | 経歴ページの各章（守る／売る／届ける／聴く／いま） | 縦長 |
 | contact.jpg | Contact | 縦長 4:5 |

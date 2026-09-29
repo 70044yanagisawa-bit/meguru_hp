@@ -793,23 +793,152 @@ main, .footer { position: relative; z-index: 1; }
   .service__row:hover .service__title { transform: translateX(1.2vw); }
 }
 
-.preview {
-  position: fixed;
-  z-index: 30;
+/* ==========================================================
+   Products：トップの2つのサービス（クリックで各ページへ）
+   ========================================================== */
+.products { margin-top: clamp(64px, 12vh, 140px); }
+.product {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: 5vw;
+  align-items: center;
+  padding: clamp(40px, 7vh, 80px) 0;
+  border-top: 1px solid var(--line-l);
+}
+.product:last-child { border-bottom: 1px solid var(--line-l); }
+.product--rev { grid-template-columns: 5fr 7fr; }
+.product--rev .product__photo { order: 2; }
+.product__photo { aspect-ratio: 16 / 10; }
+.product__photo img { transition: scale 1.2s var(--ease-out); }
+.product:hover .product__photo img { scale: 1.06; }
+.product__no {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font: 500 12px/1 var(--en);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+.product__no span {
+  font-size: 14px;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.product__name {
+  margin-top: 20px;
+  font-size: clamp(36px, 4.4vw, 76px);
+  font-weight: 700;
+  line-height: 1.2;
+}
+.product__text { max-width: 26em; margin-top: 28px; font-size: 15px; color: var(--text-sub); }
+.product__scope {
+  margin-top: 20px;
+  font-size: 12px;
+  letter-spacing: .08em;
+  color: var(--gray);
+}
+.product__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 36px;
+  font-size: 14px;
+  letter-spacing: .12em;
+}
+.product__more i {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  aspect-ratio: 1;
+  border: 1px solid var(--line-l);
+  border-radius: 50%;
+  font-style: normal;
+  transition: background .5s, color .5s, border-color .5s, transform .6s var(--ease-out);
+}
+.product:hover .product__more i { background: var(--ink); border-color: var(--ink); color: var(--paper); transform: translateX(8px); }
+
+/* ---------- 商品ページ ---------- */
+.message--page { padding-top: clamp(96px, 16vh, 180px); }
+.service--detail { padding-top: clamp(64px, 12vh, 140px); }
+.service--detail .service__list { margin-top: clamp(32px, 6vh, 64px); }
+
+.flow { padding: clamp(96px, 16vh, 180px) var(--gutter) 0; }
+.flow__heading {
+  margin-top: clamp(32px, 6vh, 64px);
+  font-size: clamp(32px, 4.4vw, 76px);
+  font-weight: 700;
+  line-height: 1.3;
+}
+.flow__list {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2vw;
+  margin: clamp(56px, 10vh, 110px) 0 0;
+  padding: 36px 0 0;
+  list-style: none;
+}
+.flow__list::before {                 /* 左から線が伸びる */
+  content: "";
+  position: absolute;
   top: 0;
   left: 0;
-  width: clamp(200px, 20vw, 320px);
-  aspect-ratio: 3 / 4;
-  pointer-events: none;
-  clip-path: inset(50% 50% 50% 50%);
-  transition: clip-path .7s var(--ease);
+  right: 0;
+  height: 2px;
+  background: var(--grad);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 1.8s var(--ease);
 }
-.preview.is-on { clip-path: inset(0 0 0 0); }
-.preview__inner {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(160deg, #3a3935, #1f1f1c) center / cover no-repeat;
+.flow__list.is-in::before { transform: scaleX(1); }
+.flow__list li {
+  position: relative;
+  font-size: clamp(16px, 1.4vw, 21px);
+  font-weight: 700;
+  line-height: 1.5;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .9s var(--ease-out), transform .9s var(--ease-out);
 }
+.flow__list li::before {
+  content: "";
+  position: absolute;
+  top: -42px;
+  left: 0;
+  width: 12px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--ink);
+}
+.flow__list.is-in li { opacity: 1; transform: none; }
+.flow__list li:nth-child(2) { transition-delay: .3s; }
+.flow__list li:nth-child(3) { transition-delay: .6s; }
+.flow__list li:nth-child(4) { transition-delay: .9s; }
+.flow__list li:nth-child(5) { transition-delay: 1.2s; }
+.flow__list li span {
+  display: block;
+  margin-bottom: 8px;
+  font: 500 12px/1 var(--en);
+  letter-spacing: .12em;
+  color: var(--gray);
+}
+
+.to-works { padding: 0 var(--gutter) clamp(48px, 8vh, 96px); }
+.to-works__link {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 24px;
+  padding: clamp(32px, 6vh, 56px) 0;
+  border-bottom: 1px solid var(--line-l);
+}
+.to-works__label { font: 500 12px/1 var(--en); letter-spacing: .18em; text-transform: uppercase; color: var(--gray); }
+.to-works__title { font-size: clamp(22px, 2.4vw, 38px); font-weight: 700; }
+.to-works__title i { display: inline-block; font-style: normal; transition: transform .6s var(--ease-out); }
+.to-works__link:hover .to-works__title i { transform: translateX(8px); }
 
 /* ==========================================================
    Marquee
@@ -1118,7 +1247,14 @@ main, .footer { position: relative; z-index: 1; }
   .site__visit { display: none; }
 
   .service__row { grid-template-columns: 1fr; gap: 18px; padding: 40px 0; }
-  .preview { display: none; }
+  .product, .product--rev { grid-template-columns: 1fr; gap: 28px; }
+  .product--rev .product__photo { order: 0; }
+  .flow { padding-left: 16px; padding-right: 16px; }
+  .flow__list { grid-template-columns: 1fr; gap: 28px; padding: 0 0 0 32px; }
+  .flow__list::before { top: 0; bottom: 0; left: 5px; right: auto; width: 2px; height: auto; transform: scaleY(0); transform-origin: top; background: linear-gradient(180deg, #3355ff, #2fbf71, #ffd23f, #ff2e63, #8e44ff); }
+  .flow__list.is-in::before { transform: scaleY(1); }
+  .flow__list li::before { top: 4px; left: -32px; }
+  .to-works { padding-left: 16px; padding-right: 16px; }
 
   .contact { grid-template-columns: 1fr; gap: 56px; padding: 112px 16px 120px; }
   .contact__photo, .contact__body { grid-column: 1; }

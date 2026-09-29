@@ -1,13 +1,12 @@
 /* ==========================================================
    Meguru Yanagisawa — motion
    外部ライブラリなし。スクロール連動はすべて1本の rAF ループで回す。
-   トップ（index.html）と経歴（history.html）の両方で読み込む。
+   すべてのページ（index / ai / web / history）で読み込む。
    ========================================================== */
 (() => {
   const body = document.body;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const wide = matchMedia('(min-width: 901px)');
-  const canHover = matchMedia('(hover: hover)').matches;
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
@@ -148,27 +147,6 @@
   };
   menuBtn.addEventListener('click', () => setMenu(!menu.classList.contains('is-open')));
   $$('a', menu).forEach(a => a.addEventListener('click', () => setMenu(false)));
-
-  /* ---------- Service：カーソルについてくる写真 ---------- */
-  const preview = $('.preview');
-  const previewInner = $('.preview__inner');
-  const pointer = { x: vw / 2, y: vh / 2 };
-  const pv = { x: vw / 2, y: vh / 2 };
-  addEventListener('pointermove', e => { pointer.x = e.clientX; pointer.y = e.clientY; }, { passive: true });
-
-  if (canHover && preview) {
-    $$('.service__row').forEach(row => {
-      let url = null;
-      const img = new Image();
-      img.onload = () => { url = row.dataset.img; };
-      img.src = row.dataset.img;
-      row.addEventListener('pointerenter', () => {
-        previewInner.style.backgroundImage = url ? `url("${url}")` : '';
-        preview.classList.add('is-on');
-      });
-      row.addEventListener('pointerleave', () => preview.classList.remove('is-on'));
-    });
-  }
 
   /* ---------- Marquee ---------- */
   const marquee = $('.marquee__track');
@@ -316,13 +294,6 @@
       const p = clamp(-r.top / (r.height - vh));
       track.style.transform = `translate3d(${-p * storyDist}px,0,0)`;
       storyBar.style.transform = `scaleX(${p})`;
-    }
-
-    // Service のプレビュー
-    if (preview) {
-      pv.x += (pointer.x - pv.x) * .14;
-      pv.y += (pointer.y - pv.y) * .14;
-      preview.style.transform = `translate3d(${pv.x - preview.offsetWidth / 2}px,${pv.y - preview.offsetHeight / 2}px,0)`;
     }
 
     requestAnimationFrame(frame);

@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@200;400;500;600&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=20260929e">
+  <link rel="stylesheet" href="css/style.css?v=20260929f">
   <script>document.documentElement.classList.add("js")</script>
 </head>
 <body>
@@ -42,9 +42,8 @@
     <a class="header__logo" href="index.html">Meguru<br>Yanagisawa</a>
     <nav class="header__nav" aria-label="メインメニュー">
       <a href="#about">About</a>
-      <a href="#backoffice">Back Office</a>
-      <a href="#works">Works</a>
       <a href="#service">Service</a>
+      <a href="#works">Works</a>
       <a href="#contact">Contact</a>
     </nav>
     <button class="header__menu" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
@@ -53,9 +52,8 @@
   <div class="menu" id="menu" aria-hidden="true">
     <nav>
       <a href="#about"><span class="mask"><span>About</span></span></a>
-      <a href="#backoffice"><span class="mask"><span>Back Office</span></span></a>
-      <a href="#works"><span class="mask"><span>Works</span></span></a>
       <a href="#service"><span class="mask"><span>Service</span></span></a>
+      <a href="#works"><span class="mask"><span>Works</span></span></a>
       <a href="#contact"><span class="mask"><span>Contact</span></span></a>
     </nav>
   </div>
@@ -77,7 +75,7 @@
       </figure>
 
       <div class="hero__panel">
-        <p class="hero__eyebrow"><span class="mask"><span>AI導入支援 / 業務効率化 / HP制作・LINE構築</span></span></p>
+        <p class="hero__eyebrow"><span class="mask"><span>AI導入・業務効率化 / HP制作・LINE構築</span></span></p>
         <h1 class="hero__title">
           <span class="mask"><span>AIと、</span></span>
           <span class="mask"><span>人の仕事の</span></span>
@@ -145,37 +143,46 @@
       </p>
     </section>
 
-    <!-- 裏方の時間をAIに -->
-    <section class="bo" id="backoffice">
-      <div class="bo__pin">
-      <div class="bo__sticky">
-        <div class="bo__head">
-          <p class="label"><span>Back Office</span></p>
-          <h2 class="bo__heading" data-reveal>
-            <span class="mask"><span>裏方はAIに。</span></span>
-            <span class="mask"><span>時間は、お客さまに。</span></span>
-          </h2>
-        </div>
+    <!-- 仕事：2つのプロダクト。クリックで各ページへ -->
+    <section class="service" id="service">
+      <p class="label" data-reveal><span>Service</span></p>
+      <h2 class="service__heading" data-reveal>
+        <span class="mask"><span>できることは、</span></span>
+        <span class="mask"><span>ふたつです。</span></span>
+      </h2>
 
-        <div class="bo__chart" aria-label="裏方の作業をAIが受け持つと、お客さまと向き合う時間が広がるイメージ図">
-          <div class="bo__seg bo__seg--task"><span class="bo__task">領収書</span><span class="bo__ai">AI</span></div>
-          <div class="bo__seg bo__seg--task"><span class="bo__task">稼働報告</span><span class="bo__ai">AI</span></div>
-          <div class="bo__seg bo__seg--task"><span class="bo__task">口コミ返信</span><span class="bo__ai">AI</span></div>
-          <div class="bo__seg bo__seg--task"><span class="bo__task">シフト反映</span><span class="bo__ai">AI</span></div>
-          <div class="bo__seg bo__seg--main"><span>お客さまと向き合う時間</span></div>
-        </div>
-        <p class="bo__note">※ イメージです</p>
+      <div class="products">
+        <a class="product" href="ai.html">
+          <figure class="product__photo ph clip" data-reveal data-label="service-ai.jpg — AIのサービスの写真">
+            <img src="images/service-ai.jpg" alt="" onerror="this.remove()" data-speed="0.08">
+          </figure>
+          <div class="product__body" data-reveal>
+            <p class="product__no"><span>01</span>Service</p>
+            <h3 class="product__name">
+              <span class="mask"><span>AI導入・</span></span>
+              <span class="mask"><span>業務効率化</span></span>
+            </h3>
+            <p class="product__text">何から始めればいいか、の段階から。AIに任せられる仕事を見つけて、現場で使い続けられる仕組みにします。</p>
+            <p class="product__scope">導入の相談 ／ 裏方の作業の自動化 ／ 定着までの伴走</p>
+            <p class="product__more"><span>詳しく見る</span><i aria-hidden="true">→</i></p>
+          </div>
+        </a>
 
-        <div class="bo__captions">
-          <p class="bo__caption bo__caption--before">いまは、お店を回すための作業が、<br>一日のあちこちに入り込んでいる。</p>
-          <p class="bo__caption bo__caption--after">裏方をAIが受け持てば、<br>本来いちばん時間をかけたい場所に戻れる。</p>
-        </div>
-      </div>
-      </div>
-      <div class="bo__body">
-        <p data-reveal="up">領収書の整理、月末の稼働報告、口コミへの返信、シフトの予約システムへの反映。どれもお店に欠かせない仕事ですが、お客さまの前にいる時間ではありません。</p>
-        <p data-reveal="up">この裏方を、私がAIと一緒に仕組みにします。美容室グループで実際に動かしている仕組みです。空いた時間は、技術を磨くことにも、スタッフと話すことにも、目の前のお客さまにも使えます。</p>
-        <p data-reveal="up">AIに全部を渡すわけではありません。送信や投稿の前には、必ず人が目を通す。その線引きも一緒に決めます。</p>
+        <a class="product product--rev" href="web.html">
+          <figure class="product__photo ph clip" data-reveal data-label="service-web.jpg — HP・LINEのサービスの写真">
+            <img src="images/service-web.jpg" alt="" onerror="this.remove()" data-speed="0.08">
+          </figure>
+          <div class="product__body" data-reveal>
+            <p class="product__no"><span>02</span>Service</p>
+            <h3 class="product__name">
+              <span class="mask"><span>HP制作・</span></span>
+              <span class="mask"><span>LINE構築</span></span>
+            </h3>
+            <p class="product__text">伝えたいことを聞いて、ホームページとLINEをひと続きのものとしてつくります。公開してからの運用まで。</p>
+            <p class="product__scope">ヒアリング〜公開 ／ ドメイン管理 ／ LINE公式アカウント ／ 運用</p>
+            <p class="product__more"><span>詳しく見る</span><i aria-hidden="true">→</i></p>
+          </div>
+        </a>
       </div>
     </section>
 
@@ -228,44 +235,10 @@
       </div>
     </section>
 
-    <!-- 仕事 -->
-    <section class="service" id="service">
-      <p class="label" data-reveal><span>Service</span></p>
-      <h2 class="service__heading" data-reveal>
-        <span class="mask"><span>いま、引き受けて</span></span>
-        <span class="mask"><span>いること。</span></span>
-      </h2>
-
-      <div class="service__list">
-        <div class="service__row" data-reveal data-img="images/work-01.jpg">
-          <h3 class="service__title"><span class="mask"><span>AI導入支援</span></span></h3>
-          <p class="service__text">何から始めればいいかわからない、という段階から一緒に考えます。まずは業務の話を聞かせてもらって、AIに任せられるところと、人が持っておくべきところを分けるところから。入れたあと、現場で使われ続けるところまで付き合います。</p>
-        </div>
-        <div class="service__row" data-reveal data-img="images/work-02.jpg">
-          <h3 class="service__title"><span class="mask"><span>AI業務効率化</span></span></h3>
-          <p class="service__text">毎日の報告、集計、メールの返信、資料づくり。繰り返している作業を、AIとツールで少しずつ手放していきます。仕組みはブラックボックスにせず、使う人が自分で直せる形で残します。</p>
-        </div>
-        <div class="service__row" data-reveal data-img="images/work-03.jpg">
-          <h3 class="service__title"><span class="mask"><span>HP制作</span></span></h3>
-          <p class="service__text">このサイトも自分でつくりました。最初のヒアリングから、デザインの修正（3回まで）、公開、ドメインの管理まで。途中で誰かに引き継ぐことはなく、最後まで私が見ます。きれいに見えることより、その人らしさが伝わることを大事にしています。</p>
-        </div>
-        <div class="service__row" data-reveal data-img="images/work-05.jpg">
-          <h3 class="service__title"><span class="mask"><span>LINE構築</span></span></h3>
-          <p class="service__text">ホームページを見てくれた人と、そのあとどうつながっていくか。LINE公式アカウントの設計から、自動の返信、予約やお知らせの流れまで、HPとひと続きのものとして組み立てます。</p>
-        </div>
-        <div class="service__row" data-reveal data-img="images/work-04.jpg">
-          <h3 class="service__title"><span class="mask"><span>運用</span></span></h3>
-          <p class="service__text">つくって終わりにはしません。更新、改善、数字の見方まで。公開してからのほうが、長い付き合いになると思っています。</p>
-        </div>
-      </div>
-
-      <div class="preview" aria-hidden="true"><div class="preview__inner"></div></div>
-    </section>
-
     <div class="marquee" aria-hidden="true">
       <div class="marquee__track">
-        <span>AI導入支援</span><i></i><span>AI業務効率化</span><i></i><span>HP制作</span><i></i><span>LINE構築</span><i></i><span>運用</span><i></i>
-        <span>AI導入支援</span><i></i><span>AI業務効率化</span><i></i><span>HP制作</span><i></i><span>LINE構築</span><i></i><span>運用</span><i></i>
+        <span>AI導入・業務効率化</span><i></i><span>HP制作・LINE構築</span><i></i>
+        <span>AI導入・業務効率化</span><i></i><span>HP制作・LINE構築</span><i></i>
       </div>
     </div>
 
@@ -297,6 +270,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js?v=20260929e"></script>
+  <script src="js/main.js?v=20260929f"></script>
 </body>
 </html>
