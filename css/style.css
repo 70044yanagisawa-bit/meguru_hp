@@ -464,6 +464,17 @@ main, .footer { position: relative; z-index: 1; }
 .about__photo { grid-column: 1; aspect-ratio: 4 / 5; }
 .about__text { grid-column: 3; max-width: 32em; }
 .about__text p + p { margin-top: 1.6em; }
+.about__more a {
+  display: inline-flex;
+  gap: 10px;
+  font-size: 14px;
+  letter-spacing: .08em;
+  border-bottom: 1px solid var(--line-l);
+  transition: border-color .4s;
+}
+.about__more a:hover { border-color: var(--ink); }
+.about__more i { font-style: normal; transition: transform .5s var(--ease-out); }
+.about__more a:hover i { transform: translateX(6px); }
 
 /* ==========================================================
    帯：写真が固定され、文字だけが上を通り過ぎる
@@ -493,7 +504,90 @@ main, .footer { position: relative; z-index: 1; }
 }
 
 /* ==========================================================
-   Works（導入実績）
+   Back Office：スクロールすると、裏方の作業が縮み
+   「お客さまと向き合う時間」が広がる（--p = 0〜1 を JS が渡す）
+   ========================================================== */
+.bo { --p: 0; position: relative; }
+.bo__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(28px, 5vh, 56px);
+  padding: 0 var(--gutter);
+}
+.bo__pin { height: 260vh; }
+.bo__heading {
+  margin-top: 28px;
+  font-size: clamp(34px, 4.8vw, 84px);
+  font-weight: 700;
+  line-height: 1.25;
+}
+.bo__chart {
+  display: flex;
+  gap: 4px;
+  height: clamp(96px, 16vh, 150px);
+}
+.bo__seg {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  white-space: nowrap;
+}
+.bo__seg--task {
+  width: calc(16% - 12% * var(--p));
+  background: var(--ink);
+  color: var(--paper);
+}
+.bo__seg--task > span { grid-area: 1 / 1; }
+.bo__task { opacity: max(0, 1 - var(--p) * 2.2); }
+.bo__ai {
+  font: 600 13px/1 var(--en);
+  letter-spacing: .12em;
+  opacity: clamp(0, (var(--p) - .45) * 3, 1);
+}
+.bo__seg--main {
+  flex: 1;
+  background: #fff;
+  color: var(--ink);
+  font-size: clamp(14px, 1.4vw, 20px);
+}
+.bo__seg--main::before {             /* 虹色は細い線だけ */
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--grad);
+}
+.bo__note { margin-top: -20px; font-size: 11px; color: var(--gray); }
+.bo__captions { display: grid; }
+.bo__caption {
+  grid-area: 1 / 1;
+  font-size: clamp(18px, 1.8vw, 26px);
+  font-weight: 500;
+  line-height: 1.7;
+}
+.bo__caption--before { opacity: max(0, 1 - var(--p) * 2.5); }
+.bo__caption--after { opacity: clamp(0, (var(--p) - .5) * 2.5, 1); }
+.bo__body {
+  max-width: 34em;
+  margin: 0 0 0 auto;
+  padding: 0 var(--gutter) clamp(96px, 16vh, 180px);
+  box-sizing: content-box;
+}
+.bo__body p + p { margin-top: 1.6em; }
+
+/* ==========================================================
+   Works：制作したサイト（サムネイルからサイトへ）
    ========================================================== */
 .works {
   padding: clamp(96px, 18vh, 200px) var(--gutter) clamp(48px, 10vh, 120px);
@@ -506,48 +600,64 @@ main, .footer { position: relative; z-index: 1; }
 }
 .works__lead { max-width: 30em; margin-top: 32px; color: var(--text-sub); }
 
-.case {
+.gallery {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  column-gap: 2vw;
-  align-items: end;
-  margin-top: clamp(96px, 18vh, 220px);
+  grid-template-columns: 1fr 1fr;
+  column-gap: 6vw;
+  row-gap: clamp(64px, 12vh, 140px);
+  margin-top: clamp(64px, 12vh, 140px);
 }
-.case__photo { grid-column: 1 / 8; grid-row: 1; aspect-ratio: 3 / 2; }
-.case__text { grid-column: 9 / 13; grid-row: 1; padding-bottom: 2vh; }
-.case--rev .case__photo { grid-column: 6 / 13; }
-.case--rev .case__text { grid-column: 1 / 5; }
-.case__meta {
+.site:nth-child(even) { margin-top: 18vh; }
+.site { display: block; }
+.site__thumb { aspect-ratio: 16 / 10; }
+.site__thumb img { transition: scale 1.2s var(--ease-out); top: 0; height: 100%; object-position: top; }
+.site__visit {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 112px;
+  aspect-ratio: 1;
+  margin: -56px 0 0 -56px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper);
+  font: 500 13px/1 var(--en);
+  letter-spacing: .12em;
+  transform: scale(0);
+  transition: transform .6s var(--ease-out);
+}
+.site:hover .site__visit, .site:focus-visible .site__visit { transform: scale(1); }
+.site:hover .site__thumb img { scale: 1.05; }
+.site__meta {
   display: flex;
   align-items: baseline;
   gap: 14px;
+  margin-top: 22px;
   font-size: 12px;
   letter-spacing: .1em;
   color: var(--gray);
 }
-.case__meta span {
+.site__meta span {
   font: 500 14px/1 var(--en);
   background: var(--grad);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
-.case__title {
-  margin: 18px 0 24px;
-  font-size: clamp(22px, 1.9vw, 32px);
-  font-weight: 700;
-  line-height: 1.6;
+.site__name { margin-top: 8px; font-size: clamp(20px, 1.8vw, 28px); font-weight: 700; line-height: 1.5; }
+.site__url {
+  display: inline-block;
+  margin-top: 6px;
+  font: 400 13px/1.6 var(--en);
+  letter-spacing: .04em;
+  color: var(--text-sub);
+  background: linear-gradient(currentColor, currentColor) left bottom / 0 1px no-repeat;
+  transition: background-size .6s var(--ease);
 }
-.case__text > p:not([class]) { font-size: 15px; color: var(--text-sub); }
-.case__text > p:not([class]) + p:not([class]) { margin-top: 1em; }
-.case__tags {
-  margin-top: 24px;
-  padding-top: 16px;
-  border-top: 1px solid var(--line-l);
-  font-size: 12px;
-  letter-spacing: .08em;
-  color: var(--gray);
-}
+.site:hover .site__url { background-size: 100% 1px; }
 
 /* ==========================================================
    Service
@@ -614,51 +724,6 @@ main, .footer { position: relative; z-index: 1; }
   height: 100%;
   background: linear-gradient(160deg, #3a3935, #1f1f1c) center / cover no-repeat;
 }
-
-/* ==========================================================
-   経歴への入口（黒いパネルから写真がはみ出す）
-   ========================================================== */
-.teaser { padding: clamp(80px, 14vh, 160px) 0 clamp(80px, 14vh, 160px) 14vw; }
-.teaser__link {
-  display: grid;
-  grid-template-columns: 5fr 6fr;
-  gap: 5vw;
-  align-items: center;
-  padding: 0 var(--gutter) 0 0;
-  background: var(--ink);
-  color: var(--paper);
-}
-.teaser__photo {
-  aspect-ratio: 4 / 5;
-  margin: -10vh 0 -6vh -8vw;
-}
-.teaser__body { padding: 10vh 0; }
-.teaser__heading {
-  margin-top: 32px;
-  font-size: clamp(32px, 4vw, 68px);
-  font-weight: 700;
-  line-height: 1.3;
-}
-.teaser__text { max-width: 28em; margin-top: 28px; color: #bdbbb5; }
-.teaser__more {
-  display: inline-flex;
-  align-items: center;
-  gap: 16px;
-  margin-top: 40px;
-  font-size: 15px;
-  letter-spacing: .12em;
-}
-.teaser__more i {
-  display: grid;
-  place-items: center;
-  width: 52px;
-  aspect-ratio: 1;
-  border: 1px solid var(--line-d);
-  border-radius: 50%;
-  font-style: normal;
-  transition: background .5s, color .5s, transform .6s var(--ease-out);
-}
-.teaser__link:hover .teaser__more i { background: var(--paper); color: var(--ink); transform: translateX(8px); }
 
 /* ==========================================================
    Marquee
@@ -732,7 +797,7 @@ main, .footer { position: relative; z-index: 1; }
 .contact__mail:hover::after { transform: scaleX(0); }
 
 /* ==========================================================
-   Career ページ
+   History ページ
    ========================================================== */
 .page-hero {
   position: relative;
@@ -925,7 +990,7 @@ main, .footer { position: relative; z-index: 1; }
   .header { padding: 20px 16px; }
   .header__nav { display: none; }
   .header__menu { display: block; }
-  .stage__word { font-size: 24vw; bottom: 12vh; }
+  .stage__word { font-size: 24vw; bottom: 1vh; }
 
   .hero__photo { top: 80px; left: 16px; width: calc(100% - 48px); height: 40%; }
   .hero__panel {
@@ -951,19 +1016,20 @@ main, .footer { position: relative; z-index: 1; }
   .band { height: 90svh; }
   .band__text { left: 16px; }
 
-  .case, .case--rev { grid-template-columns: 1fr; row-gap: 28px; margin-top: 96px; }
-  .case__photo, .case--rev .case__photo,
-  .case__text, .case--rev .case__text { grid-column: 1; grid-row: auto; }
-  .case__photo { width: 92%; }
-  .case--rev .case__photo { justify-self: end; }
+  .bo__pin { height: 230svh; }
+  .bo__sticky { gap: 24px; padding: 0 16px; }
+  .bo__chart { flex-direction: column; height: 46svh; }
+  .bo__seg--task { width: auto; height: calc(15% - 11% * var(--p)); font-size: 13px; }
+  .bo__seg--main { height: auto; }
+  .bo__note { margin-top: -12px; }
+  .bo__body { margin: 0; padding: 0 16px 96px; }
+
+  .gallery { grid-template-columns: 1fr; row-gap: 64px; }
+  .site:nth-child(even) { margin-top: 0; }
+  .site__visit { display: none; }
 
   .service__row { grid-template-columns: 1fr; gap: 18px; padding: 40px 0; }
   .preview { display: none; }
-
-  .teaser { padding: 96px 0 96px 16px; }
-  .teaser__link { grid-template-columns: 1fr; gap: 0; padding: 0 16px 0 0; }
-  .teaser__photo { width: 76%; margin: -48px 0 0 -16px; }
-  .teaser__body { padding: 40px 0 56px 16px; }
 
   .contact { grid-template-columns: 1fr; gap: 56px; padding: 112px 16px 120px; }
   .contact__photo, .contact__body { grid-column: 1; }

@@ -42,9 +42,9 @@
     <a class="header__logo" href="index.html">Meguru<br>Yanagisawa</a>
     <nav class="header__nav" aria-label="メインメニュー">
       <a href="#about">About</a>
+      <a href="#backoffice">Back Office</a>
       <a href="#works">Works</a>
       <a href="#service">Service</a>
-      <a href="career.html">Career</a>
       <a href="#contact">Contact</a>
     </nav>
     <button class="header__menu" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
@@ -53,9 +53,9 @@
   <div class="menu" id="menu" aria-hidden="true">
     <nav>
       <a href="#about"><span class="mask"><span>About</span></span></a>
+      <a href="#backoffice"><span class="mask"><span>Back Office</span></span></a>
       <a href="#works"><span class="mask"><span>Works</span></span></a>
       <a href="#service"><span class="mask"><span>Service</span></span></a>
-      <a href="career.html"><span class="mask"><span>Career</span></span></a>
       <a href="#contact"><span class="mask"><span>Contact</span></span></a>
     </nav>
   </div>
@@ -94,7 +94,7 @@
     <section class="about" id="about">
       <p class="label" data-reveal><span>About</span></p>
 
-      <p class="about__statement" data-fill>消防士、訪問販売、Webマーケティング、コーチング。遠回りに見えるかもしれません。でも振り返ると、やってきたことはずっと同じでした。目の前の人の「困った」を、動ける形にすること。</p>
+      <p class="about__statement" data-fill>AIに任せられることは、AIに。人にしかできない仕事に、ちゃんと時間を使えるように。お店や会社の中に、その流れをつくるのが私の仕事です。</p>
 
       <div class="about__body">
         <figure class="about__photo ph clip" data-reveal data-float="-0.12" data-label="about.jpg — 人柄が伝わる写真">
@@ -104,6 +104,7 @@
           <p data-reveal="up">はじめまして、柳沢恵瑠（やなぎさわ めぐる）です。</p>
           <p data-reveal="up">いまは、会社やお店にAIを入れるお手伝いと、毎日の仕事を軽くする仕組みづくり、それからホームページの制作とLINEの構築、公開後の運用までをしています。</p>
           <p data-reveal="up">AIのことを話す人は増えました。けれど、実際の現場では「で、うちは何からやればいいの」で止まっていることが多い。ツールを並べる前に、その仕事をしている人の話を聞く。そこから始めるようにしています。</p>
+          <p class="about__more" data-reveal="up"><a href="history.html">これまでの経歴は History へ <i aria-hidden="true">→</i></a></p>
         </div>
       </div>
     </section>
@@ -119,39 +120,87 @@
       </p>
     </section>
 
-    <!-- 導入実績 -->
-    <!-- ※ 下書きです。社名・業種の出し方、内容は公開前に本人確認が必要 -->
+    <!-- 裏方の時間をAIに -->
+    <section class="bo" id="backoffice">
+      <div class="bo__pin">
+      <div class="bo__sticky">
+        <div class="bo__head">
+          <p class="label"><span>Back Office</span></p>
+          <h2 class="bo__heading" data-reveal>
+            <span class="mask"><span>裏方はAIに。</span></span>
+            <span class="mask"><span>時間は、お客さまに。</span></span>
+          </h2>
+        </div>
+
+        <div class="bo__chart" aria-label="裏方の作業をAIが受け持つと、お客さまと向き合う時間が広がるイメージ図">
+          <div class="bo__seg bo__seg--task"><span class="bo__task">領収書</span><span class="bo__ai">AI</span></div>
+          <div class="bo__seg bo__seg--task"><span class="bo__task">稼働報告</span><span class="bo__ai">AI</span></div>
+          <div class="bo__seg bo__seg--task"><span class="bo__task">口コミ返信</span><span class="bo__ai">AI</span></div>
+          <div class="bo__seg bo__seg--task"><span class="bo__task">シフト反映</span><span class="bo__ai">AI</span></div>
+          <div class="bo__seg bo__seg--main"><span>お客さまと向き合う時間</span></div>
+        </div>
+        <p class="bo__note">※ イメージです</p>
+
+        <div class="bo__captions">
+          <p class="bo__caption bo__caption--before">いまは、お店を回すための作業が、<br>一日のあちこちに入り込んでいる。</p>
+          <p class="bo__caption bo__caption--after">裏方をAIが受け持てば、<br>本来いちばん時間をかけたい場所に戻れる。</p>
+        </div>
+      </div>
+      </div>
+      <div class="bo__body">
+        <p data-reveal="up">領収書の整理、月末の稼働報告、口コミへの返信、シフトの予約システムへの反映。どれもお店に欠かせない仕事ですが、お客さまの前にいる時間ではありません。</p>
+        <p data-reveal="up">この裏方を、私がAIと一緒に仕組みにします。美容室グループで実際に動かしている仕組みです。空いた時間は、技術を磨くことにも、スタッフと話すことにも、目の前のお客さまにも使えます。</p>
+        <p data-reveal="up">AIに全部を渡すわけではありません。送信や投稿の前には、必ず人が目を通す。その線引きも一緒に決めます。</p>
+      </div>
+    </section>
+
+    <!-- 制作実績：サムネイルをクリックでサイトへ -->
+    <!-- ※ サイト名・URL・サムネイルは仮。実際の制作物に差し替える -->
     <section class="works" id="works">
       <p class="label" data-reveal><span>Works</span></p>
       <h2 class="works__heading" data-reveal>
-        <span class="mask"><span>導入実績</span></span>
+        <span class="mask"><span>つくったサイト</span></span>
       </h2>
-      <p class="works__lead" data-reveal="up">これまでに関わった仕事の一部です。どれも「毎月のあの作業、なんとかならないかな」という一言から始まりました。</p>
+      <p class="works__lead" data-reveal="up">これまでに制作したホームページの一部です。画像を押すと、実際のサイトが開きます。</p>
 
-      <article class="case">
-        <figure class="case__photo ph clip" data-reveal data-float="0.1" data-label="case-01.jpg">
-          <img src="images/case-01.jpg" alt="" onerror="this.remove()">
-        </figure>
-        <div class="case__text" data-reveal="up">
-          <p class="case__meta"><span>01</span>美容室グループ ／ 広島・東京</p>
-          <h3 class="case__title">お店の裏方の仕事を、<br>まとめてAIに。</h3>
-          <p>領収書の整理、月末の稼働報告、口コミへの返信、シフトの予約システムへの入力。どれも接客の合間に、店長やスタッフが手で続けてきた作業です。</p>
-          <p>領収書の写真を読み取って報告メールの下書きをつくる。過去の返信を手本に、担当スタイリストの口調で口コミの返信案を出す。スプレッドシートのシフトを、そのまま予約システムへ反映する。ばらばらだった裏方の仕事を、ひとつの流れにまとめました。送信や投稿の前には、必ず人が目を通します。</p>
-          <p class="case__tags">AI業務効率化 · 領収書 · 稼働報告 · 口コミ返信 · シフト反映</p>
-        </div>
-      </article>
-
-      <article class="case case--rev">
-        <figure class="case__photo ph clip" data-reveal data-float="0.1" data-label="case-02.jpg">
-          <img src="images/case-02.jpg" alt="" onerror="this.remove()">
-        </figure>
-        <div class="case__text" data-reveal="up">
-          <p class="case__meta"><span>02</span>サロン ／ ホームページ</p>
-          <h3 class="case__title">ヒアリングから公開、<br>ドメインの管理まで。</h3>
-          <p>お店の雰囲気と、来てほしいお客さまの話を聞くところから始めて、デザイン、修正、公開、ドメインの管理までをひとりで担当しました。公開したあとも、更新と改善を続けています。</p>
-          <p class="case__tags">HP制作 · 運用</p>
-        </div>
-      </article>
+      <div class="gallery">
+        <a class="site" href="https://example.com" target="_blank" rel="noopener" data-float="0.06">
+          <figure class="site__thumb ph clip" data-reveal data-label="works/site-01.jpg — サイトのスクリーンショット">
+            <img src="images/works/site-01.jpg" alt="サイト名 01 のトップページ" onerror="this.remove()">
+            <span class="site__visit" aria-hidden="true">Visit ↗</span>
+          </figure>
+          <p class="site__meta"><span>01</span>美容室 ／ HP制作・運用</p>
+          <h3 class="site__name">サイト名 01</h3>
+          <p class="site__url">example.com</p>
+        </a>
+        <a class="site" href="https://example.com" target="_blank" rel="noopener" data-float="-0.06">
+          <figure class="site__thumb ph clip" data-reveal data-label="works/site-02.jpg — サイトのスクリーンショット">
+            <img src="images/works/site-02.jpg" alt="サイト名 02 のトップページ" onerror="this.remove()">
+            <span class="site__visit" aria-hidden="true">Visit ↗</span>
+          </figure>
+          <p class="site__meta"><span>02</span>業種 ／ HP制作・LINE構築</p>
+          <h3 class="site__name">サイト名 02</h3>
+          <p class="site__url">example.com</p>
+        </a>
+        <a class="site" href="https://example.com" target="_blank" rel="noopener" data-float="0.06">
+          <figure class="site__thumb ph clip" data-reveal data-label="works/site-03.jpg — サイトのスクリーンショット">
+            <img src="images/works/site-03.jpg" alt="サイト名 03 のトップページ" onerror="this.remove()">
+            <span class="site__visit" aria-hidden="true">Visit ↗</span>
+          </figure>
+          <p class="site__meta"><span>03</span>業種 ／ HP制作</p>
+          <h3 class="site__name">サイト名 03</h3>
+          <p class="site__url">example.com</p>
+        </a>
+        <a class="site" href="https://example.com" target="_blank" rel="noopener" data-float="-0.06">
+          <figure class="site__thumb ph clip" data-reveal data-label="works/site-04.jpg — サイトのスクリーンショット">
+            <img src="images/works/site-04.jpg" alt="サイト名 04 のトップページ" onerror="this.remove()">
+            <span class="site__visit" aria-hidden="true">Visit ↗</span>
+          </figure>
+          <p class="site__meta"><span>04</span>業種 ／ HP制作</p>
+          <h3 class="site__name">サイト名 04</h3>
+          <p class="site__url">example.com</p>
+        </a>
+      </div>
     </section>
 
     <!-- 仕事 -->
@@ -188,24 +237,6 @@
       <div class="preview" aria-hidden="true"><div class="preview__inner"></div></div>
     </section>
 
-    <!-- 経歴への入口 -->
-    <section class="teaser">
-      <a class="teaser__link" href="career.html">
-        <figure class="teaser__photo ph clip" data-reveal data-label="career.jpg — 経歴ページの入口">
-          <img src="images/career.jpg" alt="" onerror="this.remove()" data-speed="0.12">
-        </figure>
-        <div class="teaser__body">
-          <p class="label" data-reveal><span>Career</span></p>
-          <h2 class="teaser__heading" data-reveal>
-            <span class="mask"><span>消防士から、</span></span>
-            <span class="mask"><span>AIの仕事まで。</span></span>
-          </h2>
-          <p class="teaser__text" data-reveal="up">自衛隊、消防、訪問販売、Webマーケティング、コーチング。いまの仕事にたどり着くまでの話を、別のページにまとめました。</p>
-          <p class="teaser__more" data-reveal="up"><span>経歴を読む</span><i aria-hidden="true">→</i></p>
-        </div>
-      </a>
-    </section>
-
     <div class="marquee" aria-hidden="true">
       <div class="marquee__track">
         <span>AI導入支援</span><i></i><span>AI業務効率化</span><i></i><span>HP制作</span><i></i><span>LINE構築</span><i></i><span>運用</span><i></i>
@@ -235,6 +266,7 @@
     <p class="footer__big" aria-hidden="true">Meguru Yanagisawa</p>
     <div class="footer__row">
       <p>柳沢恵瑠</p>
+      <a href="history.html">History</a>
       <a href="#">Back to top ↑</a>
       <p><small>&copy; <span class="year">2026</span> Meguru Yanagisawa</small></p>
     </div>

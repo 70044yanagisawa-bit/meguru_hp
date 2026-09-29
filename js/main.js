@@ -1,7 +1,7 @@
 /* ==========================================================
    Meguru Yanagisawa — motion
    外部ライブラリなし。スクロール連動はすべて1本の rAF ループで回す。
-   トップ（index.html）と経歴（career.html）の両方で読み込む。
+   トップ（index.html）と経歴（history.html）の両方で読み込む。
    ========================================================== */
 (() => {
   const body = document.body;
@@ -11,6 +11,7 @@
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+  const easeInOut = p => (p < .5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2);
 
   let vw = innerWidth;
   let vh = innerHeight;
@@ -19,7 +20,7 @@
   $$('[data-reveal], [data-intro], .loader__name, .loader__inner, .menu nav').forEach(box => {
     $$(':scope .mask', box).forEach((m, i) => m.style.setProperty('--i', i));
   });
-  $$('.about__text, .contact__body, .teaser__body').forEach(box => {
+  $$('.about__text, .contact__body, .bo__body').forEach(box => {
     $$(':scope > [data-reveal="up"]', box).forEach((el, i) => el.style.setProperty('--i', i));
   });
 
@@ -90,7 +91,11 @@
   const parallax = $$('[data-speed]').map(el => ({ el, box: el.parentElement, speed: parseFloat(el.dataset.speed) }));
   const floats = $$('[data-float]').map(el => ({ el, speed: parseFloat(el.dataset.float) }));
 
-  /* ---------- Story：縦スクロールを横移動に変換（経歴ページ） ---------- */
+  /* ---------- Back Office：スクロール量を 0〜1 にして CSS に渡す ---------- */
+  const bo = $('.bo');
+  const boPin = $('.bo__pin');
+
+  /* ---------- Story：縦スクロールを横移動に変換（History ページ） ---------- */
   const story = $('.story');
   const track = $('.story__track');
   const storyBar = $('.story__progress span');
@@ -254,6 +259,7 @@
         el.style.transform = `translate3d(0,${off}px,0)`;
       });
       floats.forEach(({ el, speed }) => {
+        if (!wide.matches) { el.style.transform = ''; return; }   // スマホでは重なりを避ける
         // 自分の transform を除いた位置で計算する
         const r = el.parentElement.getBoundingClientRect();
         if (r.bottom < -200 || r.top > vh + 200) return;
@@ -279,6 +285,14 @@
         chars.forEach((c, i) => c.classList.toggle('on', i < n));
         lit = n;
       }
+    }
+
+    // Back Office：前後に少し「間」を残して、真ん中で入れ替わる
+    if (bo) {
+      const r = boPin.getBoundingClientRect();
+      const raw = clamp(-r.top / (r.height - vh));
+      const p = reduce ? 1 : easeInOut(clamp((raw - .12) / .6));
+      bo.style.setProperty('--p', p.toFixed(4));
     }
 
     // Story の横移動
