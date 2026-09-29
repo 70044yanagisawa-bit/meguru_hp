@@ -79,21 +79,22 @@
   /* ---------- About：文字がスクロールに合わせて濃くなる ---------- */
   const fill = $('[data-fill]');
   const chars = [];
+  const fillLines = [];
   if (fill) {
-    // 1文字ずつ span に分ける（<br> の改行はそのまま残す）
-    fill.setAttribute('aria-label', fill.textContent.trim());
-    const nodes = [...fill.childNodes];
-    fill.textContent = '';
-    nodes.forEach(node => {
-      if (node.nodeName === 'BR') { fill.appendChild(document.createElement('br')); return; }
-      for (const c of node.textContent.trim()) {
+    // 行ごとに、1文字ずつ span に分ける
+    fill.setAttribute('aria-label', fill.textContent.replace(/\s+/g, ''));
+    $$('.fill-line', fill).forEach(line => {
+      const text = line.textContent.trim();
+      line.textContent = '';
+      line.setAttribute('aria-hidden', 'true');
+      for (const c of text) {
         const s = document.createElement('span');
         s.className = 'ch';
-        s.setAttribute('aria-hidden', 'true');
         s.textContent = c;
-        fill.appendChild(s);
+        line.appendChild(s);
         chars.push(s);
       }
+      fillLines.push({ line, end: chars.length });   // この行の最後の文字まで点いたら下線を引く
     });
   }
   let lit = -1;
@@ -296,6 +297,7 @@
       const n = reduce ? chars.length : Math.round(p * chars.length);
       if (n !== lit) {
         chars.forEach((c, i) => c.classList.toggle('on', i < n));
+        fillLines.forEach(({ line, end }) => line.classList.toggle('is-done', n >= end));
         lit = n;
       }
     }
