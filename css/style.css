@@ -539,6 +539,7 @@ main, .footer { position: relative; z-index: 1; }
   line-height: 1.6;
 }
 .case__text > p:not([class]) { font-size: 15px; color: var(--text-sub); }
+.case__text > p:not([class]) + p:not([class]) { margin-top: 1em; }
 .case__tags {
   margin-top: 24px;
   padding-top: 16px;
