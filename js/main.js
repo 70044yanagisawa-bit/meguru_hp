@@ -80,17 +80,21 @@
   const fill = $('[data-fill]');
   const chars = [];
   if (fill) {
-    const text = fill.textContent.trim();
+    // 1文字ずつ span に分ける（<br> の改行はそのまま残す）
+    fill.setAttribute('aria-label', fill.textContent.trim());
+    const nodes = [...fill.childNodes];
     fill.textContent = '';
-    fill.setAttribute('aria-label', text);
-    for (const c of text) {
-      const s = document.createElement('span');
-      s.className = 'ch';
-      s.setAttribute('aria-hidden', 'true');
-      s.textContent = c;
-      fill.appendChild(s);
-      chars.push(s);
-    }
+    nodes.forEach(node => {
+      if (node.nodeName === 'BR') { fill.appendChild(document.createElement('br')); return; }
+      for (const c of node.textContent.trim()) {
+        const s = document.createElement('span');
+        s.className = 'ch';
+        s.setAttribute('aria-hidden', 'true');
+        s.textContent = c;
+        fill.appendChild(s);
+        chars.push(s);
+      }
+    });
   }
   let lit = -1;
 
