@@ -39,7 +39,16 @@
     requestAnimationFrame(() => requestAnimationFrame(finishLoading));
   } else {
     requestAnimationFrame(() => loader.classList.add('is-in'));
-    const count = $('.loader__count span');
+    const digits = $$('.loader__digit');
+    const reels = digits.map(d => $('.loader__reel', d));
+    const setCount = n => {
+      const str = String(n).padStart(3, '0');
+      [...str].forEach((c, i) => {
+        reels[i].style.transform = `translateY(${-Number(c)}em)`;
+        digits[i].classList.toggle('is-on', i >= 3 - String(n).length);
+      });
+    };
+    setCount(0);
     const bar = $('.loader__bar span');
     const duration = 1900;
     const ease = p => (p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
@@ -48,7 +57,7 @@
       start ??= now;
       const p = clamp((now - start) / duration);
       const e = ease(p);
-      count.textContent = Math.round(e * 100);
+      setCount(Math.round(e * 100));
       bar.style.transform = `scaleX(${e})`;
       if (p < 1) requestAnimationFrame(tick);
       else setTimeout(finishLoading, 350);
