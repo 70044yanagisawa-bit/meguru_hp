@@ -148,6 +148,38 @@
   menuBtn.addEventListener('click', () => setMenu(!menu.classList.contains('is-open')));
   $$('a', menu).forEach(a => a.addEventListener('click', () => setMenu(false)));
 
+  /* ---------- 全画面パネル（「なぜ安くできるのか」） ---------- */
+  const countUp = el => {
+    const target = Number(el.dataset.count);
+    if (reduce) { el.textContent = target.toLocaleString('ja-JP'); return; }
+    const start = performance.now();
+    const step = now => {
+      const p = clamp((now - start) / 1600);
+      const e = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * e).toLocaleString('ja-JP');
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  $$('[data-open]').forEach(btn => {
+    const dlg = document.getElementById(btn.dataset.open);
+    if (!dlg?.showModal) return;
+    const close = () => {
+      dlg.classList.remove('is-open');
+      body.style.overflow = '';
+      setTimeout(() => dlg.close(), reduce ? 0 : 900);
+    };
+    btn.addEventListener('click', () => {
+      dlg.showModal();
+      body.style.overflow = 'hidden';
+      $('.why__scroll', dlg)?.scrollTo(0, 0);
+      requestAnimationFrame(() => dlg.classList.add('is-open'));
+      setTimeout(() => $$('[data-count]', dlg).forEach(countUp), 700);
+    });
+    $$('[data-close]', dlg).forEach(b => b.addEventListener('click', close));
+    dlg.addEventListener('cancel', e => { e.preventDefault(); close(); });   // Esc キー
+  });
+
   /* ---------- Marquee ---------- */
   const marquee = $('.marquee__track');
   let mx = 0;

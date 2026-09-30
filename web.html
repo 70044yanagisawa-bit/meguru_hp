@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=20260929f">
+  <link rel="stylesheet" href="css/style.css?v=20261001a">
   <script>document.documentElement.classList.add("js")</script>
 </head>
 <body>
@@ -62,7 +62,7 @@
           <span class="mask"><span>HP制作・</span></span>
           <span class="mask"><span>LINE構築</span></span>
         </h1>
-        <p class="page-hero__lead"><span class="mask"><span>見てもらうところから、</span></span><span class="mask"><span>つながり続けるところまで。</span></span></p>
+        <p class="page-hero__lead"><span class="mask"><span>最短1週間で、見てもらうところから</span></span><span class="mask"><span>つながり続けるところまで。</span></span></p>
       </div>
       <figure class="page-hero__photo ph intro-clip" data-label="web-hero.jpg — HP・LINEのサービスの大きな写真">
         <img src="images/web-hero.jpg" alt="" onerror="this.remove()" data-speed="-0.1">
@@ -79,10 +79,105 @@
       </div>
     </section>
 
+    <!-- 強み -->
+    <section class="strengths">
+      <p class="label" data-reveal><span>Strength</span></p>
+
+      <article class="strength">
+        <div class="strength__head">
+          <p class="strength__no">01</p>
+          <h2 class="strength__title" data-reveal>
+            <span class="mask"><span>最短1週間で、</span></span>
+            <span class="mask"><span>納品。</span></span>
+          </h2>
+        </div>
+        <div class="strength__body">
+          <ol class="days" data-reveal aria-label="ヒアリングから公開まで最短7日"><li><span>Day 1</span></li><li><span>Day 2</span></li><li><span>Day 3</span></li><li><span>Day 4</span></li><li><span>Day 5</span></li><li><span>Day 6</span></li><li class="is-last"><span>公開</span></li></ol>
+          <p data-reveal="up">ヒアリングから公開まで、最短1週間。「来月の開店に間に合わせたい」「すぐに集客を始めたい」、そんなときこそ頼ってください。制作の流れにAIを組み込んでいるので、速さと丁寧さを両立できます。</p>
+        </div>
+      </article>
+
+      <article class="strength">
+        <div class="strength__head">
+          <p class="strength__no">02</p>
+          <h2 class="strength__title" data-reveal>
+            <span class="mask"><span>話を聞く時間は、</span></span>
+            <span class="mask"><span>削らない。</span></span>
+          </h2>
+        </div>
+        <div class="strength__body">
+          <p data-reveal="up">速いからといって、ヒアリングを短くすることはありません。どんなお客さまに来てほしいか、これまで何を大事にしてきたか。納得いくまで話を聞いてから、形にします。</p>
+        </div>
+      </article>
+
+      <article class="strength">
+        <div class="strength__head">
+          <p class="strength__no">03</p>
+          <h2 class="strength__title" data-reveal>
+            <span class="mask"><span>LINEの仕組みを、</span></span>
+            <span class="mask"><span>AIで安く。</span></span>
+          </h2>
+        </div>
+        <div class="strength__body">
+          <p data-reveal="up">LINEの自動配信や予約の仕組みは、ふつうは有料ツールの月額がかかり続けます。私はAIとオープンソースのツールを組み合わせて、その費用をできるだけ削ります。</p>
+          <button class="why-open" type="button" data-open="why" data-reveal="up">
+            <span>なぜ安くできるのか</span><i aria-hidden="true">＋</i>
+          </button>
+        </div>
+      </article>
+    </section>
+
+    <!-- 「なぜ安くできるのか」：ボタンで開く -->
+    <dialog class="why" id="why" aria-labelledby="why-title">
+      <div class="why__scroll">
+        <button class="why__close" type="button" data-close>Close <i aria-hidden="true">×</i></button>
+
+        <p class="label"><span>Why</span></p>
+        <h2 class="why__title" id="why-title">なぜ、安くできるのか。</h2>
+
+        <div class="compare">
+          <div class="compare__col">
+            <p class="compare__head">よくある形</p>
+            <ul class="compare__stack">
+              <li>LINE公式アカウント</li>
+              <li class="compare__plus">＋</li>
+              <li>Lステップなどの有料ツール<small>月額 5,000〜32,780円</small></li>
+              <li class="compare__plus">＋</li>
+              <li>やりたいことごとの構築費</li>
+            </ul>
+            <p class="compare__text">多くの場合、LINE公式アカウントにLステップのような有料ツールを組み合わせて、「これをやりたいなら、この金額」という形で費用が積み上がっていきます。</p>
+          </div>
+          <div class="compare__col compare__col--mine">
+            <p class="compare__head">私のやり方</p>
+            <ul class="compare__stack">
+              <li>LINE公式アカウント</li>
+              <li class="compare__plus">＋</li>
+              <li>LINE Harness<small>オープンソース・ツール代 0円〜</small></li>
+              <li class="compare__plus">＋</li>
+              <li>AIと一緒に構築</li>
+            </ul>
+            <p class="compare__text">私はAIの導入を仕事にしていて、LステップではなくLINE Harnessというオープンソースのツールを使います。友だち管理、シナリオ配信、タグ付け、リッチメニューの切り替えなど、必要な機能はそろっていて、ツールそのものに月額はかかりません。構築もAIと一緒に進めるので、手間と費用をおさえられます。</p>
+          </div>
+        </div>
+
+        <div class="saving">
+          <p class="saving__row"><span class="saving__label">ツール代</span><span class="saving__num">月 <b data-count="21780">0</b> 円</span><span class="saving__arrow">→</span><span class="saving__num saving__num--zero">0 円</span></p>
+          <p class="saving__row saving__row--year"><span class="saving__label">1年で</span><span class="saving__num saving__num--big"><b data-count="261360">0</b> 円</span><span class="saving__tail">おさえられる</span></p>
+          <p class="saving__note">※ Lステップのスタンダードプラン（月額21,780円・税込）をLINE Harnessに置き換えた場合の、ツール代だけの試算です。LINE公式アカウントの月額はどちらの場合も別にかかります。友だちの数や使い方によって変わります。</p>
+        </div>
+
+        <div class="why__end">
+          <h3 class="why__end-title">浮いたお金と時間を、<br>本当にやりたいことへ。</h3>
+          <p>おさえた費用は、あなたが本当に力を入れたい商品やサービス、お客さまのために使えます。そして、AIを入れているからこそ、日々の作業の時間も減らせる。</p>
+          <p>お金と時間の両方を、本業に戻す。それが、私がいちばん貢献できることだと思っています。</p>
+        </div>
+      </div>
+    </dialog>
+
     <section class="flow">
       <p class="label" data-reveal><span>Flow</span></p>
       <h2 class="flow__heading" data-reveal>
-        <span class="mask"><span>最初から最後まで、</span></span>
+        <span class="mask"><span>最短1週間。最初から最後まで、</span></span>
         <span class="mask"><span>私が担当します。</span></span>
       </h2>
       <ol class="flow__list" data-reveal>
@@ -156,6 +251,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js?v=20260929f"></script>
+  <script src="js/main.js?v=20261001a"></script>
 </body>
 </html>

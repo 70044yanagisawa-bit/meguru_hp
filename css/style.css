@@ -865,6 +865,196 @@ main, .footer { position: relative; z-index: 1; }
 .service--detail { padding-top: clamp(64px, 12vh, 140px); }
 .service--detail .service__list { margin-top: clamp(32px, 6vh, 64px); }
 
+/* ---------- 強み（HP・LINEページ） ---------- */
+.strengths { padding: clamp(96px, 16vh, 180px) var(--gutter) 0; }
+.strength {
+  display: grid;
+  grid-template-columns: 6fr 5fr;
+  gap: 5vw;
+  align-items: start;
+  margin-top: clamp(48px, 8vh, 96px);
+  padding-top: clamp(40px, 6vh, 64px);
+  border-top: 1px solid var(--line-l);
+}
+.strength__no {
+  font: 500 14px/1 var(--en);
+  letter-spacing: .1em;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  width: max-content;
+}
+.strength__title {
+  margin-top: 20px;
+  font-size: clamp(34px, 4.6vw, 80px);
+  font-weight: 700;
+  line-height: 1.25;
+}
+.strength__body { padding-top: 36px; }
+.strength__body > p { color: var(--text-sub); }
+
+/* 7日のマスが1日ずつ埋まっていく */
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin: 0 0 32px;
+  padding: 0;
+  list-style: none;
+}
+.days li {
+  position: relative;
+  height: 64px;
+  border: 1px solid var(--line-l);
+  background: transparent;
+  transition: background .5s, border-color .5s, color .5s;
+}
+.days li span {
+  position: absolute;
+  left: 8px;
+  bottom: 6px;
+  font: 500 10px/1 var(--en);
+  letter-spacing: .06em;
+  color: var(--gray);
+  transition: color .5s;
+}
+.days.is-in li { background: var(--ink); border-color: var(--ink); }
+.days.is-in li span { color: var(--paper); }
+.days.is-in li.is-last { background: var(--grad); border-color: transparent; }
+.days.is-in li.is-last span { color: #fff; font: 700 12px/1 var(--ja); }
+.days li:nth-child(2) { transition-delay: .15s; }
+.days li:nth-child(3) { transition-delay: .3s; }
+.days li:nth-child(4) { transition-delay: .45s; }
+.days li:nth-child(5) { transition-delay: .6s; }
+.days li:nth-child(6) { transition-delay: .75s; }
+.days li:nth-child(7) { transition-delay: .95s; }
+.days li:nth-child(n) span { transition-delay: inherit; }
+
+.why-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 36px;
+  padding: 18px 22px 18px 28px;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  transition: background .5s, color .5s;
+}
+.why-open i { font-style: normal; font-size: 18px; transition: transform .6s var(--ease-out); }
+.why-open:hover { background: var(--ink); color: var(--paper); }
+.why-open:hover i { transform: rotate(90deg); }
+
+/* ---------- 「なぜ安くできるのか」の全画面パネル ---------- */
+.why {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--ink);
+  color: var(--paper);
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1s var(--ease);
+}
+.why.is-open { clip-path: inset(0 0 0 0); }
+.why::backdrop { background: transparent; }
+.why__scroll {
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: clamp(72px, 12vh, 140px) var(--gutter) clamp(72px, 12vh, 140px);
+}
+.why__close {
+  position: fixed;
+  top: 24px;
+  right: var(--gutter);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font: 500 13px/1 var(--en);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.why__close i { font-style: normal; font-size: 22px; }
+.why__title {
+  margin-top: 32px;
+  font-size: clamp(36px, 5vw, 88px);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5vw;
+  margin-top: clamp(48px, 9vh, 100px);
+}
+.compare__head {
+  font-size: 13px;
+  letter-spacing: .12em;
+  color: var(--gray);
+}
+.compare__col--mine .compare__head { color: var(--paper); }
+.compare__stack { margin: 20px 0 0; padding: 0; list-style: none; }
+.compare__stack li:not(.compare__plus) {
+  padding: 18px 22px;
+  border: 1px solid var(--line-d);
+  font-size: clamp(15px, 1.3vw, 18px);
+  font-weight: 700;
+}
+.compare__stack small { display: block; margin-top: 4px; font-size: 12px; font-weight: 400; color: var(--gray); }
+.compare__plus { padding: 6px 0; text-align: center; color: var(--gray); }
+.compare__col:not(.compare__col--mine) .compare__stack li:not(.compare__plus) { color: #9c9a94; }
+.compare__col--mine .compare__stack li:not(.compare__plus) {
+  border: 0;
+  background:
+    linear-gradient(var(--ink), var(--ink)) padding-box,
+    var(--grad) border-box;
+  border: 1px solid transparent;
+}
+.compare__text { margin-top: 28px; font-size: 15px; color: #bdbbb5; }
+
+.saving {
+  margin-top: clamp(64px, 12vh, 140px);
+  padding: clamp(40px, 7vh, 72px) 0;
+  border-top: 1px solid var(--line-d);
+  border-bottom: 1px solid var(--line-d);
+}
+.saving__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 24px;
+}
+.saving__row + .saving__row { margin-top: 28px; }
+.saving__label { width: 5em; font-size: 14px; color: var(--gray); }
+.saving__num { font: 400 clamp(28px, 3.4vw, 56px)/1.1 var(--en); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.saving__num b { font-weight: 500; }
+.saving__arrow { font-size: clamp(20px, 2vw, 32px); color: var(--gray); }
+.saving__num--zero,
+.saving__num--big {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.saving__num--big { font-size: clamp(48px, 7.4vw, 128px); }
+.saving__tail { font-size: clamp(16px, 1.6vw, 22px); font-weight: 700; }
+.saving__note { max-width: 46em; margin-top: 32px; font-size: 12px; line-height: 1.9; color: var(--gray); }
+
+.why__end { max-width: 36em; margin-top: clamp(64px, 12vh, 140px); }
+.why__end-title { font-size: clamp(28px, 3.4vw, 56px); font-weight: 700; line-height: 1.4; }
+.why__end p { margin-top: 1.4em; color: #d6d4ce; }
+.why__end-title + p { margin-top: 32px; }
+
 .flow { padding: clamp(96px, 16vh, 180px) var(--gutter) 0; }
 .flow__heading {
   margin-top: clamp(32px, 6vh, 64px);
@@ -1255,6 +1445,14 @@ main, .footer { position: relative; z-index: 1; }
   .flow__list.is-in::before { transform: scaleY(1); }
   .flow__list li::before { top: 4px; left: -32px; }
   .to-works { padding-left: 16px; padding-right: 16px; }
+  .strengths { padding-left: 16px; padding-right: 16px; }
+  .strength { grid-template-columns: 1fr; gap: 0; }
+  .strength__body { padding-top: 24px; }
+  .days li { height: 48px; }
+  .days li span { left: 4px; font-size: 9px; }
+  .why__scroll { padding: 88px 16px 96px; }
+  .why__close { right: 16px; top: 20px; }
+  .compare { grid-template-columns: 1fr; gap: 56px; }
 
   .contact { grid-template-columns: 1fr; gap: 56px; padding: 112px 16px 120px; }
   .contact__photo, .contact__body { grid-column: 1; }
