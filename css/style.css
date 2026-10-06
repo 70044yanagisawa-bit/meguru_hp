@@ -717,6 +717,32 @@ main, .footer { position: relative; z-index: 1; }
   transition: transform .6s var(--ease-out);
 }
 .site:hover .site__visit, .site:focus-visible .site__visit { transform: scale(1); }
+/* サイトの1枚目に見出しがないとき、そのサイトのキャッチコピーを重ねる */
+.site__overlay {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: clamp(20px, 3vw, 44px);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 35%, rgba(0, 0, 0, .6) 100%);
+  color: #fff;
+}
+.site__catch {
+  font-size: clamp(22px, 2.6vw, 44px);
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: .06em;
+}
+.site__brand {
+  font: 500 clamp(11px, .9vw, 14px)/1 var(--en);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  opacity: .85;
+}
+.site__thumb .site__visit { z-index: 3; }
 .site:hover .site__thumb img { scale: 1.05; }
 .site__meta {
   display: flex;
