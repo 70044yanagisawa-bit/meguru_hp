@@ -17,7 +17,7 @@ JPG・横幅 2000px 前後・1枚 500KB 以下が目安。
 | hero.jpg | ファーストビュー（黒いパネルの左に重なる） | 横長 3:2 |
 | about.jpg | About | 縦長 4:5 |
 | wide.jpg | 「道具より先に、人の話を聞く。」の背景 | 横長 16:9 |
-| works/site-01.jpg 〜 site-04.jpg | 制作したサイトのサムネイル（トップ画面のスクリーンショット） | 横長 16:10 |
+| works/site-01.jpg 〜 | 制作したサイトのサムネイル（トップ画面のスクリーンショット） | 横長 16:10 |
 | service-ai.jpg / service-web.jpg | トップの Service（2つのサービスの入口） | 横長 16:10 |
 | ai-hero.jpg / web-hero.jpg | 各サービスページの最初の大きな写真 | 横長 |
 | history-hero.jpg | 経歴ページの最初の大きな写真 | 横長 |
@@ -27,7 +27,7 @@ JPG・横幅 2000px 前後・1枚 500KB 以下が目安。
 
 ## 公開前に差し替えるもの
 
-- Works の各サイト：`href`・サイト名・業種・URL表記・サムネイルを実物に
+- Works：制作物が増えたら index.html の `<a class="site">` を複製して追加（サムネイルは images/works/）
 
 - `index.html` の `hello@example.com`（2か所）を実際のメールアドレスに
 - 独自ドメインが決まったら `og:image` を絶対URLに

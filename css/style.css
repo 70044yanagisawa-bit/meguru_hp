@@ -694,6 +694,7 @@ main, .footer { position: relative; z-index: 1; }
   margin-top: clamp(64px, 12vh, 140px);
 }
 .site:nth-child(even) { margin-top: 18vh; }
+.site:only-child { grid-column: 1 / -1; }      /* 1件だけのときは横幅いっぱいに */
 .site { display: block; }
 .site__thumb { aspect-ratio: 16 / 10; }
 .site__thumb img { transition: scale 1.2s var(--ease-out); top: 0; height: 100%; object-position: top; }
