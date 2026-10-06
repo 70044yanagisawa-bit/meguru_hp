@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@200;400;500;600&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=20261006b">
+  <link rel="stylesheet" href="css/style.css?v=20261006c">
   <script>document.documentElement.classList.add("js")</script>
 </head>
 <body>
@@ -187,7 +187,7 @@
     </section>
 
     <!-- 制作実績：サムネイルをクリックでサイトへ -->
-    <!-- 増やすときは <a class="site"> を1件ずつ複製する（2件以上で左右交互の並びになる） -->
+    <!-- 増やすときは <a class="site"> を1件ずつ複製する（横にスライドして見る形） -->
     <section class="works" id="works">
       <p class="label" data-reveal><span>Works</span></p>
       <h2 class="works__heading" data-reveal>
@@ -195,8 +195,8 @@
       </h2>
       <p class="works__lead" data-reveal="up">これまでに関わった仕事の一部です。画像を押すと、実際のサイトが開きます。</p>
 
-      <div class="gallery">
-        <a class="site" href="https://haltakagi.com/" target="_blank" rel="noopener" data-float="0.06">
+      <div class="gallery" data-gallery>
+        <a class="site" href="https://haltakagi.com/" target="_blank" rel="noopener">
           <figure class="site__thumb ph clip" data-reveal data-label="works/site-01.jpg">
             <img src="images/works/site-01.jpg" alt="GOAL ACHIEVEMENT PROGRAM のトップページ" onerror="this.remove()">
             <span class="site__visit" aria-hidden="true">Visit ↗</span>
@@ -205,7 +205,7 @@
           <h3 class="site__name">GOAL ACHIEVEMENT PROGRAM</h3>
           <p class="site__url">haltakagi.com</p>
         </a>
-        <a class="site" href="https://harbor-shisha.com/" target="_blank" rel="noopener" data-float="-0.06">
+        <a class="site" href="https://harbor-shisha.com/" target="_blank" rel="noopener">
           <figure class="site__thumb ph clip" data-reveal data-label="works/site-02.jpg">
             <img src="images/works/site-02.jpg" alt="HARBOR cafe &amp; shisha bar のトップページ" onerror="this.remove()">
             <figcaption class="site__overlay" aria-hidden="true">
@@ -218,6 +218,12 @@
           <h3 class="site__name">HARBOR cafe &amp; shisha bar</h3>
           <p class="site__url">harbor-shisha.com</p>
         </a>
+      </div>
+      <div class="gallery__ui">
+        <button class="gallery__btn" type="button" data-dir="-1" aria-label="前へ">←</button>
+        <p class="gallery__count"><span class="gallery__now">01</span> / <span class="gallery__all">02</span></p>
+        <button class="gallery__btn" type="button" data-dir="1" aria-label="次へ">→</button>
+        <div class="gallery__bar" aria-hidden="true"><span></span></div>
       </div>
     </section>
 
@@ -256,6 +262,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js?v=20261006b"></script>
+  <script src="js/main.js?v=20261006c"></script>
 </body>
 </html>

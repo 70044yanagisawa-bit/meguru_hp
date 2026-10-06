@@ -180,6 +180,57 @@
     dlg.addEventListener('cancel', e => { e.preventDefault(); close(); });   // Esc キー
   });
 
+  /* ---------- Works：横スライド（ボタン・ドラッグ・件数表示） ---------- */
+  $$('[data-gallery]').forEach(g => {
+    const ui = g.nextElementSibling;
+    const items = $$('.site', g);
+    const now = $('.gallery__now', ui);
+    const bar = $('.gallery__bar span', ui);
+    const [prev, next] = $$('.gallery__btn', ui);
+    const pad = n => String(n).padStart(2, '0');
+    $('.gallery__all', ui).textContent = pad(items.length);
+    const step = () => items[1] ? items[1].offsetLeft - items[0].offsetLeft : g.clientWidth;
+    const update = () => {
+      const max = g.scrollWidth - g.clientWidth;
+      const i = Math.min(items.length - 1, Math.round(g.scrollLeft / step()));
+      now.textContent = pad(i + 1);
+      bar.style.transform = `scaleX(${max > 0 ? (g.scrollLeft / max) * (1 - 1 / items.length) + 1 / items.length : 1})`;
+      prev.disabled = g.scrollLeft <= 2;
+      next.disabled = g.scrollLeft >= max - 2;
+    };
+    $$('.gallery__btn', ui).forEach(b => b.addEventListener('click', () => {
+      g.scrollBy({ left: step() * Number(b.dataset.dir), behavior: 'smooth' });
+    }));
+    g.addEventListener('scroll', update, { passive: true });
+    addEventListener('resize', update);
+    update();
+
+    // マウスでつかんで横に動かせる（指で触る端末はそのままスワイプ）
+    let down = null;
+    let moved = false;
+    g.addEventListener('pointerdown', e => {
+      if (e.pointerType !== 'mouse') return;
+      down = { x: e.clientX, left: g.scrollLeft };
+      moved = false;
+    });
+    addEventListener('pointermove', e => {
+      if (!down) return;
+      const dx = e.clientX - down.x;
+      if (!moved && Math.abs(dx) > 5) { moved = true; g.classList.add('is-dragging'); }
+      if (moved) g.scrollLeft = down.left - dx;
+    });
+    addEventListener('pointerup', () => {
+      if (!down) return;
+      down = null;
+      if (moved) {
+        g.classList.remove('is-dragging');
+        const i = Math.round(g.scrollLeft / step());
+        g.scrollTo({ left: i * step(), behavior: 'smooth' });
+      }
+    });
+    g.addEventListener('click', e => { if (moved) e.preventDefault(); }, true);
+  });
+
   /* ---------- Marquee ---------- */
   const marquee = $('.marquee__track');
   let mx = 0;
