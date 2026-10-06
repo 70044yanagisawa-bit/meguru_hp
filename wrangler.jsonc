@@ -1,0 +1,10 @@
+{
+  // Cloudflare Workers（静的アセットのみ）の設定。
+  // このフォルダのHTML/CSS/JS/画像をそのまま配信するだけで、サーバー側のコードは動かしていない。
+  // 配信しないファイルは .assetsignore に書く。
+  "name": "meguru-hp",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "."
+  }
+}

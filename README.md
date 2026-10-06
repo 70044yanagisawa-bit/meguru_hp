@@ -32,8 +32,14 @@ JPG・横幅 2000px 前後・1枚 500KB 以下が目安。
 - `index.html` の `hello@example.com`（2か所）を実際のメールアドレスに
 - 独自ドメインが決まったら `og:image` を絶対URLに
 
-## Cloudflare Pages
+## 公開（Cloudflare Workers）
 
-- Framework preset: None
-- Build command: （空欄）
-- Build output directory: `/`
+公開URL：https://meguru-hp.mgr-lab.workers.dev
+
+`wrangler.jsonc` の設定で、このフォルダの静的ファイルをそのまま配信しています（`.assetsignore` に書いたファイルは配信されません）。更新するときは：
+
+```bash
+CLOUDFLARE_ACCOUNT_ID=65716fe5d4ca4cda2e57c9b00f352744 npx wrangler deploy
+```
+
+GitHub に push するたびに自動で反映したい場合は、Cloudflare ダッシュボード → Workers & Pages → meguru-hp → Settings → Builds で、このリポジトリを接続する。
