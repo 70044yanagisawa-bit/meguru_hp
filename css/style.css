@@ -1316,31 +1316,66 @@ main, .footer { position: relative; z-index: 1; }
 }
 
 .record { padding: clamp(96px, 18vh, 200px) var(--gutter) clamp(48px, 8vh, 96px); }
-.record__list { margin-top: clamp(48px, 8vh, 96px); }
+/* 古い順に下から積み上げ、右上へのぼっていく階段 */
+.record__list {
+  display: flex;
+  flex-direction: column-reverse;
+  margin-top: clamp(48px, 8vh, 96px);
+}
 .record__row {
   position: relative;
-  display: grid;
-  grid-template-columns: 4fr 8fr;
-  gap: 4vw;
-  padding: 28px 0;
+  margin-left: calc(var(--s) * 10%);
+  padding: 22px 0 22px 28px;
+  border-left: 1px solid rgba(13, 13, 12, .35);
+  border-top: 1px solid rgba(13, 13, 12, .35);
 }
-.record__row::before {
+.record__row::before {               /* 段の角の点 */
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
+  top: -5px;
+  left: -5px;
+  width: 9px;
+  aspect-ratio: 1;
+  border-radius: 50%;
   background: var(--ink);
-  opacity: .2;
-  transform-origin: left;
-  transition: transform 1.4s var(--ease);
 }
-.js .record__row::before { transform: scaleX(0); }
-.js .record__row.is-in::before { transform: scaleX(1); }
-.record__row:last-child { border-bottom: 1px solid var(--line-l); }
-.record__row dt { font-weight: 700; }
-.record__row dd { color: var(--text-sub); }
+.js .record__row {
+  opacity: 0;
+  transform: translate(-24px, 40px);
+  transition: opacity .9s var(--ease-out), transform .9s var(--ease-out);
+  transition-delay: calc(var(--s) * 180ms);      /* 下の段から順に */
+}
+.js .record__list.is-in .record__row { opacity: 1; transform: none; }
+.record__row dt { font-size: clamp(16px, 1.4vw, 20px); font-weight: 700; }
+.record__row dt span {
+  display: block;
+  margin-bottom: 6px;
+  font: 500 11px/1 var(--en);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+.record__row dd { margin-top: 6px; font-size: 14px; color: var(--text-sub); }
+.record__row--now { border-color: transparent; }
+.record__row--now::after {           /* いまの段だけ虹色 */
+  content: "";
+  position: absolute;
+  inset: -1px auto auto -1px;
+  width: calc(100% + 1px);
+  height: 100%;
+  border-top: 2px solid;
+  border-left: 2px solid;
+  border-image: var(--grad) 1;
+  pointer-events: none;
+}
+.record__row--now::before { background: #ff2e63; }
+.record__row--now dt {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.record__row--now dt span { -webkit-text-fill-color: var(--gray); }
 
 .next { padding: clamp(64px, 12vh, 140px) var(--gutter) clamp(96px, 18vh, 200px); }
 .next__title {
@@ -1480,7 +1515,7 @@ main, .footer { position: relative; z-index: 1; }
   .chapter:nth-child(odd) .chapter__photo { margin-left: 14%; }
   .story__progress { display: none; }
 
-  .record__row { grid-template-columns: 1fr; gap: 4px; }
+  .record__row { margin-left: calc(var(--s) * 5%); padding-left: 18px; }
 
   .footer { padding-left: 16px; padding-right: 16px; }
   .footer__row { flex-wrap: wrap; }
