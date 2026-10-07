@@ -548,6 +548,7 @@ main, .footer { position: relative; z-index: 1; }
   margin-top: clamp(80px, 16vh, 180px);
 }
 .about__photo { grid-column: 1; aspect-ratio: 4 / 5; }
+.about__photo img { top: 0; height: 100%; object-position: center 12%; }   /* 本人の写真は頭が切れないよう枠に収める */
 .about__text { grid-column: 3; max-width: 32em; }
 .about__text p + p { margin-top: 1.6em; }
 .about__more a {
