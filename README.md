@@ -18,8 +18,7 @@ JPG・横幅 2000px 前後・1枚 500KB 以下が目安。
 | about.jpg | About | 縦長 4:5 |
 | wide.jpg | 「道具より先に、人の話を聞く。」の背景 | 横長 16:9 |
 | works/site-01.jpg 〜 | 制作したサイトのサムネイル（トップ画面のスクリーンショット） | 横長 16:10 |
-| service-ai.jpg / service-web.jpg | トップの Service（2つのサービスの入口） | 横長 16:10 |
-| ai-hero.jpg / web-hero.jpg | 各サービスページの最初の大きな写真 | 横長 |
+| service-ai.jpg / service-web.jpg | トップの Service と、各サービスページの最初の画像（図解イラスト。差し替え可） | 横長 16:10 |
 | history-hero.jpg | 経歴ページの最初の大きな写真 | 横長 |
 | story-01.jpg 〜 story-05.jpg | 経歴ページの各章（守る／売る／届ける／聴く／いま） | 縦長 |
 | contact.jpg | Contact | 縦長 4:5 |

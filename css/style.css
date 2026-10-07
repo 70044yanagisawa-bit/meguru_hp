@@ -880,6 +880,9 @@ main, .footer { position: relative; z-index: 1; }
 .product--rev { grid-template-columns: 5fr 7fr; }
 .product--rev .product__photo { order: 2; }
 .product__photo { aspect-ratio: 16 / 10; }
+.product__photo img { top: 0; height: 100%; }        /* 図解は端まで見せる */
+.illust img { top: 0; height: 100%; object-fit: contain; }
+.illust::after { display: none; }
 .product__photo img { transition: scale 1.2s var(--ease-out); }
 .product:hover .product__photo img { scale: 1.06; }
 .product__no {
