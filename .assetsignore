@@ -7,3 +7,4 @@ wrangler.jsonc
 .DS_Store
 .wrangler
 node_modules
+deploy.sh

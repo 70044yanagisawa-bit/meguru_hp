@@ -36,10 +36,12 @@ JPG・横幅 2000px 前後・1枚 500KB 以下が目安。
 
 公開URL：https://meguru-hp.mgr-lab.workers.dev
 
-`wrangler.jsonc` の設定で、このフォルダの静的ファイルをそのまま配信しています（`.assetsignore` に書いたファイルは配信されません）。更新するときは：
+`wrangler.jsonc` の設定で、このフォルダの静的ファイルをそのまま配信しています（`.assetsignore` に書いたファイルは配信されません）。
+
+更新するときは、このフォルダで次を実行（GitHub への保存と公開を一度に行う）：
 
 ```bash
-CLOUDFLARE_ACCOUNT_ID=65716fe5d4ca4cda2e57c9b00f352744 npx wrangler deploy
+./deploy.sh "変更内容のメモ"
 ```
 
 GitHub に push するたびに自動で反映したい場合は、Cloudflare ダッシュボード → Workers & Pages → meguru-hp → Settings → Builds で、このリポジトリを接続する。
