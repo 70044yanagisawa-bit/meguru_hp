@@ -405,7 +405,8 @@ main, .footer { position: relative; z-index: 1; }
   color: var(--gray);
 }
 .hero__title {
-  font-size: clamp(34px, 4.2vw, 76px);
+  font-size: clamp(30px, 3.7vw, 68px);
+  white-space: nowrap;
   font-weight: 500;
   line-height: 1.4;
   letter-spacing: .04em;
@@ -1139,7 +1140,7 @@ main, .footer { position: relative; z-index: 1; }
 .flow__list {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 2vw;
   margin: clamp(56px, 10vh, 110px) 0 0;
   padding: 36px 0 0;
@@ -1182,6 +1183,7 @@ main, .footer { position: relative; z-index: 1; }
 .flow__list li:nth-child(3) { transition-delay: .6s; }
 .flow__list li:nth-child(4) { transition-delay: .9s; }
 .flow__list li:nth-child(5) { transition-delay: 1.2s; }
+.flow__list li:nth-child(6) { transition-delay: 1.5s; }
 .flow__list li span {
   display: block;
   margin-bottom: 8px;
@@ -1238,18 +1240,14 @@ main, .footer { position: relative; z-index: 1; }
    Contact
    ========================================================== */
 .contact {
-  display: grid;
-  grid-template-columns: 5fr 1fr 6fr;
-  align-items: center;
-  padding: clamp(96px, 18vh, 200px) var(--gutter);
+  padding: clamp(120px, 22vh, 240px) var(--gutter);
   background: var(--ink);
   color: var(--paper);
 }
-.contact__photo { grid-column: 1; aspect-ratio: 4 / 5; }
-.contact__body { grid-column: 3; }
+.contact__body { max-width: 1100px; }
 .contact__heading {
   margin-top: 36px;
-  font-size: clamp(34px, 4.4vw, 76px);
+  font-size: clamp(36px, 5.6vw, 96px);
   font-weight: 700;
   line-height: 1.3;
 }
@@ -1563,9 +1561,7 @@ main, .footer { position: relative; z-index: 1; }
   .why__close { right: 16px; top: 20px; }
   .compare { grid-template-columns: 1fr; gap: 56px; }
 
-  .contact { grid-template-columns: 1fr; gap: 56px; padding: 112px 16px 120px; }
-  .contact__photo, .contact__body { grid-column: 1; }
-  .contact__photo { width: 78%; }
+  .contact { padding: 112px 16px 120px; }
   .contact__mail { word-break: break-all; }
 
   .page-hero__photo { top: 80px; left: 16px; right: 16px; width: auto; height: 46svh; }
