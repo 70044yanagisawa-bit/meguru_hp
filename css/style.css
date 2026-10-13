@@ -1472,23 +1472,10 @@ main, .footer { position: relative; z-index: 1; }
   color: var(--paper);
   border-top: 1px solid var(--line-d);
 }
-.footer__big {
-  font: 600 10.4vw/1 var(--en);
-  letter-spacing: -.05em;
-  white-space: nowrap;
-  background: var(--grad);
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: flow 12s linear infinite alternate;
-}
-@keyframes flow { to { background-position: 100% 0; } }
 .footer__row {
   display: flex;
   justify-content: space-between;
   gap: 16px;
-  margin-top: 40px;
   font: 400 12px/1.6 var(--en);
   letter-spacing: .1em;
   color: var(--gray);
