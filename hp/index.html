@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Maru+Gothic:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261013b">
+  <link rel="stylesheet" href="style.css?v=20261013c">
   <script>
     document.documentElement.classList.add("js");
     // 写真がまだ無いときは、仮の写真（data-fallback）→ それも無ければ枠だけ残す
@@ -114,7 +114,7 @@
           <span class="mask"><span>雑じゃないように。</span></span>
         </h2>
         <p data-reveal="up">制作の途中にAIを組み込んでいるので、ヒアリングから公開まで、早ければ1週間ほどです。そのぶん、話を聞く時間と、見た目を整える時間は削らないようにしています。</p>
-        <p data-reveal="up">デザインは一緒に画面を見ながら、3回まで直します。ドメインや公開の手続きも、こちらでまとめて引き受けます。このサイトも、自分でつくりました。</p>
+        <p data-reveal="up">デザインは一緒に画面を見ながら、納得いくまで直します。ドメインや公開の手続きも、こちらでまとめて引き受けます。このサイトも、自分でつくりました。</p>
       </div>
     </article>
 
@@ -139,10 +139,51 @@
           <span class="mask"><span>見てくれた人と、</span></span>
           <span class="mask"><span>そのあとも。</span></span>
         </h2>
-        <p data-reveal="up">ホームページは、見てもらって終わりではないと思っています。気になった人が、気軽にもう一歩近づけるように、LINE公式アカウントをホームページとひと続きのものとして組み立てることもあります。</p>
-        <p data-reveal="up">自動の返信や予約の案内は、オープンソースのLINE Harnessを使って、月々のツール代がかさまない形でつくります。浮いたお金は、本業のほうに使ってほしいからです。</p>
+        <p data-reveal="up">ホームページは、見てもらって終わりではないと思っています。せっかく気になってくれた人との出会いが、一度きりで終わってしまうのはもったいない。</p>
+        <p data-reveal="up">だから私は、ホームページをつくったあと、LINEの構築までひと続きで引き受けています。</p>
       </div>
     </article>
+
+    <!-- LINE構築：ホームページの先に -->
+    <section class="line" id="line">
+      <div class="line__head">
+        <p class="tag" data-reveal="up">LINE</p>
+        <h2 class="line__title" data-reveal>
+          <span class="mask"><span>ホームページの先に、</span></span>
+          <span class="mask"><span>LINEを。</span></span>
+        </h2>
+      </div>
+
+      <figure class="line__illust frame" data-reveal="clip">
+        <div class="frame__in" data-parallax="0.08">
+          <div class="illust" data-illust="line"></div>
+        </div>
+      </figure>
+
+      <div class="line__body">
+        <p data-reveal="up">LINEで自動の返信やステップ配信、予約の案内をしようとすると、Lステップやエルメのような有料のツールを使うのが一般的です。とても便利な一方で、月々の料金はずっとかかり続けます。</p>
+        <p data-reveal="up">私は、オープンソースの<b>LINE Harness（LINEハーネス）</b>を使って、同じような仕組みをつくります。友だちの管理、シナリオ配信、タグ付け、リッチメニューの切り替え。必要なものはそろっていて、ツールの月額はかかりません。</p>
+        <p data-reveal="up">アカウントの開設から、配信の設計、構築、実際に動かしてみての調整まで。途中で誰かに引き継ぐことなく、私が最後まで伴走します。</p>
+      </div>
+
+      <div class="line__swap" data-reveal="up">
+        <p class="line__from"><s>Lステップ</s><s>エルメ</s><small>月額のツール代</small></p>
+        <p class="line__arrow" aria-hidden="true">→</p>
+        <p class="line__to"><b>LINE Harness</b><span class="line__stamp">ツール代<br><em>0</em>円</span></p>
+      </div>
+      <p class="line__note" data-reveal="up">※ LINE公式アカウントそのものの月額プランは、送るメッセージの数によって別にかかることがあります。</p>
+
+      <div class="line__promise">
+        <h3 class="line__promise-title" data-reveal>
+          <span class="mask"><span>直しは、</span></span>
+          <span class="mask"><span>納得いくまで。</span></span>
+        </h3>
+        <div class="line__promise-body">
+          <p data-reveal="up">回数で区切ることはしません。言葉のひとつ、ボタンの色ひとつでも、気になるところがあれば言ってください。</p>
+          <p data-reveal="up">使いはじめてから「ここ、こうしたいな」が出てくることも、たくさんあります。そのたびに、一緒に直していきます。あなたのお店や仕事に、ちゃんと役立つものになるまで。</p>
+        </div>
+      </div>
+    </section>
 
     <!-- 見つづける -->
     <article class="chapter chapter--rev chapter--photo">
@@ -239,7 +280,7 @@
 
   <script src="draw.js?v=20261013b"></script>
   <script src="scene.js?v=20261013b"></script>
-  <script src="illust.js?v=20261013b"></script>
+  <script src="illust.js?v=20261013c"></script>
   <script src="main.js?v=20261013b"></script>
 </body>
 </html>

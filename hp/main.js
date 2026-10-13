@@ -14,7 +14,7 @@
   $$('[data-reveal], [data-intro], .opening').forEach(box => {
     $$('.mask', box).forEach((m, i) => m.style.setProperty('--i', i));
   });
-  $$('.chapter__body, .me__body, .close, .intro, .h-chap__body').forEach(box => {
+  $$('.chapter__body, .me__body, .close, .intro, .h-chap__body, .line__body, .line__promise-body').forEach(box => {
     $$(':scope > [data-reveal="up"]', box).forEach((el, i) => el.style.setProperty('--i', i));
   });
 

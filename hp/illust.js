@@ -188,6 +188,50 @@
       s.draw();
     },
 
+    /* ホームページからLINEへ：ハートが画面から画面へ渡っていく */
+    line(root) {
+      const s = stage(root, 12, 6, { label: 'ホームページの画面から、LINEのスマホ画面へ、ハートが渡っていくイラスト' });
+      s.tree(0.8, 0.8, .8); s.tree(11.3, 5.3, .7); s.tree(6.2, 0.7, .7);
+      const [bx, by] = s.P(2.6, 2.0, H);
+      const [px, py] = s.P(9.6, 2.2, H);
+      s.put(2.6, 2.0, () => {
+        const g = el('g', { transform: `translate(${bx} ${by})` }, s.world);
+        line(g, 'M-40 0 L-40 -16 M40 0 L40 -16', 4);
+        el('rect', { x: -62, y: -104, width: 124, height: 88, rx: 8, fill: COL.white, stroke: COL.ink, 'stroke-width': 2 }, g);
+        el('path', { d: 'M-62 -88 h124', stroke: COL.ink, 'stroke-width': 2 }, g);
+        [0, 1, 2].forEach(i => el('circle', { cx: -52 + i * 8, cy: -96, r: 2.5, fill: i ? COL.pale : COL.ink }, g));
+        el('rect', { x: -52, y: -80, width: 104, height: 30, rx: 3, fill: COL.green }, g);
+        const t = el('text', { x: -44, y: -59, fill: '#fff', 'font-size': 14, 'font-weight': 700, 'font-family': 'Fredoka, sans-serif' }, g);
+        t.textContent = 'HP';
+        [0, 1, 2].forEach(i => el('rect', { x: -52 + i * 36, y: -44, width: 32, height: 20, rx: 2, fill: i === 1 ? '#fff3b8' : COL.top }, g));
+      });
+      s.put(9.6, 2.2, () => {
+        const g = el('g', { transform: `translate(${px} ${py})` }, s.world);
+        el('rect', { x: -30, y: -112, width: 60, height: 108, rx: 10, fill: COL.ink }, g);
+        el('rect', { x: -25, y: -104, width: 50, height: 90, rx: 4, fill: COL.white }, g);
+        el('rect', { x: -25, y: -104, width: 50, height: 14, rx: 4, fill: COL.green }, g);
+        const t = el('text', { x: 0, y: -93, 'text-anchor': 'middle', fill: '#fff', 'font-size': 9, 'font-weight': 700, 'font-family': 'Fredoka, sans-serif' }, g);
+        t.textContent = 'LINE';
+        [[-20, -82, 30, COL.top], [-6, -66, 26, COL.green], [-20, -50, 34, COL.top], [-4, -34, 24, COL.pop]].forEach(([x, y, w, f], i) => {
+          el('rect', { x, y, width: w, height: 11, rx: 5, fill: f, stroke: COL.ink, 'stroke-width': 1, class: 'sc-chat', style: `--k:${i}` }, g);
+        });
+      });
+      // 画面と画面をつなぐ点線と、その上を渡っていくハート
+      s.put(10, 10, () => {
+        const d = `M${bx + 64} ${by - 60} C ${bx + 150} ${by - 150}, ${px - 120} ${py - 150}, ${px - 34} ${py - 70}`;
+        el('path', { d, fill: 'none', stroke: COL.green, 'stroke-width': 2.5, 'stroke-dasharray': '6 7', class: 'sc-lane' }, s.world);
+        [0, 1, 2].forEach(i => {
+          const g = el('g', {}, s.world);
+          heart(g, i === 1 ? COL.green : COL.pop).setAttribute('transform', 'scale(1.4)');
+          el('animateMotion', { dur: '3s', repeatCount: 'indefinite', begin: `${-i}s`, path: d }, g);
+        });
+      });
+      s.put(2.0, 4.6, () => person(s.at(2.0, 4.6, H, 'sc-nod'), { shirt: COL.pop, arms: 'point' }));
+      s.put(8.4, 4.8, () => person(s.at(8.4, 4.8, H, 'sc-wave'), { shirt: COL.green, arms: 'phone' }));
+      s.put(5.6, 4.2, () => person(s.at(5.6, 4.2, H, 'sc-walk'), { shirt: COL.deep, legs: 'walk', arms: 'hold' }));
+      s.draw();
+    },
+
     /* 数字を見る：GA4のグラフ */
     chart(root) {
       const s = stage(root, 6, 6, { label: '大きなグラフを指さしながら、数字を確かめているイラスト' });

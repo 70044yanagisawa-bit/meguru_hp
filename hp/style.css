@@ -651,6 +651,111 @@ svg g[class^="sc-"] { transform-box: fill-box; transform-origin: 50% 100%; }
 .footer__row a:hover { color: var(--pop); }
 
 /* ==========================================================
+   LINE構築
+   ========================================================== */
+.line {
+  position: relative;
+  margin: clamp(40px, 6vw, 80px) var(--gut) 0;
+  padding: clamp(80px, 10vw, 140px) clamp(20px, 6vw, 96px);
+  border-radius: 32px;
+  background: #fff;
+  box-shadow: 0 0 0 3px var(--pale) inset;
+  display: grid;
+  grid-template-columns: 5fr 6fr;
+  gap: clamp(32px, 5vw, 72px) clamp(40px, 6vw, 96px);
+  align-items: start;
+}
+.line__head { grid-column: 1 / -1; }
+.line__title {
+  margin-top: 16px;
+  font-family: var(--round);
+  font-size: clamp(32px, 4.6vw, 64px);
+  line-height: 1.45;
+  letter-spacing: .06em;
+}
+.line__title .mask:last-child > span { color: var(--green); }
+.line__illust { aspect-ratio: 4 / 3; }
+.line__body { max-width: 30em; }
+.line__body p + p { margin-top: 1.4em; }
+.line__body b { color: var(--deep); background: linear-gradient(transparent 62%, var(--pop) 62%); }
+
+/* Lステップ・エルメ → LINE Harness */
+.line__swap {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 16px clamp(20px, 4vw, 56px);
+  padding: clamp(28px, 4vw, 44px) 0 0;
+  border-top: 2px dashed var(--line);
+}
+.line__from { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; color: var(--mute); }
+.line__from s {
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: 2px solid var(--line);
+  font-family: var(--round);
+  font-weight: 700;
+  text-decoration-color: var(--green);
+  text-decoration-thickness: 2px;
+}
+.line__from small { width: 100%; text-align: center; font-size: 12px; }
+.line__arrow { font-family: var(--latin); font-size: 34px; color: var(--green); animation: nudge 1.4s ease-in-out infinite; }
+@keyframes nudge { 50% { transform: translateX(8px); } }
+.line__to { display: flex; align-items: center; gap: 18px; }
+.line__to b {
+  padding: 10px 22px;
+  border-radius: 999px;
+  background: var(--green);
+  color: #fff;
+  font-family: var(--latin);
+  font-size: clamp(18px, 2vw, 24px);
+  letter-spacing: .04em;
+}
+.line__stamp {
+  display: grid;
+  place-items: center;
+  width: 92px; height: 92px;
+  border-radius: 50%;
+  background: var(--pop);
+  border: 3px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+  font-family: var(--round);
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 1.1;
+  text-align: center;
+  transform: rotate(-10deg);
+}
+.line__stamp em { font-family: var(--latin); font-size: 34px; line-height: 1; }
+.line__swap.is-in .line__stamp { animation: stamp .7s var(--pop-ease) .4s both; }
+@keyframes stamp { from { transform: scale(2.2) rotate(-30deg); opacity: 0; } to { transform: rotate(-10deg); opacity: 1; } }
+.line__note { grid-column: 1 / -1; margin-top: -12px; text-align: center; font-size: 11px; color: var(--mute); }
+
+/* 直しは、納得いくまで */
+.line__promise {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 5fr 6fr;
+  gap: clamp(24px, 5vw, 96px);
+  align-items: center;
+  margin-top: clamp(24px, 4vw, 56px);
+  padding: clamp(32px, 5vw, 64px);
+  border-radius: 24px;
+  background: var(--green);
+  color: #fff;
+}
+.line__promise-title {
+  font-family: var(--round);
+  font-size: clamp(30px, 4vw, 56px);
+  line-height: 1.45;
+  letter-spacing: .06em;
+}
+.line__promise-title .mask:last-child > span { color: var(--pop); }
+.line__promise-body p + p { margin-top: 1.2em; }
+
+/* ==========================================================
    これまでのこと（history.html）
    ========================================================== */
 .h-hero {
@@ -800,6 +905,12 @@ body.is-loaded .h-hero .mask > span { transform: none; }
 
   .me { grid-template-columns: 1fr; }
   .me__photo { width: 86%; }
+
+  .line { grid-template-columns: 1fr; margin-left: 12px; margin-right: 12px; }
+  .line__title { font-size: clamp(24px, 7vw, 32px); }
+  .line__swap { flex-direction: column; }
+  .line__arrow { transform: rotate(90deg); animation: none; }
+  .line__promise { grid-template-columns: 1fr; }
 
   .h-hero__illust { aspect-ratio: 4 / 3; }
   .h-chap { grid-template-columns: 1fr; gap: 28px; }
