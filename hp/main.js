@@ -76,7 +76,9 @@
     if (!pin) return;
     if (wide.matches) {
       distance = Math.max(0, track.scrollWidth - innerWidth);
-      pin.style.height = `${distance + vh}px`;
+      // 画面に収まるうちは横に流さず、ふつうの高さのセクションにする
+      pin.classList.toggle('is-static', distance === 0);
+      pin.style.height = distance ? `${distance + vh}px` : '';
     } else {
       distance = 0;
       pin.style.height = '';
