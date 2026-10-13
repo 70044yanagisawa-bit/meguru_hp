@@ -11,7 +11,13 @@
   const S = 36;                         // 床の1マス → px
   const C = Math.cos(Math.PI / 6);
   const H = 1.6;                        // Mの厚み
-  const P = (x, y, z = 0) => [(x - y) * C * S, (x + y) * 0.5 * S - z * S];
+  // 文字の座標 (u, v) を床の向きに回す。-30° にすると、Mが正面からほぼまっすぐ読める
+  const ROT = -30 * Math.PI / 180;
+  const R = [Math.cos(ROT), Math.sin(ROT)];      // 文字の「右」が床のどちら向きか
+  const D = [-Math.sin(ROT), Math.cos(ROT)];     // 文字の「下」
+  const F = (u, v) => [u * R[0] + v * D[0], u * R[1] + v * D[1]];
+  const depthOf = (u, v) => { const [x, y] = F(u, v); return x + y; };
+  const P = (u, v, z = 0) => { const [x, y] = F(u, v); return [(x - y) * C * S, (x + y) * 0.5 * S - z * S]; };
   const pts = arr => arr.map(p => p.map(n => n.toFixed(1)).join(',')).join(' ');
 
   const COL = {
@@ -34,7 +40,7 @@
     return n;
   };
 
-  const svg = el('svg', { viewBox: '-470 -200 1010 760', role: 'img', 'aria-label': 'Mの形をした島の上で、トレーニングする人、パソコンでAIを使う人、LINEのお店、ダンスする人がいて、車とバイクが走っているイラスト' });
+  const svg = el('svg', { role: 'img', 'aria-label': 'Mの形をした島の上で、トレーニングする人、パソコンでAIを使う人、LINEのお店、ダンスする人がいて、車とバイクが走っているイラスト' });
   root.appendChild(svg);
 
   // 網点（参考：イラストの影の質感）
@@ -46,6 +52,15 @@
 
   const world = el('g', { class: 'sc-world' }, svg);
 
+  // 見える範囲：Mの四隅から計算して、上は看板や人のぶん余白をとる
+  {
+    const c = [[0, 0], [15, 0], [15, 12], [0, 12]].flatMap(([u, v]) => [P(u, v, 0), P(u, v, H)]);
+    const xs = c.map(p => p[0]), ys = c.map(p => p[1]);
+    const x0 = Math.min(...xs) - 40, x1 = Math.max(...xs) + 40;
+    const y0 = Math.min(...ys) - 110, y1 = Math.max(...ys) + 40;
+    svg.setAttribute('viewBox', `${x0.toFixed(0)} ${y0.toFixed(0)} ${(x1 - x0).toFixed(0)} ${(y1 - y0).toFixed(0)}`);
+  }
+
   /* ---------- 立体（多角形を押し出す） ---------- */
   const prism = (poly, z0, z1, opt = {}, parent = world) => {
     const g = el('g', {}, parent);
@@ -55,9 +70,9 @@
     poly.forEach((a, i) => {
       const b = poly[(i + 1) % poly.length];
       const dx = b[0] - a[0], dy = b[1] - a[1];
-      const n = area > 0 ? [dy, -dx] : [-dy, dx];
+      const n = F(...(area > 0 ? [dy, -dx] : [-dy, dx]));
       if (n[0] + n[1] <= 0.001) return;               // こちらを向いていない面は描かない
-      sides.push({ a, b, n, depth: (a[0] + a[1] + b[0] + b[1]) / 2 });
+      sides.push({ a, b, n, depth: depthOf((a[0] + b[0]) / 2, (a[1] + b[1]) / 2) });
     });
     sides.sort((p, q) => p.depth - q.depth);
     sides.forEach(({ a, b, n }) => {
@@ -212,7 +227,14 @@
     [0, 1, 2].forEach(i => el('rect', { x: -12 + i * 2, y: -6 - i * 6, width: 22 - i * 4, height: 6, rx: 2, fill: i % 2 ? COL.green : COL.deep, stroke: COL.ink, 'stroke-width': 1.5 }, g));
   });
 
-  items.sort((a, b) => (a.x + a.y) - (b.x + b.y)).forEach(it => it.draw());
+  // 1つずつ <g class="sc-drop"> に包む（読み込み時に順番に降ってくる）
+  items.sort((a, b) => depthOf(a.x, a.y) - depthOf(b.x, b.y)).forEach(it => {
+    const before = world.childNodes.length;
+    it.draw();
+    const added = [...world.childNodes].slice(before);
+    const drop = el('g', { class: 'sc-drop', style: `--k:${(it.x / 15 * 6 + Math.random() * 2).toFixed(2)}` }, world);
+    added.forEach(n => drop.appendChild(n));
+  });
 
   /* ---------- 車とバイク ---------- */
   const seg = [];

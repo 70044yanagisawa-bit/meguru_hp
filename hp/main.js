@@ -97,8 +97,7 @@
       const r = hero.getBoundingClientRect();
       const p = clamp(-r.top / (r.height - vh));
       window.meguruScene && window.meguruScene.setProgress(p);
-      heroBg.style.transform = `translate3d(${(-p * 40).toFixed(2)}%, 0, 0)`;
-      heroSvg && (heroSvg.style.transform = `translate3d(0, ${(-p * 4).toFixed(2)}%, 0) scale(${(1 + p * .12).toFixed(3)})`);
+      heroSvg && (heroSvg.style.transform = `translate3d(0, ${(-p * 4).toFixed(2)}%, 0) scale(${(1 + p * .06).toFixed(3)})`);
     }
 
     if (pin && distance) {
@@ -110,6 +109,25 @@
     const max = document.documentElement.scrollHeight - vh;
     bar.style.transform = `scaleX(${max > 0 ? clamp(scrollY / max) : 0})`;
   };
+
+  // 後ろの「MEGURU」：ずっと流れていて、スクロールした勢いのぶん速くなる
+  if (heroBg) {
+    heroBg.textContent += heroBg.textContent;
+    let x = 0, boost = 0, lastY = scrollY, half = heroBg.scrollWidth / 2;
+    addEventListener('resize', () => { half = heroBg.scrollWidth / 2; });
+    addEventListener('scroll', () => {
+      boost = Math.min(18, boost + Math.abs(scrollY - lastY) * .2);
+      lastY = scrollY;
+    }, { passive: true });
+    const loop = () => {
+      x -= .6 + boost;
+      boost *= .92;
+      if (-x >= half) x += half;
+      heroBg.style.transform = `translate3d(${x.toFixed(1)}px, 0, 0)`;
+      requestAnimationFrame(loop);
+    };
+    requestAnimationFrame(loop);
+  }
 
   let ticking = false;
   const onScroll = () => {
