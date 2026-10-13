@@ -11,7 +11,7 @@
   const H = 1;                          // 島の厚み
 
   // 1枚ぶんの描き場所をつくる。w × d の島を置いて、上に乗せるものは put で登録する
-  const stage = (root, w, d, { S = 34, label = '' } = {}) => {
+  const stage = (root, w, d, { S = 34, label = '', top = 96 } = {}) => {
     const view = D.iso(S, -30);
     const { P, depthOf } = view;
     const svg = el('svg', { role: 'img', 'aria-label': label, preserveAspectRatio: 'xMidYMid meet' });
@@ -22,7 +22,7 @@
     const c = [[0, 0], [w, 0], [w, d], [0, d]].flatMap(([u, v]) => [P(u, v, 0), P(u, v, H)]);
     const xs = c.map(p => p[0]), ys = c.map(p => p[1]);
     const x0 = Math.min(...xs) - 16, x1 = Math.max(...xs) + 16;
-    const y0 = Math.min(...ys) - 96, y1 = Math.max(...ys) + 20;
+    const y0 = Math.min(...ys) - top, y1 = Math.max(...ys) + 20;
     svg.setAttribute('viewBox', `${x0.toFixed(0)} ${y0.toFixed(0)} ${(x1 - x0).toFixed(0)} ${(y1 - y0).toFixed(0)}`);
 
     el('polygon', { points: pts([[0, 0], [w, 0], [w, d], [0, d]].map(([u, v]) => P(u + .4, v + .4, -.1))), fill: COL.pale, opacity: .8 }, world);
@@ -185,6 +185,138 @@
         el('circle', { cx: 0, cy: -11, r: 6, fill: COL.pale, class: 'sc-speaker' }, g);
       });
       s.put(6.6, 5.9, () => person(s.at(6.6, 5.9, H, 'sc-walk'), { shirt: COL.deep, legs: 'walk', arms: 'phone' }));
+      s.draw();
+    },
+
+    /* カフェ：コーヒーを飲みながら話す */
+    cafe(root) {
+      const s = stage(root, 10, 6, { label: 'カフェのテーブルで、コーヒーを飲みながら話しているイラスト' });
+      s.tree(9.2, 0.9, .85); s.tree(9.3, 5.2, .7);
+      // お店の看板
+      s.put(1.0, 1.2, () => {
+        const g = s.at(1.0, 1.2, H);
+        line(g, 'M-10 0 L-4 -40 M10 0 L4 -40', 3);
+        el('rect', { x: -16, y: -52, width: 32, height: 26, rx: 3, fill: COL.ink }, g);
+        const t = el('text', { x: 0, y: -35, 'text-anchor': 'middle', fill: '#fff', 'font-size': 10, 'font-weight': 700, 'font-family': 'Fredoka, sans-serif' }, g);
+        t.textContent = 'CAFE';
+        const c = el('g', { transform: 'translate(0 -6)' }, g);
+        el('path', { d: 'M-5 0 L-6 -8 L6 -8 L5 0 Z', fill: COL.white, stroke: COL.ink, 'stroke-width': 1.2 }, c);
+      });
+      // 左の人：カップを口元へ
+      s.put(3.0, 2.8, () => {
+        const g = s.at(3.0, 2.8, H, 'sc-sip');
+        person(g, { shirt: COL.pop, arms: 'front', legs: 'sit' });
+        const c = el('g', { transform: 'translate(6 -24)' }, g);
+        el('path', { d: 'M-4 0 L-5 -8 L5 -8 L4 0 Z', fill: COL.white, stroke: COL.ink, 'stroke-width': 1.5 }, c);
+      });
+      s.put(4.9, 3.3, () => {
+        table(s, 3.9, 2.5, 6.2, 4.1);
+        cup(s, 4.5, 3.4, H + .6);
+        const g = s.at(5.6, 3.0, H + .6);          // コーヒーポット
+        el('path', { d: 'M-7 0 Q-9 -12 -5 -16 L5 -16 Q9 -12 7 0 Z', fill: COL.deep, stroke: COL.ink, 'stroke-width': 1.5, 'stroke-linejoin': 'round' }, g);
+        line(g, 'M7 -10 Q13 -12 14 -16', 2);
+        el('rect', { x: -4, y: -20, width: 8, height: 4, rx: 1, fill: COL.ink }, g);
+        const p = s.at(5.2, 3.7, H + .6);          // お皿とクッキー
+        el('ellipse', { cx: 0, cy: 0, rx: 9, ry: 4, fill: COL.white, stroke: COL.ink, 'stroke-width': 1.2 }, p);
+        el('circle', { cx: -2, cy: -2, r: 3, fill: COL.pop, stroke: COL.ink, 'stroke-width': 1 }, p);
+        el('circle', { cx: 3, cy: -1.5, r: 3, fill: COL.pop, stroke: COL.ink, 'stroke-width': 1 }, p);
+      });
+      // 右の人：手ぶりで話す
+      s.put(7.1, 4.0, () => {
+        const g = s.at(7.1, 4.0, H, 'sc-talk');
+        person(g, { shirt: COL.deep, arms: 'v', legs: 'sit', hat: 'cap' });
+      });
+      const [ax, ay] = s.P(3.0, 2.8, H), [bx, by] = s.P(7.1, 4.0, H);
+      s.put(10, 10, () => {
+        floatBubble(el('g', { transform: `translate(${ax - 8} ${ay - 48})` }, s.world), 'ふむふむ', { w: 64, size: 12 });
+        floatBubble(el('g', { transform: `translate(${bx + 12} ${by - 50})` }, s.world), 'それでね…', { w: 72, fill: COL.pop, color: COL.ink, size: 12 }, .8);
+      });
+      s.draw();
+    },
+
+    /* LINEをポチポチ：大きなスマホと、操作する人 */
+    phone(root) {
+      const s = stage(root, 9, 6, { label: 'スマホでLINEをポチポチ操作して、メッセージやメニューが動いているイラスト', top: 130 });
+      s.tree(0.8, 0.9, .8); s.tree(8.3, 5.3, .7);
+      s.put(5.4, 1.8, () => {
+        const [x, y] = s.P(5.4, 1.8, H);
+        const g = el('g', { transform: `translate(${x} ${y})` }, s.world);
+        line(g, 'M-20 0 L-12 -14 M20 0 L12 -14', 3);
+        el('rect', { x: -40, y: -150, width: 80, height: 140, rx: 12, fill: COL.ink }, g);
+        el('rect', { x: -34, y: -142, width: 68, height: 124, rx: 5, fill: COL.white }, g);
+        el('rect', { x: -34, y: -142, width: 68, height: 16, rx: 5, fill: COL.green }, g);
+        const t = el('text', { x: 0, y: -130, 'text-anchor': 'middle', fill: '#fff', 'font-size': 9, 'font-weight': 700, 'font-family': 'Fredoka, sans-serif' }, g);
+        t.textContent = 'LINE';
+        // トーク（順番にぽんぽん出てくる）
+        [[-28, -120, 34, COL.top], [-2, -106, 30, COL.green], [-28, -92, 40, COL.top]].forEach(([bx, by, w, f], i) => {
+          el('rect', { x: bx, y: by, width: w, height: 10, rx: 5, fill: f, stroke: COL.ink, 'stroke-width': 1, class: 'sc-chat', style: `--k:${i}` }, g);
+        });
+        // リッチメニュー（2段×3列）。1つが押されて光る
+        for (let r = 0; r < 2; r++) for (let c = 0; c < 3; c++) {
+          const on = r === 1 && c === 1;
+          el('rect', { x: -32 + c * 22, y: -74 + r * 26, width: 20, height: 24, rx: 3, fill: on ? COL.pop : COL.top, stroke: COL.ink, 'stroke-width': 1, class: on ? 'sc-press' : '' }, g);
+        }
+        // 押したところの波紋と、指
+        const tap = el('g', { transform: 'translate(-10 -36)' }, g);
+        el('circle', { cx: 0, cy: 0, r: 8, fill: 'none', stroke: COL.green, 'stroke-width': 2, class: 'sc-ripple' }, tap);
+        el('circle', { cx: 0, cy: 0, r: 8, fill: 'none', stroke: COL.green, 'stroke-width': 2, class: 'sc-ripple', style: 'animation-delay:.6s' }, tap);
+        const finger = el('g', { class: 'sc-finger' }, tap);
+        el('path', { d: 'M0 0 q-4 0 -4 4 v18 h8 v-18 q0 -4 -4 -4z', fill: COL.skin, stroke: COL.ink, 'stroke-width': 1.5 }, finger);
+        const pochi = el('text', { x: 16, y: -6, fill: COL.deep, 'font-size': 11, 'font-weight': 700, 'font-family': '"Zen Maru Gothic", sans-serif', class: 'sc-pochi' }, tap);
+        pochi.textContent = 'ポチッ';
+      });
+      s.put(2.4, 3.6, () => {
+        const g = s.at(2.4, 3.6, H, 'sc-tapme');
+        person(g, { shirt: COL.pop, arms: 'phone', legs: 'stand' });
+        el('rect', { x: 3, y: -38, width: 7, height: 11, rx: 1.5, fill: COL.ink }, g);
+        el('rect', { x: 4.5, y: -36, width: 4, height: 6, fill: COL.green }, g);
+      });
+      s.put(7.4, 4.4, () => {
+        const g = s.at(7.4, 4.4, H, 'sc-wave');
+        person(g, { shirt: COL.green, arms: 'phone' });
+        [0, 1].forEach(i => heart(el('g', { class: 'sc-heart', style: `--k:${i}`, transform: `translate(${10 + i * 7} -44)` }, g), i ? COL.green : COL.pop));
+      });
+      s.draw();
+    },
+
+    /* ホームページのマインドマップ：ボードに描いて考える */
+    mindmap(root) {
+      const s = stage(root, 6, 7, { label: 'ホワイトボードに、ホームページの中身をマインドマップで描いているイラスト', top: 120 });
+      s.tree(5.3, 6.3, .7);
+      s.put(3.0, 1.4, () => {
+        const [x, y] = s.P(3.0, 1.2, H);
+        const g = el('g', { transform: `translate(${x} ${y})` }, s.world);
+        line(g, 'M-50 0 L-46 -24 M50 0 L46 -24', 4);
+        el('rect', { x: -70, y: -170, width: 140, height: 148, rx: 6, fill: COL.white, stroke: COL.ink, 'stroke-width': 2.5 }, g);
+        const cx = 0, cy = -96;
+        const nodes = [
+          [-44, -144, '想い'], [44, -144, 'お客さま'], [-50, -96, 'メニュー'],
+          [50, -96, 'LINE'], [-40, -48, '実績'], [42, -48, '写真']
+        ];
+        nodes.forEach(([nx, ny], i) => {
+          el('path', { d: `M${cx} ${cy} Q${(cx + nx) / 2} ${ny} ${nx} ${ny}`, fill: 'none', stroke: COL.green, 'stroke-width': 2, 'stroke-linecap': 'round', class: 'sc-draw', style: `--k:${i}`, pathLength: 1 }, g);
+        });
+        nodes.forEach(([nx, ny, label], i) => {
+          const n = el('g', { class: 'sc-node', style: `--k:${i}` }, g);
+          const w = label.length * 11 + 10;
+          el('rect', { x: nx - w / 2, y: ny - 9, width: w, height: 18, rx: 9, fill: i === 3 ? COL.green : COL.top, stroke: COL.ink, 'stroke-width': 1.2 }, n);
+          const t = el('text', { x: nx, y: ny + 4, 'text-anchor': 'middle', fill: i === 3 ? '#fff' : COL.ink, 'font-size': 10, 'font-weight': 700, 'font-family': '"Zen Maru Gothic", sans-serif' }, n);
+          t.textContent = label;
+        });
+        el('circle', { cx, cy, r: 17, fill: COL.pop, stroke: COL.ink, 'stroke-width': 2 }, g);
+        const t = el('text', { x: cx, y: cy + 5, 'text-anchor': 'middle', fill: COL.ink, 'font-size': 14, 'font-weight': 700, 'font-family': 'Fredoka, sans-serif' }, g);
+        t.textContent = 'HP';
+      });
+      s.put(1.2, 3.6, () => {
+        const g = s.at(1.2, 3.6, H, 'sc-nod');
+        person(g, { shirt: COL.green, arms: 'point' });
+        el('rect', { x: 16, y: -30, width: 9, height: 3, rx: 1, fill: COL.deep, transform: 'rotate(-30 18 -28)' }, g);
+      });
+      s.put(4.4, 4.4, () => {
+        const g = s.at(4.4, 4.4, H, 'sc-talk');
+        person(g, { shirt: COL.pop, arms: 'hold' });
+        el('rect', { x: 6, y: -22, width: 10, height: 10, fill: '#fff3b8', stroke: COL.ink, 'stroke-width': 1.2, transform: 'rotate(8 11 -17)' }, g);
+      });
       s.draw();
     },
 

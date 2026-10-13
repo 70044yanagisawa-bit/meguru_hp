@@ -390,6 +390,22 @@ svg g[class^="sc-"] { transform-box: fill-box; transform-origin: 50% 100%; }
 }
 .sc-lane { animation: lane 1.2s linear infinite; }
 .sc-nod { animation: nod 2s ease-in-out infinite; }
+.sc-sip { animation: sip 3s ease-in-out infinite; }
+@keyframes sip { 0%, 50%, 100% { transform: none; } 65%, 85% { transform: rotate(-6deg); } }
+.sc-chat, .sc-node { transform-box: fill-box; transform-origin: center; animation: chat 4s var(--pop-ease) infinite; animation-delay: calc(var(--k) * .35s); }
+@keyframes chat { 0% { transform: scale(0); } 12%, 85% { transform: scale(1); } 100% { transform: scale(0); } }
+.sc-press { animation: press 1.2s ease-in-out infinite; }
+@keyframes press { 0%, 100% { fill: #dff3e5; } 30%, 60% { fill: #ffd23f; } }
+.sc-ripple { transform-box: fill-box; transform-origin: center; animation: ripple 1.2s ease-out infinite; }
+@keyframes ripple { from { transform: scale(.4); opacity: 1; } to { transform: scale(2.4); opacity: 0; } }
+.sc-finger { animation: finger 1.2s ease-in-out infinite; }
+@keyframes finger { 0%, 100% { transform: translate(4px, 6px); } 30%, 60% { transform: none; } }
+.sc-pochi { animation: pochi 1.2s ease-out infinite; }
+@keyframes pochi { 0%, 20% { opacity: 0; translate: 0 4px; } 40%, 70% { opacity: 1; translate: 0 0; } 100% { opacity: 0; } }
+.sc-tapme { animation: type .4s steps(2) infinite; }
+.sc-draw { stroke-dasharray: 1; animation: draw 5s ease-in-out infinite; animation-delay: calc(var(--k) * .25s); }
+@keyframes draw { 0% { stroke-dashoffset: 1; } 30%, 90% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 1; } }
+.sc-node { animation-duration: 5s; animation-delay: calc(var(--k) * .25s + .5s); }
 @keyframes nod { 0%, 60%, 100% { transform: none; } 70% { transform: rotate(4deg); } 80% { transform: rotate(-2deg); } }
 .sc-talk { animation: talk 1.6s ease-in-out infinite; }
 @keyframes talk { 50% { transform: translateY(-2px) rotate(-2deg); } }
@@ -930,6 +946,7 @@ body.is-loaded .h-hero .mask > span { transform: none; }
   .js [data-reveal^="clip"] img,
   .js .sc-drop,
   .js .hero__scene { transform: none !important; opacity: 1 !important; clip-path: none !important; }
-  .sc-note, .sc-heart { opacity: 1; }
+  .sc-note, .sc-heart, .sc-pochi { opacity: 1; }
+  .sc-draw { stroke-dashoffset: 0; }
   .opening { display: none; }
 }
