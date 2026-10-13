@@ -97,6 +97,7 @@
       const r = hero.getBoundingClientRect();
       const p = clamp(-r.top / (r.height - vh));
       window.meguruScene && window.meguruScene.setProgress(p);
+      hero.classList.toggle('is-built', p > 0.45);
       heroSvg && (heroSvg.style.transform = `translate3d(0, ${(-p * 4).toFixed(2)}%, 0) scale(${(1 + p * .06).toFixed(3)})`);
     }
 

@@ -86,18 +86,54 @@
   };
   const box = (x0, y0, x1, y1, z0, z1, opt, parent) => prism([[x0, y0], [x1, y0], [x1, y1], [x0, y1]], z0, z1, opt, parent);
 
-  /* ---------- 地面の影とMの本体 ---------- */
+  /* ---------- YとMの本体 ----------
+     Mの真ん中のV字（2本の斜め）が、そのままYの両腕。その下に、Yの縦棒を足す。
+     スクロールの前半で、5つのパーツが四方から集まってきて「YM」になる。 */
   const M = [[0, 0], [4, 0], [7.5, 5], [11, 0], [15, 0], [15, 12], [11, 12], [11, 5.5], [7.5, 10.5], [4, 5.5], [4, 12], [0, 12]];
-  el('polygon', { points: pts(M.map(([x, y]) => P(x + .6, y + .6, -.15))), fill: COL.pale, opacity: .7 }, world);
-  prism(M, 0, H, { dots: true });
+  const ys = 10.5 - 1.2 * 5 / 3.5;                // 縦棒の上端（斜めの内側の線と交わる高さ）
+  const Y_STEM = [[6.3, ys], [7.5, 10.5], [8.7, ys], [8.7, 12], [6.3, 12]];
+  const Y_TOP = [[4, 0], [7.5, 5], [11, 0], [11, 5.5], [8.7, ys], [8.7, 12], [6.3, 12], [6.3, ys], [4, 5.5]];
+  const YCOL = { top: '#fff3b8', left: '#ffd23f', right: '#e8b51f' };
 
-  /* ---------- 道（Mの上を一筆書き） ---------- */
+  const PIECES = {
+    legL: { poly: [[0, 0], [4, 0], [4, 12], [0, 12]], from: [-240, 50], opt: { dots: true } },
+    legR: { poly: [[11, 0], [15, 0], [15, 12], [11, 12]], from: [260, -60], opt: { dots: true } },
+    armL: { poly: [[4, 0], [7.5, 5], [7.5, 10.5], [4, 5.5]], from: [-90, -230], opt: { top: YCOL.top } },
+    armR: { poly: [[7.5, 5], [11, 0], [11, 5.5], [7.5, 10.5]], from: [150, -220], opt: { top: YCOL.top } },
+    stem: { poly: Y_STEM, from: [20, 230], opt: YCOL }
+  };
+  // 置いたものが、どのパーツに乗っているか
+  const pieceOf = (u, v) => {
+    if (u < 4) return 'legL';
+    if (u > 11) return 'legR';
+    const inner = 10.5 - Math.abs(u - 7.5) * 5 / 3.5;
+    if (v > inner) return 'stem';
+    return u < 7.5 ? 'armL' : 'armR';
+  };
+
+  const shadow = el('polygon', { points: pts(M.map(([x, y]) => P(x + .6, y + .6, -.15))), fill: COL.pale, opacity: 0 }, world);
+
+  // 集まり終わったら、つなぎ目のない1つの形に差し替える
+  const whole = el('g', { class: 'sc-whole' }, world);
+  prism(M, 0, H, { dots: true }, whole);
+  prism(Y_STEM, 0, H, YCOL, whole);
+  el('polygon', { points: pts(Y_TOP.map(p => P(...p, H))), fill: YCOL.top, stroke: COL.ink, 'stroke-width': 2, 'stroke-linejoin': 'round' }, whole);
+  el('polygon', { points: pts(Y_TOP.map(p => P(...p, H))), fill: 'url(#dots)', opacity: .5 }, whole);
+
+  const parts = el('g', { class: 'sc-parts' }, world);
+  Object.entries(PIECES)
+    .sort((p, q) => depthOf(...p[1].poly[0]) - depthOf(...q[1].poly[0]))
+    .forEach(([key, pc]) => { pc.g = prism(pc.poly, 0, H, pc.opt, parts); pc.key = key; });
+
+  /* ---------- 道（Mの上を一筆書き）。集まったあとに引かれていく ---------- */
   const ROAD = [[2, 12], [2, 1.7], [7.5, 8.1], [13, 1.7], [13, 12]];
   const roadPts = pts(ROAD.map(([x, y]) => P(x, y, H)));
   const road = el('g', { class: 'sc-road' }, world);
-  el('polyline', { points: roadPts, fill: 'none', stroke: COL.ink, 'stroke-width': 30, 'stroke-linejoin': 'round' }, road);
-  el('polyline', { points: roadPts, fill: 'none', stroke: COL.white, 'stroke-width': 26, 'stroke-linejoin': 'round' }, road);
-  el('polyline', { points: roadPts, fill: 'none', stroke: COL.green, 'stroke-width': 2.2, 'stroke-dasharray': '8 9', 'stroke-linejoin': 'round', class: 'sc-lane' }, road);
+  const roadLines = [
+    el('polyline', { points: roadPts, fill: 'none', stroke: COL.ink, 'stroke-width': 30, 'stroke-linejoin': 'round' }, road),
+    el('polyline', { points: roadPts, fill: 'none', stroke: COL.white, 'stroke-width': 26, 'stroke-linejoin': 'round' }, road)
+  ];
+  const lane = el('polyline', { points: roadPts, fill: 'none', stroke: COL.green, 'stroke-width': 2.2, 'stroke-dasharray': '8 9', 'stroke-linejoin': 'round', class: 'sc-lane' }, road);
 
   /* ---------- Mの上に置くもの（奥から順に描く） ---------- */
   const items = [];
@@ -138,6 +174,7 @@
     el('circle', { cx: 0, cy: -26 * r, r: 13 * r, fill: 'url(#dotsW)' }, g);
     el('path', { d: `M${-6 * r} ${-30 * r} q4 -5 9 -4`, fill: 'none', stroke: '#fff', 'stroke-width': 2, 'stroke-linecap': 'round' }, g);
   });
+  tree(7.5, 11.3, .75);
   [[0.8, 1.0], [3.3, 1.1], [11.8, 1.1], [14.2, 1.0], [0.7, 11.3, .8], [14.3, 11.3, .8], [3.4, 11.4, .7], [11.7, 11.4, .7]].forEach(([x, y, r]) => tree(x, y, r));
 
   // LINEのお店（左の脚）
@@ -232,8 +269,10 @@
     const before = world.childNodes.length;
     it.draw();
     const added = [...world.childNodes].slice(before);
-    const drop = el('g', { class: 'sc-drop', style: `--k:${(it.x / 15 * 6 + Math.random() * 2).toFixed(2)}` }, world);
+    const ride = el('g', {}, world);
+    const drop = el('g', { class: 'sc-drop', style: `--k:${(it.x / 15 * 6 + Math.random() * 2).toFixed(2)}` }, ride);
     added.forEach(n => drop.appendChild(n));
+    (PIECES[pieceOf(it.x, it.y)].riders ||= []).push(ride);
   });
 
   /* ---------- 車とバイク ---------- */
@@ -290,10 +329,42 @@
   };
 
   // 0〜1 の進み具合で動かす
+  //   0.00〜0.50：パーツが四方から集まる（少しずつ時間差）
+  //   0.48〜0.62：道が引かれる
+  //   0.60〜1.00：車とバイクが走る
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const easeOut = t => 1 - Math.pow(1 - t, 3);
+  const narrow = matchMedia('(max-width: 800px)');
+  const order = ['legL', 'armL', 'stem', 'armR', 'legR'];
+  const roadLen = roadLines[0].getTotalLength ? roadLines[0].getTotalLength() : 2000;
+  [...roadLines, lane].forEach(l => { l.style.strokeDasharray = l === lane ? '' : `${roadLen} ${roadLen}`; });
+
   const setProgress = p => {
-    place(car, 0.04 + p * 0.9);
-    place(bike, 0.96 - p * 0.9);
+    let done = true;
+    order.forEach((key, i) => {
+      const pc = PIECES[key];
+      const k = easeOut(clamp((p - i * 0.05) / 0.3));
+      if (k < 1) done = false;
+      const spread = narrow.matches ? 0.55 : 1;      // スマホでは散らばる距離を短く
+      const tx = (pc.from[0] * spread * (1 - k)).toFixed(1), ty = (pc.from[1] * spread * (1 - k)).toFixed(1);
+      const tr = `translate(${tx} ${ty})`;
+      pc.g.setAttribute('transform', tr);
+      (pc.riders || []).forEach(r => r.setAttribute('transform', tr));
+    });
+    whole.style.display = done ? '' : 'none';
+    parts.style.display = done ? 'none' : '';
+    shadow.setAttribute('opacity', (clamp((p - 0.3) / 0.2) * .7).toFixed(2));
+
+    const r = clamp((p - 0.48) / 0.14);
+    roadLines.forEach(l => { l.style.strokeDashoffset = (roadLen * (1 - r)).toFixed(1); });
+    lane.style.opacity = r >= 1 ? 1 : 0;
+
+    const t = clamp((p - 0.6) / 0.4);
+    const show = r >= 1 ? '' : 'none';
+    car.outer.style.display = bike.outer.style.display = show;
+    place(car, 0.04 + t * 0.9);
+    place(bike, 0.96 - t * 0.9);
   };
-  setProgress(0);
+  setProgress(matchMedia('(prefers-reduced-motion: reduce)').matches ? 1 : 0);
   window.meguruScene = { setProgress };
 })();
