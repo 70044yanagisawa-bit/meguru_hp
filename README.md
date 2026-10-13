@@ -8,7 +8,9 @@
 - `history.html` … 経歴（フッターとAboutからだけリンク。興味がある人向け）
 - `hp/` … HP制作サービス専用のサイト「めぐるHP制作」（公開URLは `/hp/`）。
   - ファーストビューの「YM」の島のイラストは `hp/scene.js` がその場でSVGを描いている（画像ファイルなし）。スクロールの前半で5つのパーツが四方から集まって「YM」になり、道が引かれ、後半で車とバイクが走る
-  - 写真は `hp/images/` に置くだけで反映：`scene-01.jpg`（横長）、`scene-02.jpg`（縦長）、`scene-03.jpg`（横長）、`scene-04.jpg`（横長・全画面）、`scene-05.jpg`（縦長）、`me.jpg`（縦長。無いあいだは `images/about.jpg` を表示）、`ogp.jpg`（1200×630）
+  - ページ内のイラスト（打ち合わせ・パソコン・トレーニング・街・グラフ、経歴の各章）は `hp/illust.js` が描いている。`<div class="illust" data-illust="名前">` で呼び出す。人や木などの描き方は `hp/draw.js` にまとめてある
+  - `hp/history.html` … 緑のテイストの「これまでのこと」。トップの「これまでのことを、もう少し詳しく」から
+  - 写真は「わたしのこと」の `hp/images/me.jpg`（縦長。無いあいだは `images/about.jpg`）と、`hp/images/ogp.jpg`（1200×630）だけ
   - 色は `hp/style.css` の先頭（`--green` など）でまとめて変えられる
 
 ## 写真の入れ方

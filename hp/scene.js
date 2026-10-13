@@ -7,48 +7,18 @@
   const root = document.querySelector('[data-scene]');
   if (!root) return;
 
-  const NS = 'http://www.w3.org/2000/svg';
+  const { COL, el, pts, line, patterns, iso, person } = window.MeguruDraw;
   const S = 36;                         // 床の1マス → px
-  const C = Math.cos(Math.PI / 6);
   const H = 1.6;                        // Mの厚み
   // 文字の座標 (u, v) を床の向きに回す。-30° にすると、Mが正面からほぼまっすぐ読める
-  const ROT = -30 * Math.PI / 180;
-  const R = [Math.cos(ROT), Math.sin(ROT)];      // 文字の「右」が床のどちら向きか
-  const D = [-Math.sin(ROT), Math.cos(ROT)];     // 文字の「下」
-  const F = (u, v) => [u * R[0] + v * D[0], u * R[1] + v * D[1]];
-  const depthOf = (u, v) => { const [x, y] = F(u, v); return x + y; };
-  const P = (u, v, z = 0) => { const [x, y] = F(u, v); return [(x - y) * C * S, (x + y) * 0.5 * S - z * S]; };
-  const pts = arr => arr.map(p => p.map(n => n.toFixed(1)).join(',')).join(' ');
-
-  const COL = {
-    ink: '#10291c',
-    top: '#dff3e5',
-    left: '#1aa85f',
-    right: '#0d7a43',
-    white: '#ffffff',
-    green: '#1aa85f',
-    deep: '#0d7a43',
-    pale: '#bfe6cc',
-    pop: '#ffd23f',
-    skin: '#fbe3cf'
-  };
-
-  const el = (tag, attrs = {}, parent) => {
-    const n = document.createElementNS(NS, tag);
-    for (const k in attrs) n.setAttribute(k, attrs[k]);
-    parent && parent.appendChild(n);
-    return n;
-  };
+  const view = iso(S, -30);
+  const { P, depthOf } = view;
 
   const svg = el('svg', { role: 'img', 'aria-label': 'Mの形をした島の上で、トレーニングする人、パソコンでAIを使う人、LINEのお店、ダンスする人がいて、車とバイクが走っているイラスト' });
   root.appendChild(svg);
 
   // 網点（参考：イラストの影の質感）
-  const defs = el('defs', {}, svg);
-  const pat = el('pattern', { id: 'dots', width: 7, height: 7, patternUnits: 'userSpaceOnUse' }, defs);
-  el('circle', { cx: 2, cy: 2, r: 1.1, fill: COL.green, opacity: .35 }, pat);
-  const patW = el('pattern', { id: 'dotsW', width: 6, height: 6, patternUnits: 'userSpaceOnUse' }, defs);
-  el('circle', { cx: 2, cy: 2, r: 1, fill: '#fff', opacity: .35 }, patW);
+  const pat = patterns(svg);
 
   const world = el('g', { class: 'sc-world' }, svg);
 
@@ -61,29 +31,7 @@
     svg.setAttribute('viewBox', `${x0.toFixed(0)} ${y0.toFixed(0)} ${(x1 - x0).toFixed(0)} ${(y1 - y0).toFixed(0)}`);
   }
 
-  /* ---------- 立体（多角形を押し出す） ---------- */
-  const prism = (poly, z0, z1, opt = {}, parent = world) => {
-    const g = el('g', {}, parent);
-    let area = 0;
-    poly.forEach((a, i) => { const b = poly[(i + 1) % poly.length]; area += a[0] * b[1] - b[0] * a[1]; });
-    const sides = [];
-    poly.forEach((a, i) => {
-      const b = poly[(i + 1) % poly.length];
-      const dx = b[0] - a[0], dy = b[1] - a[1];
-      const n = F(...(area > 0 ? [dy, -dx] : [-dy, dx]));
-      if (n[0] + n[1] <= 0.001) return;               // こちらを向いていない面は描かない
-      sides.push({ a, b, n, depth: depthOf((a[0] + b[0]) / 2, (a[1] + b[1]) / 2) });
-    });
-    sides.sort((p, q) => p.depth - q.depth);
-    sides.forEach(({ a, b, n }) => {
-      const fill = n[0] > n[1] ? (opt.right || COL.right) : (opt.left || COL.left);
-      el('polygon', { points: pts([P(...a, z0), P(...b, z0), P(...b, z1), P(...a, z1)]), fill, stroke: COL.ink, 'stroke-width': 2, 'stroke-linejoin': 'round' }, g);
-    });
-    const top = pts(poly.map(p => P(p[0], p[1], z1)));
-    el('polygon', { points: top, fill: opt.top || COL.top, stroke: COL.ink, 'stroke-width': 2, 'stroke-linejoin': 'round' }, g);
-    if (opt.dots) el('polygon', { points: top, fill: 'url(#dots)' }, g);
-    return g;
-  };
+  const prism = (poly, z0, z1, opt = {}, parent = world) => window.MeguruDraw.prism(view, poly, z0, z1, { ...opt, dots: opt.dots ? pat.dots : null }, parent);
   const box = (x0, y0, x1, y1, z0, z1, opt, parent) => prism([[x0, y0], [x1, y0], [x1, y1], [x0, y1]], z0, z1, opt, parent);
 
   /* ---------- YとMの本体 ----------
@@ -118,7 +66,7 @@
   prism(M, 0, H, { dots: true }, whole);
   prism(Y_STEM, 0, H, YCOL, whole);
   el('polygon', { points: pts(Y_TOP.map(p => P(...p, H))), fill: YCOL.top, stroke: COL.ink, 'stroke-width': 2, 'stroke-linejoin': 'round' }, whole);
-  el('polygon', { points: pts(Y_TOP.map(p => P(...p, H))), fill: 'url(#dots)', opacity: .5 }, whole);
+  el('polygon', { points: pts(Y_TOP.map(p => P(...p, H))), fill: pat.dots, opacity: .5 }, whole);
 
   const parts = el('g', { class: 'sc-parts' }, world);
   Object.entries(PIECES)
@@ -143,37 +91,8 @@
     const outer = el('g', { transform: `translate(${px.toFixed(1)} ${py.toFixed(1)})` }, world);
     return el('g', { class: cls }, outer);
   };
-  const line = (g, d, w = 3, color = COL.ink) => el('path', { d, fill: 'none', stroke: color, 'stroke-width': w, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, g);
-
-  // 人：足元が原点。body の色と、腕の形を渡す
-  const person = (g, { shirt = COL.green, arms = 'down', hair = COL.ink, legs = 'stand' } = {}) => {
-    if (legs === 'stand') line(g, 'M-3 0 L-3 -11 M3 0 L3 -11');
-    if (legs === 'sit') line(g, 'M-3 -10 L-9 -10 L-9 0 M3 -10 L-3 -10 L-3 0');
-    if (legs === 'wide') line(g, 'M-6 0 L-3 -11 M6 0 L3 -11');
-    el('rect', { x: -7, y: -25, width: 14, height: 15, rx: 5, fill: shirt, stroke: COL.ink, 'stroke-width': 2 }, g);
-    const A = {
-      down: 'M-7 -21 L-10 -11 M7 -21 L10 -11',
-      up: 'M-7 -21 L-12 -33 M7 -21 L12 -33',
-      v: 'M-7 -21 L-14 -30 M7 -21 L13 -14',
-      front: 'M-6 -20 L2 -14 M6 -20 L10 -13',
-      phone: 'M-7 -21 L-10 -11 M7 -21 L6 -28'
-    };
-    line(g, A[arms], 3);
-    el('circle', { cx: 0, cy: -32, r: 7, fill: COL.skin, stroke: COL.ink, 'stroke-width': 2 }, g);
-    el('path', { d: 'M-7 -33 Q-7 -41 0 -40 Q7 -41 7 -33 Q3 -36 -1 -35 Q-5 -35 -7 -33 Z', fill: hair, stroke: COL.ink, 'stroke-width': 1.5, 'stroke-linejoin': 'round' }, g);
-    el('circle', { cx: -2.5, cy: -31, r: 1, fill: COL.ink }, g);
-    el('circle', { cx: 2.5, cy: -31, r: 1, fill: COL.ink }, g);
-    return g;
-  };
-
   // 木
-  const tree = (x, y, r = 1) => put(x, y, () => {
-    const g = at(x, y, H, 'sc-tree');
-    line(g, 'M0 0 L0 -16', 3);
-    el('circle', { cx: 0, cy: -26 * r, r: 13 * r, fill: COL.green, stroke: COL.ink, 'stroke-width': 2 }, g);
-    el('circle', { cx: 0, cy: -26 * r, r: 13 * r, fill: 'url(#dotsW)' }, g);
-    el('path', { d: `M${-6 * r} ${-30 * r} q4 -5 9 -4`, fill: 'none', stroke: '#fff', 'stroke-width': 2, 'stroke-linecap': 'round' }, g);
-  });
+  const tree = (x, y, r = 1) => put(x, y, () => window.MeguruDraw.tree(at(x, y, H, 'sc-tree'), r, pat.dotsW));
   tree(7.5, 11.3, .75);
   [[0.8, 1.0], [3.3, 1.1], [11.8, 1.1], [14.2, 1.0], [0.7, 11.3, .8], [14.3, 11.3, .8], [3.4, 11.4, .7], [11.7, 11.4, .7]].forEach(([x, y, r]) => tree(x, y, r));
 

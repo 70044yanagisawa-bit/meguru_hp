@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Maru+Gothic:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261013">
+  <link rel="stylesheet" href="style.css?v=20261013b">
   <script>
     document.documentElement.classList.add("js");
     // 写真がまだ無いときは、仮の写真（data-fallback）→ それも無ければ枠だけ残す
@@ -73,9 +73,9 @@
     </section>
 
     <!-- 大きな写真 -->
-    <figure class="wide frame" data-reveal="clip" data-label="scene-01.jpg — 打ち合わせの手元、ノート、コーヒーなど（横長）">
+    <figure class="wide frame" data-reveal="clip">
       <div class="frame__in" data-parallax="0.18">
-        <img src="images/scene-01.jpg" alt="" onerror="ph(this)">
+          <div class="illust" data-illust="listen"></div>
       </div>
     </figure>
 
@@ -93,14 +93,14 @@
     </article>
 
     <div class="pair">
-      <figure class="pair__a frame" data-reveal="clip" data-label="scene-02.jpg — 縦長の写真">
+      <figure class="pair__a frame" data-reveal="clip">
         <div class="frame__in" data-parallax="0.1">
-          <img src="images/scene-02.jpg" alt="" onerror="ph(this)">
+          <div class="illust" data-illust="pc"></div>
         </div>
       </figure>
-      <figure class="pair__b frame" data-reveal="clip-side" data-label="scene-03.jpg — 横長の写真">
+      <figure class="pair__b frame" data-reveal="clip-side">
         <div class="frame__in" data-parallax="-0.08">
-          <img src="images/scene-03.jpg" alt="" onerror="ph(this)">
+          <div class="illust" data-illust="train"></div>
         </div>
       </figure>
     </div>
@@ -120,9 +120,9 @@
 
     <!-- 写真の上を言葉が通り過ぎる -->
     <section class="band">
-      <figure class="band__photo frame" data-label="scene-04.jpg — 横長の写真（街、店先、手元など）">
+      <figure class="band__photo frame">
         <div class="frame__in" data-parallax="0.25">
-          <img src="images/scene-04.jpg" alt="" onerror="ph(this)">
+          <div class="illust" data-illust="town"></div>
         </div>
       </figure>
       <p class="band__text" data-reveal>
@@ -155,9 +155,9 @@
         <p data-reveal="up">公開したあとは、GA4で数字を見ます。どこから来て、どのページで読むのをやめているのか。それを見ながら、言葉や順番を少しずつ直していきます。</p>
         <p data-reveal="up">数字の見方もお伝えするので、ご自身でも様子がわかるようになります。</p>
       </div>
-      <figure class="chapter__photo frame" data-reveal="clip" data-label="scene-05.jpg — 縦長の写真">
+      <figure class="chapter__photo frame" data-reveal="clip">
         <div class="frame__in" data-parallax="0.1">
-          <img src="images/scene-05.jpg" alt="" onerror="ph(this)">
+          <div class="illust" data-illust="chart"></div>
         </div>
       </figure>
     </article>
@@ -212,7 +212,7 @@
         <p data-reveal="up">はじめまして、柳沢恵瑠（やなぎさわ めぐる）です。</p>
         <p data-reveal="up">消防士として3年半、現場にいました。そのあと完全歩合の営業、SNSマーケティングの会社での運用と法人営業を経て、いまはAIの導入支援と、ホームページの制作をしています。</p>
         <p data-reveal="up">遠回りに見えるかもしれません。でも、人の話を聞くこと、相手の立場で伝えること、仕組みで手間を減らすこと。どれも、いまの仕事でいちばん役に立っています。</p>
-        <p class="me__more" data-reveal="up"><a href="../history.html">これまでのことを、もう少し詳しく <i aria-hidden="true">→</i></a></p>
+        <p class="me__more" data-reveal="up"><a href="history.html">これまでのことを、もう少し詳しく <i aria-hidden="true">→</i></a></p>
       </div>
     </section>
 
@@ -237,7 +237,9 @@
     </div>
   </footer>
 
-  <script src="scene.js?v=20261013"></script>
-  <script src="main.js?v=20261013"></script>
+  <script src="draw.js?v=20261013b"></script>
+  <script src="scene.js?v=20261013b"></script>
+  <script src="illust.js?v=20261013b"></script>
+  <script src="main.js?v=20261013b"></script>
 </body>
 </html>
