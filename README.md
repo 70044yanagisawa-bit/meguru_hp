@@ -34,7 +34,6 @@ JPG・横幅 2000px 前後・1枚 500KB 以下が目安。
 
 - Works：制作物が増えたら index.html の `<a class="site">` を複製して追加（サムネイルは images/works/）
 
-- `index.html` の `hello@example.com`（2か所）を実際のメールアドレスに
 - 独自ドメインが決まったら `og:image` を絶対URLに
 
 ## 公開（Cloudflare Workers）
