@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>めぐるHP制作 | 柳沢恵瑠</title>
+  <meta name="description" content="柳沢恵瑠がひとりで請けているホームページ制作。話を聞くところから、LINEとのつながり、公開後の見直しまで。">
+  <meta property="og:title" content="めぐるHP制作 | 柳沢恵瑠">
+  <meta property="og:description" content="話を聞くところから、ホームページをつくっています。">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="images/ogp.jpg">
+  <meta name="theme-color" content="#0d7a43">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Maru+Gothic:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=20261013">
+  <script>
+    document.documentElement.classList.add("js");
+    // 写真がまだ無いときは、仮の写真（data-fallback）→ それも無ければ枠だけ残す
+    function ph(img) {
+      var fb = img.getAttribute("data-fallback");
+      if (fb) { img.removeAttribute("data-fallback"); img.src = fb; } else { img.remove(); }
+    }
+  </script>
+</head>
+<body>
+
+  <!-- オープニング -->
+  <div class="opening" aria-hidden="true">
+    <p class="opening__m"><span>M</span></p>
+    <p class="opening__word">
+      <span class="mask"><span>め</span></span><span class="mask"><span>ぐ</span></span><span class="mask"><span>る</span></span>
+    </p>
+    <p class="opening__sub"><span class="mask"><span>HP制作</span></span></p>
+  </div>
+
+  <header class="header">
+    <a class="header__logo" href="./">めぐる<small>HP制作</small></a>
+    <a class="header__link" href="../">柳沢恵瑠のサイト</a>
+  </header>
+  <div class="progress" aria-hidden="true"><span></span></div>
+
+  <main>
+
+    <!-- ファーストビュー：Mの島。スクロールで車とバイクが進む -->
+    <section class="hero" data-intro data-hero>
+      <div class="hero__sticky">
+        <p class="hero__bg" aria-hidden="true"><span>MEGURU MEGURU MEGURU MEGURU</span></p>
+        <div class="hero__scene" data-scene></div>
+        <div class="hero__copy">
+          <p class="hero__label"><span class="mask"><span>めぐるHP制作</span></span></p>
+          <h1 class="hero__title">
+            <span class="mask"><span>話を聞くことから、</span></span>
+            <span class="mask"><span>ホームページを</span></span>
+            <span class="mask"><span>つくっています。</span></span>
+          </h1>
+          <p class="hero__name"><span class="mask"><span>柳沢恵瑠 <i>Meguru Yanagisawa</i></span></span></p>
+        </div>
+        <p class="hero__scroll" aria-hidden="true">Scroll</p>
+      </div>
+    </section>
+
+    <!-- はじめに -->
+    <section class="intro">
+      <p class="intro__text" data-reveal>
+        <span class="mask"><span>ホームページをつくる仕事をしています。</span></span>
+        <span class="mask"><span>といっても、最初の時間のほとんどは、</span></span>
+        <span class="mask"><span>話を聞いています。</span></span>
+      </p>
+      <p class="intro__sub" data-reveal="up">どんな人に来てほしいのか。これまで何を大事にしてきたのか。<br>言葉になる前のところまで聞けたら、つくるのはそのあとです。</p>
+    </section>
+
+    <!-- 大きな写真 -->
+    <figure class="wide frame" data-reveal="clip" data-label="scene-01.jpg — 打ち合わせの手元、ノート、コーヒーなど（横長）">
+      <div class="frame__in" data-parallax="0.18">
+        <img src="images/scene-01.jpg" alt="" onerror="ph(this)">
+      </div>
+    </figure>
+
+    <!-- 聞く -->
+    <article class="chapter">
+      <p class="chapter__word" data-reveal><span class="mask"><span>聞く</span></span></p>
+      <div class="chapter__body">
+        <h2 class="chapter__title" data-reveal>
+          <span class="mask"><span>うまく言えなくて、</span></span>
+          <span class="mask"><span>大丈夫です。</span></span>
+        </h2>
+        <p data-reveal="up">副業でコーチをしていて、年間でおよそ250人と話します。そこで知ったのは、自分のことをいちばん言葉にしにくいのは、本人だということでした。</p>
+        <p data-reveal="up">だから最初は、ホームページの話をあまりしません。お店や仕事を始めたきっかけ、よく来てくれるお客さんのこと、ちょっと困っていること。雑談のような時間の中に、ページに載せたい言葉はだいたい埋まっています。</p>
+      </div>
+    </article>
+
+    <div class="pair">
+      <figure class="pair__a frame" data-reveal="clip" data-label="scene-02.jpg — 縦長の写真">
+        <div class="frame__in" data-parallax="0.1">
+          <img src="images/scene-02.jpg" alt="" onerror="ph(this)">
+        </div>
+      </figure>
+      <figure class="pair__b frame" data-reveal="clip-side" data-label="scene-03.jpg — 横長の写真">
+        <div class="frame__in" data-parallax="-0.08">
+          <img src="images/scene-03.jpg" alt="" onerror="ph(this)">
+        </div>
+      </figure>
+    </div>
+
+    <!-- つくる -->
+    <article class="chapter chapter--rev">
+      <p class="chapter__word" data-reveal><span class="mask"><span>つくる</span></span></p>
+      <div class="chapter__body">
+        <h2 class="chapter__title" data-reveal>
+          <span class="mask"><span>早くて、</span></span>
+          <span class="mask"><span>雑じゃないように。</span></span>
+        </h2>
+        <p data-reveal="up">制作の途中にAIを組み込んでいるので、ヒアリングから公開まで、早ければ1週間ほどです。そのぶん、話を聞く時間と、見た目を整える時間は削らないようにしています。</p>
+        <p data-reveal="up">デザインは一緒に画面を見ながら、3回まで直します。ドメインや公開の手続きも、こちらでまとめて引き受けます。このサイトも、自分でつくりました。</p>
+      </div>
+    </article>
+
+    <!-- 写真の上を言葉が通り過ぎる -->
+    <section class="band">
+      <figure class="band__photo frame" data-label="scene-04.jpg — 横長の写真（街、店先、手元など）">
+        <div class="frame__in" data-parallax="0.25">
+          <img src="images/scene-04.jpg" alt="" onerror="ph(this)">
+        </div>
+      </figure>
+      <p class="band__text" data-reveal>
+        <span class="mask"><span>きれいに見えることより、</span></span>
+        <span class="mask"><span>その人らしさが伝わること。</span></span>
+      </p>
+    </section>
+
+    <!-- つなぐ -->
+    <article class="chapter">
+      <p class="chapter__word" data-reveal><span class="mask"><span>つなぐ</span></span></p>
+      <div class="chapter__body">
+        <h2 class="chapter__title" data-reveal>
+          <span class="mask"><span>見てくれた人と、</span></span>
+          <span class="mask"><span>そのあとも。</span></span>
+        </h2>
+        <p data-reveal="up">ホームページは、見てもらって終わりではないと思っています。気になった人が、気軽にもう一歩近づけるように、LINE公式アカウントをホームページとひと続きのものとして組み立てることもあります。</p>
+        <p data-reveal="up">自動の返信や予約の案内は、オープンソースのLINE Harnessを使って、月々のツール代がかさまない形でつくります。浮いたお金は、本業のほうに使ってほしいからです。</p>
+      </div>
+    </article>
+
+    <!-- 見つづける -->
+    <article class="chapter chapter--rev chapter--photo">
+      <p class="chapter__word" data-reveal><span class="mask"><span>見つづける</span></span></p>
+      <div class="chapter__body">
+        <h2 class="chapter__title" data-reveal>
+          <span class="mask"><span>公開してからが、</span></span>
+          <span class="mask"><span>本番です。</span></span>
+        </h2>
+        <p data-reveal="up">公開したあとは、GA4で数字を見ます。どこから来て、どのページで読むのをやめているのか。それを見ながら、言葉や順番を少しずつ直していきます。</p>
+        <p data-reveal="up">数字の見方もお伝えするので、ご自身でも様子がわかるようになります。</p>
+      </div>
+      <figure class="chapter__photo frame" data-reveal="clip" data-label="scene-05.jpg — 縦長の写真">
+        <div class="frame__in" data-parallax="0.1">
+          <img src="images/scene-05.jpg" alt="" onerror="ph(this)">
+        </div>
+      </figure>
+    </article>
+
+    <!-- つくったもの：PCでは縦スクロールで横に流れる -->
+    <section class="works" data-pin>
+      <div class="works__sticky">
+        <div class="works__track">
+          <div class="works__head">
+            <h2 class="works__title" data-reveal>
+              <span class="mask"><span>これまでに</span></span>
+              <span class="mask"><span>つくったもの</span></span>
+            </h2>
+            <p data-reveal="up">画像を押すと、実際のサイトが開きます。</p>
+          </div>
+
+          <a class="work" href="https://haltakagi.com/" target="_blank" rel="noopener">
+            <figure class="work__thumb frame" data-reveal="clip" data-label="works/site-01.jpg">
+              <div class="frame__in">
+                <img src="../images/works/site-01.jpg" alt="GOAL ACHIEVEMENT PROGRAM のトップページ" onerror="ph(this)">
+              </div>
+            </figure>
+            <p class="work__meta">個人コーチングのホームページ</p>
+            <h3 class="work__name">GOAL ACHIEVEMENT PROGRAM <i aria-hidden="true">↗</i></h3>
+          </a>
+
+          <a class="work" href="https://harbor-shisha.com/" target="_blank" rel="noopener">
+            <figure class="work__thumb frame" data-reveal="clip" data-label="works/site-02.jpg">
+              <div class="frame__in">
+                <img src="../images/works/site-02.jpg" alt="HARBOR cafe &amp; shisha bar のトップページ" onerror="ph(this)">
+              </div>
+            </figure>
+            <p class="work__meta">シーシャカフェ＆バーのLINE公式アカウント運用</p>
+            <h3 class="work__name">HARBOR cafe &amp; shisha bar <i aria-hidden="true">↗</i></h3>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- わたしのこと -->
+    <section class="me">
+      <figure class="me__photo frame" data-reveal="clip" data-label="me.jpg — 人柄が伝わる写真（縦長）">
+        <div class="frame__in" data-parallax="0.08">
+          <img src="images/me.jpg" data-fallback="../images/about.jpg" alt="柳沢恵瑠" onerror="ph(this)">
+        </div>
+      </figure>
+      <div class="me__body">
+        <p class="me__name" data-reveal>
+          <span class="mask"><span>柳沢恵瑠</span></span>
+          <span class="mask"><span><i>Meguru Yanagisawa</i></span></span>
+        </p>
+        <p data-reveal="up">はじめまして、柳沢恵瑠（やなぎさわ めぐる）です。</p>
+        <p data-reveal="up">消防士として3年半、現場にいました。そのあと完全歩合の営業、SNSマーケティングの会社での運用と法人営業を経て、いまはAIの導入支援と、ホームページの制作をしています。</p>
+        <p data-reveal="up">遠回りに見えるかもしれません。でも、人の話を聞くこと、相手の立場で伝えること、仕組みで手間を減らすこと。どれも、いまの仕事でいちばん役に立っています。</p>
+        <p class="me__more" data-reveal="up"><a href="../history.html">これまでのことを、もう少し詳しく <i aria-hidden="true">→</i></a></p>
+      </div>
+    </section>
+
+    <!-- おわりに -->
+    <section class="close">
+      <h2 class="close__title" data-reveal>
+        <span class="mask"><span>話してみたいと</span></span>
+        <span class="mask"><span>思ったら。</span></span>
+      </h2>
+      <p data-reveal="up">何をつくるか決まっていなくても、かまいません。「うちにホームページって要るのかな」くらいの話から、一緒に考えます。</p>
+      <p data-reveal="up">メールは、<a class="close__mail" href="mailto:hello@example.com">hello@example.com</a> まで。</p>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p class="footer__big" aria-hidden="true">Meguru</p>
+    <div class="footer__row">
+      <p>めぐるHP制作 ／ 柳沢恵瑠</p>
+      <a href="../">柳沢恵瑠のサイトへ</a>
+      <p><small>&copy; 2026 Meguru Yanagisawa</small></p>
+    </div>
+  </footer>
+
+  <script src="scene.js?v=20261013"></script>
+  <script src="main.js?v=20261013"></script>
+</body>
+</html>
