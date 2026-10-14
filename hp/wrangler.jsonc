@@ -1,0 +1,10 @@
+{
+  // めぐるHP制作（このフォルダ）を、単体のサイトとして配信する Cloudflare Workers の設定。
+  // Cloudflare で Worker を作るときに、ルートディレクトリを「hp」にする。
+  // 配信しないファイルは .assetsignore に書く。
+  "name": "meguru-hp-seisaku",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "."
+  }
+}

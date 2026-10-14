@@ -10,7 +10,15 @@
   - ファーストビューの「YM」の島のイラストは `hp/scene.js` がその場でSVGを描いている（画像ファイルなし）。スクロールの前半で5つのパーツが四方から集まって「YM」になり、道が引かれ、後半で車とバイクが走る
   - ページ内のイラスト（打ち合わせ・パソコン・トレーニング・街・グラフ、経歴の各章）は `hp/illust.js` が描いている。`<div class="illust" data-illust="名前">` で呼び出す。人や木などの描き方は `hp/draw.js` にまとめてある
   - `hp/history.html` … 緑のテイストの「これまでのこと」。トップの「これまでのことを、もう少し詳しく」から
-  - 写真は「わたしのこと」の `hp/images/me.jpg`（縦長。無いあいだは `images/about.jpg`）と、`hp/images/ogp.jpg`（1200×630）だけ
+  - 写真は「わたしのこと」の `hp/images/me.jpg`（縦長）と、`hp/images/ogp.jpg`（1200×630）だけ
+  - `hp/` は単体でも動く（画像・favicon をフォルダ内に持っている）。独自ドメイン用に、`hp/` だけを配信する2つ目の Worker「meguru-hp-seisaku」の設定を `hp/wrangler.jsonc` に置いてある
+
+## めぐるHP制作を独自ドメインで公開する（2つ目の Worker）
+
+1. Cloudflare の Workers & Pages → Create → Import a repository で、このリポジトリを選ぶ
+2. Worker の名前は `meguru-hp-seisaku`（`hp/wrangler.jsonc` の name と同じにする）、Root directory は `hp`
+3. 作成後、Settings → Domains & Routes → Add → Custom domain で、買ったドメインを付ける
+4. それ以降は `main` に push すると、メインサイトとめぐるHP制作の両方が自動で更新される
   - 色は `hp/style.css` の先頭（`--green` など）でまとめて変えられる
 
 ## 写真の入れ方
