@@ -1,7 +1,8 @@
 <?php
 /**
- * トップページ（hp/index.html と同じ内容）
- * 文章を直すときは、このファイルを編集する。実績は管理画面の「実績」から。
+ * トップページ
+ * 文章・写真は、管理画面の「固定ページ → トップページ」の入力欄から変えられる（inc/fields.php）。
+ * 実績は左メニューの「実績」から。
  */
 get_header();
 ?>
@@ -10,18 +11,16 @@ get_header();
     <!-- ファーストビュー：Mの島。スクロールで車とバイクが進む -->
     <section class="hero" data-intro data-hero>
       <div class="hero__sticky">
-        <p class="hero__bg" aria-hidden="true"><span>MEGURU&nbsp;MEGURU&nbsp;MEGURU&nbsp;MEGURU&nbsp;</span></p>
+        <p class="hero__bg" aria-hidden="true"><span><?php echo esc_html( str_repeat( wp_strip_all_tags( meguru_f( 'hero_bg' ) ) . "\u{00A0}", 4 ) ); ?></span></p>
         <div class="hero__scene" data-scene></div>
         <div class="hero__copy">
-          <p class="hero__label"><span class="mask"><span>めぐるHP制作</span></span></p>
+          <p class="hero__label"><span class="mask"><span><?php echo meguru_t( 'hero_label' ); ?></span></span></p>
           <h1 class="hero__title">
-            <span class="mask"><span>話を聞くことから、</span></span>
-            <span class="mask"><span>ホームページを</span></span>
-            <span class="mask"><span>つくっています。</span></span>
+<?php echo meguru_lines( 'hero_title', '            ' ); ?>
           </h1>
-          <p class="hero__name"><span class="mask"><span>柳沢恵瑠 <i>Meguru Yanagisawa</i></span></span></p>
+          <p class="hero__name"><span class="mask"><span><?php echo meguru_t( 'hero_name' ); ?></span></span></p>
         </div>
-        <p class="hero__hint" aria-hidden="true">スクロールすると、<br>パーツが集まって「YM」になります。</p>
+        <p class="hero__hint" aria-hidden="true"><?php echo meguru_br( 'hero_hint' ); ?></p>
         <p class="hero__scroll" aria-hidden="true">Scroll</p>
       </div>
     </section>
@@ -29,154 +28,150 @@ get_header();
     <!-- はじめに -->
     <section class="intro">
       <p class="intro__text" data-reveal>
-        <span class="mask"><span>ホームページをつくる仕事をしています。</span></span>
-        <span class="mask"><span>といっても、最初の時間のほとんどは、</span></span>
-        <span class="mask"><span>話を聞いています。</span></span>
+<?php echo meguru_lines( 'intro_text', '        ' ); ?>
       </p>
-      <p class="intro__sub" data-reveal="up">どんな人に来てほしいのか。これまで何を大事にしてきたのか。<br>言葉になる前のところまで聞けたら、つくるのはそのあとです。</p>
+      <p class="intro__sub" data-reveal="up"><?php echo meguru_br( 'intro_sub' ); ?></p>
     </section>
 
     <!-- 大きな写真 -->
     <figure class="wide frame" data-reveal="clip">
       <div class="frame__in" data-parallax="0.18">
-          <div class="illust" data-illust="cafe"></div>
+        <?php echo meguru_frame( 'img_wide' ); ?>
       </div>
     </figure>
 
-    <!-- 聞く -->
+    <!-- 章1 -->
     <article class="chapter">
-      <p class="chapter__word" data-reveal><span class="mask"><span>聞く</span></span></p>
+      <p class="chapter__word" data-reveal><span class="mask"><span><?php echo meguru_t( 'ch1_word' ); ?></span></span></p>
       <div class="chapter__body">
         <h2 class="chapter__title" data-reveal>
-          <span class="mask"><span>うまく言えなくて、</span></span>
-          <span class="mask"><span>大丈夫です。</span></span>
+<?php echo meguru_lines( 'ch1_title' ); ?>
         </h2>
-        <p data-reveal="up">副業でコーチをしていて、年間でおよそ250人と話します。そこで知ったのは、自分のことをいちばん言葉にしにくいのは、本人だということでした。</p>
-        <p data-reveal="up">だから最初は、ホームページの話をあまりしません。お店や仕事を始めたきっかけ、よく来てくれるお客さんのこと、ちょっと困っていること。雑談のような時間の中に、ページに載せたい言葉はだいたい埋まっています。</p>
+<?php echo meguru_paras( 'ch1_body' ); ?>
       </div>
     </article>
 
     <div class="pair">
       <figure class="pair__a frame" data-reveal="clip">
         <div class="frame__in" data-parallax="0.1">
-          <div class="illust" data-illust="mindmap"></div>
+          <?php echo meguru_frame( 'img_pair_a' ); ?>
         </div>
       </figure>
       <figure class="pair__b frame" data-reveal="clip-side">
         <div class="frame__in" data-parallax="-0.08">
-          <div class="illust" data-illust="phone"></div>
+          <?php echo meguru_frame( 'img_pair_b' ); ?>
         </div>
       </figure>
     </div>
 
-    <!-- つくる -->
+    <!-- 章2 -->
     <article class="chapter chapter--rev">
-      <p class="chapter__word" data-reveal><span class="mask"><span>つくる</span></span></p>
+      <p class="chapter__word" data-reveal><span class="mask"><span><?php echo meguru_t( 'ch2_word' ); ?></span></span></p>
       <div class="chapter__body">
         <h2 class="chapter__title" data-reveal>
-          <span class="mask"><span>早くて、</span></span>
-          <span class="mask"><span>雑じゃないように。</span></span>
+<?php echo meguru_lines( 'ch2_title' ); ?>
         </h2>
-        <p data-reveal="up">制作の途中にAIを組み込んでいるので、ヒアリングから公開まで、早ければ1週間ほどです。そのぶん、話を聞く時間と、見た目を整える時間は削らないようにしています。</p>
-        <p data-reveal="up">デザインは一緒に画面を見ながら、納得いくまで直します。ドメインや公開の手続きも、こちらでまとめて引き受けます。このサイトも、自分でつくりました。</p>
+<?php echo meguru_paras( 'ch2_body' ); ?>
       </div>
     </article>
 
+<?php if ( meguru_on( 'band_show' ) ) : ?>
     <!-- 写真の上を言葉が通り過ぎる -->
     <section class="band">
       <figure class="band__photo frame">
         <div class="frame__in" data-parallax="0.25">
-          <div class="illust" data-illust="town"></div>
+          <?php echo meguru_frame( 'img_band' ); ?>
         </div>
       </figure>
       <p class="band__text" data-reveal>
-        <span class="mask"><span>きれいに見えることより、</span></span>
-        <span class="mask"><span>その人らしさが伝わること。</span></span>
+<?php echo meguru_lines( 'band_text', '        ' ); ?>
       </p>
     </section>
+<?php endif; ?>
 
-    <!-- つなぐ -->
+<?php if ( meguru_on( 'ch3_show' ) ) : ?>
+    <!-- 章3 -->
     <article class="chapter">
-      <p class="chapter__word" data-reveal><span class="mask"><span>つなぐ</span></span></p>
+      <p class="chapter__word" data-reveal><span class="mask"><span><?php echo meguru_t( 'ch3_word' ); ?></span></span></p>
       <div class="chapter__body">
         <h2 class="chapter__title" data-reveal>
-          <span class="mask"><span>見てくれた人と、</span></span>
-          <span class="mask"><span>そのあとも。</span></span>
+<?php echo meguru_lines( 'ch3_title' ); ?>
         </h2>
-        <p data-reveal="up">ホームページは、見てもらって終わりではないと思っています。せっかく気になってくれた人との出会いが、一度きりで終わってしまうのはもったいない。</p>
-        <p data-reveal="up">だから私は、ホームページをつくったあと、LINEの構築までひと続きで引き受けています。</p>
+<?php echo meguru_paras( 'ch3_body' ); ?>
       </div>
     </article>
+<?php endif; ?>
 
-    <!-- LINE構築：ホームページの先に -->
+<?php if ( meguru_on( 'line_show' ) ) : ?>
+    <!-- 緑の囲み -->
     <section class="line" id="line">
       <div class="line__head">
-        <p class="tag" data-reveal="up">LINE</p>
+        <p class="tag" data-reveal="up"><?php echo meguru_t( 'line_tag' ); ?></p>
         <h2 class="line__title" data-reveal>
-          <span class="mask"><span>ホームページの先に、</span></span>
-          <span class="mask"><span>LINEを。</span></span>
+<?php echo meguru_lines( 'line_title' ); ?>
         </h2>
       </div>
 
       <figure class="line__illust frame" data-reveal="clip">
         <div class="frame__in" data-parallax="0.08">
-          <div class="illust" data-illust="line"></div>
+          <?php echo meguru_frame( 'img_line' ); ?>
         </div>
       </figure>
 
       <div class="line__body">
-        <p data-reveal="up">LINEで自動の返信やステップ配信、予約の案内をしようとすると、Lステップやエルメのような有料のツールを使うのが一般的です。とても便利な一方で、月々の料金はずっとかかり続けます。</p>
-        <p data-reveal="up">私は、オープンソースの<b>LINE Harness（LINEハーネス）</b>を使って、同じような仕組みをつくります。友だちの管理、シナリオ配信、タグ付け、リッチメニューの切り替え。必要なものはそろっていて、ツールの月額はかかりません。</p>
-        <p data-reveal="up">アカウントの開設から、配信の設計、構築、実際に動かしてみての調整まで。途中で誰かに引き継ぐことなく、私が最後まで伴走します。</p>
+<?php echo meguru_paras( 'line_body' ); ?>
       </div>
 
+<?php if ( meguru_on( 'line_swap_show' ) ) : ?>
       <div class="line__swap" data-reveal="up">
-        <p class="line__from"><s>Lステップ</s><s>エルメ</s><small>月額のツール代</small></p>
+        <p class="line__from"><?php foreach ( meguru_split( meguru_f( 'line_from' ) ) as $from ) : ?><s><?php echo meguru_kses( $from ); ?></s><?php endforeach; ?><small><?php echo meguru_t( 'line_from_note' ); ?></small></p>
         <p class="line__arrow" aria-hidden="true">→</p>
-        <p class="line__to"><b>LINE Harness</b><span class="line__stamp">ツール代<br><em>0</em>円</span></p>
+        <p class="line__to"><b><?php echo meguru_t( 'line_to' ); ?></b><span class="line__stamp"><?php echo meguru_t( 'line_stamp' ); ?><br><em><?php echo meguru_t( 'line_stamp_num' ); ?></em><?php echo meguru_t( 'line_stamp_unit' ); ?></span></p>
       </div>
-      <p class="line__note" data-reveal="up">※ LINE公式アカウントそのものの月額プランは、送るメッセージの数によって別にかかることがあります。</p>
+<?php endif; ?>
+<?php if ( meguru_f( 'line_note' ) ) : ?>
+      <p class="line__note" data-reveal="up"><?php echo meguru_br( 'line_note' ); ?></p>
+<?php endif; ?>
 
       <div class="line__promise">
         <h3 class="line__promise-title" data-reveal>
-          <span class="mask"><span>直しは、</span></span>
-          <span class="mask"><span>納得いくまで。</span></span>
+<?php echo meguru_lines( 'line_promise_title' ); ?>
         </h3>
         <div class="line__promise-body">
-          <p data-reveal="up">回数で区切ることはしません。言葉のひとつ、ボタンの色ひとつでも、気になるところがあれば言ってください。</p>
-          <p data-reveal="up">使いはじめてから「ここ、こうしたいな」が出てくることも、たくさんあります。そのたびに、一緒に直していきます。あなたのお店や仕事に、ちゃんと役立つものになるまで。</p>
+<?php echo meguru_paras( 'line_promise_body', '          ' ); ?>
         </div>
       </div>
     </section>
+<?php endif; ?>
 
-    <!-- 見つづける -->
+<?php if ( meguru_on( 'ch4_show' ) ) : ?>
+    <!-- 章4 -->
     <article class="chapter chapter--rev chapter--photo">
-      <p class="chapter__word" data-reveal><span class="mask"><span>見つづける</span></span></p>
+      <p class="chapter__word" data-reveal><span class="mask"><span><?php echo meguru_t( 'ch4_word' ); ?></span></span></p>
       <div class="chapter__body">
         <h2 class="chapter__title" data-reveal>
-          <span class="mask"><span>公開してからが、</span></span>
-          <span class="mask"><span>本番です。</span></span>
+<?php echo meguru_lines( 'ch4_title' ); ?>
         </h2>
-        <p data-reveal="up">公開したあとは、GA4で数字を見ます。どこから来て、どのページで読むのをやめているのか。それを見ながら、言葉や順番を少しずつ直していきます。</p>
-        <p data-reveal="up">数字の見方もお伝えするので、ご自身でも様子がわかるようになります。</p>
+<?php echo meguru_paras( 'ch4_body' ); ?>
       </div>
       <figure class="chapter__photo frame" data-reveal="clip">
         <div class="frame__in" data-parallax="0.1">
-          <div class="illust" data-illust="chart"></div>
+          <?php echo meguru_frame( 'img_ch4' ); ?>
         </div>
       </figure>
     </article>
+<?php endif; ?>
 
+<?php if ( meguru_on( 'works_show' ) ) : ?>
     <!-- つくったもの：PCでは縦スクロールで横に流れる -->
     <section class="works" data-pin>
       <div class="works__sticky">
         <div class="works__track">
           <div class="works__head">
             <h2 class="works__title" data-reveal>
-              <span class="mask"><span>これまでに</span></span>
-              <span class="mask"><span>つくったもの</span></span>
+<?php echo meguru_lines( 'works_title', '              ' ); ?>
             </h2>
-            <p data-reveal="up">画像を押すと、実際のサイトが開きます。</p>
+            <p data-reveal="up"><?php echo meguru_t( 'works_sub' ); ?></p>
           </div>
 
 <?php foreach ( meguru_works() as $work ) : ?>
@@ -195,34 +190,43 @@ get_header();
         </div>
       </div>
     </section>
+<?php endif; ?>
 
-    <!-- わたしのこと -->
+<?php if ( meguru_on( 'me_show' ) ) : ?>
+    <!-- プロフィール -->
     <section class="me">
       <figure class="me__photo frame" data-reveal="clip">
         <div class="frame__in" data-parallax="0.08">
-          <img src="<?php echo esc_url( meguru_img( 'me.jpg' ) ); ?>" alt="柳沢恵瑠" onerror="ph(this)">
+          <?php echo meguru_frame( 'me_photo', wp_strip_all_tags( meguru_f( 'me_name' ) ) ); ?>
         </div>
       </figure>
       <div class="me__body">
         <p class="me__name" data-reveal>
-          <span class="mask"><span>柳沢恵瑠</span></span>
-          <span class="mask"><span><i>Meguru Yanagisawa</i></span></span>
+          <span class="mask"><span><?php echo meguru_t( 'me_name' ); ?></span></span>
+<?php if ( meguru_f( 'me_name_en' ) ) : ?>
+          <span class="mask"><span><i><?php echo meguru_t( 'me_name_en' ); ?></i></span></span>
+<?php endif; ?>
         </p>
-        <p data-reveal="up">はじめまして、柳沢恵瑠（やなぎさわ めぐる）です。</p>
-        <p data-reveal="up">消防士として3年半、現場にいました。そのあと完全歩合の営業、SNSマーケティングの会社での運用と法人営業を経て、いまはAIの導入支援と、ホームページの制作をしています。</p>
-        <p data-reveal="up">遠回りに見えるかもしれません。でも、人の話を聞くこと、相手の立場で伝えること、仕組みで手間を減らすこと。どれも、いまの仕事でいちばん役に立っています。</p>
-        <p class="me__more" data-reveal="up"><a href="<?php echo esc_url( meguru_history_url() ); ?>">これまでのことを、もう少し詳しく <i aria-hidden="true">→</i></a></p>
+<?php echo meguru_paras( 'me_body' ); ?>
+<?php if ( meguru_f( 'me_more' ) ) : ?>
+        <p class="me__more" data-reveal="up"><a href="<?php echo esc_url( meguru_history_url() ); ?>"><?php echo meguru_t( 'me_more' ); ?> <i aria-hidden="true">→</i></a></p>
+<?php endif; ?>
       </div>
     </section>
+<?php endif; ?>
 
     <!-- おわりに -->
     <section class="close">
       <h2 class="close__title" data-reveal>
-        <span class="mask"><span>話してみたいと</span></span>
-        <span class="mask"><span>思ったら。</span></span>
+<?php echo meguru_lines( 'close_title' ); ?>
       </h2>
-      <p data-reveal="up">何をつくるか決まっていなくても、かまいません。「うちにホームページって要るのかな」くらいの話から、一緒に考えます。</p>
-      <p data-reveal="up">メールは、<a class="close__mail" href="<?php echo esc_url( 'mailto:' . meguru_mail() ); ?>"><?php echo esc_html( meguru_mail() ); ?></a> まで。</p>
+<?php echo meguru_paras( 'close_body', '      ' ); ?>
+<?php if ( meguru_f( 'close_mail' ) ) : ?>
+      <p data-reveal="up"><?php
+		$mail_link = '<a class="close__mail" href="' . esc_url( 'mailto:' . meguru_mail() ) . '">' . esc_html( meguru_mail() ) . '</a>';
+		echo str_replace( '{mail}', $mail_link, meguru_t( 'close_mail' ) ); // phpcs:ignore WordPress.Security.EscapeOutput
+		?></p>
+<?php endif; ?>
     </section>
 
   </main>

@@ -28,7 +28,9 @@
 <?php endif; ?>
 
   <header class="header">
-    <a class="header__logo" href="<?php echo esc_url( home_url( '/' ) ); ?>">めぐる<small>HP制作</small></a>
-    <a class="header__link" href="<?php echo esc_url( meguru_main_url() ); ?>" target="_blank" rel="noopener">柳沢恵瑠のサイト</a>
+    <a class="header__logo" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php echo esc_html( meguru_brand( 'meguru_logo' ) ); ?><small><?php echo esc_html( meguru_brand( 'meguru_logo_sub' ) ); ?></small></a>
+<?php if ( meguru_brand( 'meguru_link_text' ) ) : ?>
+    <a class="header__link" href="<?php echo esc_url( meguru_main_url() ); ?>" target="_blank" rel="noopener"><?php echo esc_html( meguru_brand( 'meguru_link_text' ) ); ?></a>
+<?php endif; ?>
   </header>
   <div class="progress" aria-hidden="true"><span></span></div>
