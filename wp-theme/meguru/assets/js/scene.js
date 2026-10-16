@@ -1,0 +1,289 @@
+/* ==========================================================
+   めぐるHP制作 — ファーストビューの「M」の島
+   SVGをその場で組み立てる。座標は床の上の (x, y) と高さ z。
+   スクロールで車とバイクがMの上の道を進む（動きは main.js から setProgress で渡す）。
+   ========================================================== */
+(() => {
+  const root = document.querySelector('[data-scene]');
+  if (!root) return;
+
+  const { COL, el, pts, line, patterns, iso, person } = window.MeguruDraw;
+  const S = 36;                         // 床の1マス → px
+  const H = 1.6;                        // Mの厚み
+  // 文字の座標 (u, v) を床の向きに回す。-30° にすると、Mが正面からほぼまっすぐ読める
+  const view = iso(S, -30);
+  const { P, depthOf } = view;
+
+  const svg = el('svg', { role: 'img', 'aria-label': 'Mの形をした島の上で、トレーニングする人、パソコンでAIを使う人、LINEのお店、ダンスする人がいて、車とバイクが走っているイラスト' });
+  root.appendChild(svg);
+
+  // 網点（参考：イラストの影の質感）
+  const pat = patterns(svg);
+
+  const world = el('g', { class: 'sc-world' }, svg);
+
+  // 見える範囲：Mの四隅から計算して、上は看板や人のぶん余白をとる
+  {
+    const c = [[0, 0], [15, 0], [15, 12], [0, 12]].flatMap(([u, v]) => [P(u, v, 0), P(u, v, H)]);
+    const xs = c.map(p => p[0]), ys = c.map(p => p[1]);
+    const x0 = Math.min(...xs) - 40, x1 = Math.max(...xs) + 40;
+    const y0 = Math.min(...ys) - 110, y1 = Math.max(...ys) + 40;
+    svg.setAttribute('viewBox', `${x0.toFixed(0)} ${y0.toFixed(0)} ${(x1 - x0).toFixed(0)} ${(y1 - y0).toFixed(0)}`);
+  }
+
+  const prism = (poly, z0, z1, opt = {}, parent = world) => window.MeguruDraw.prism(view, poly, z0, z1, { ...opt, dots: opt.dots ? pat.dots : null }, parent);
+  const box = (x0, y0, x1, y1, z0, z1, opt, parent) => prism([[x0, y0], [x1, y0], [x1, y1], [x0, y1]], z0, z1, opt, parent);
+
+  /* ---------- YとMの本体 ----------
+     Mの真ん中のV字（2本の斜め）が、そのままYの両腕。その下に、Yの縦棒を足す。
+     スクロールの前半で、5つのパーツが四方から集まってきて「YM」になる。 */
+  const M = [[0, 0], [4, 0], [7.5, 5], [11, 0], [15, 0], [15, 12], [11, 12], [11, 5.5], [7.5, 10.5], [4, 5.5], [4, 12], [0, 12]];
+  const ys = 10.5 - 1.2 * 5 / 3.5;                // 縦棒の上端（斜めの内側の線と交わる高さ）
+  const Y_STEM = [[6.3, ys], [7.5, 10.5], [8.7, ys], [8.7, 12], [6.3, 12]];
+  const Y_TOP = [[4, 0], [7.5, 5], [11, 0], [11, 5.5], [8.7, ys], [8.7, 12], [6.3, 12], [6.3, ys], [4, 5.5]];
+  const YCOL = { top: '#fff3b8', left: '#ffd23f', right: '#e8b51f' };
+
+  const PIECES = {
+    legL: { poly: [[0, 0], [4, 0], [4, 12], [0, 12]], from: [-240, 50], opt: { dots: true } },
+    legR: { poly: [[11, 0], [15, 0], [15, 12], [11, 12]], from: [260, -60], opt: { dots: true } },
+    armL: { poly: [[4, 0], [7.5, 5], [7.5, 10.5], [4, 5.5]], from: [-90, -230], opt: { top: YCOL.top } },
+    armR: { poly: [[7.5, 5], [11, 0], [11, 5.5], [7.5, 10.5]], from: [150, -220], opt: { top: YCOL.top } },
+    stem: { poly: Y_STEM, from: [20, 230], opt: YCOL }
+  };
+  // 置いたものが、どのパーツに乗っているか
+  const pieceOf = (u, v) => {
+    if (u < 4) return 'legL';
+    if (u > 11) return 'legR';
+    const inner = 10.5 - Math.abs(u - 7.5) * 5 / 3.5;
+    if (v > inner) return 'stem';
+    return u < 7.5 ? 'armL' : 'armR';
+  };
+
+  const shadow = el('polygon', { points: pts(M.map(([x, y]) => P(x + .6, y + .6, -.15))), fill: COL.pale, opacity: 0 }, world);
+
+  // 集まり終わったら、つなぎ目のない1つの形に差し替える
+  const whole = el('g', { class: 'sc-whole' }, world);
+  prism(M, 0, H, { dots: true }, whole);
+  prism(Y_STEM, 0, H, YCOL, whole);
+  el('polygon', { points: pts(Y_TOP.map(p => P(...p, H))), fill: YCOL.top, stroke: COL.ink, 'stroke-width': 2, 'stroke-linejoin': 'round' }, whole);
+  el('polygon', { points: pts(Y_TOP.map(p => P(...p, H))), fill: pat.dots, opacity: .5 }, whole);
+
+  const parts = el('g', { class: 'sc-parts' }, world);
+  Object.entries(PIECES)
+    .sort((p, q) => depthOf(...p[1].poly[0]) - depthOf(...q[1].poly[0]))
+    .forEach(([key, pc]) => { pc.g = prism(pc.poly, 0, H, pc.opt, parts); pc.key = key; });
+
+  /* ---------- 道（Mの上を一筆書き）。集まったあとに引かれていく ---------- */
+  const ROAD = [[2, 12], [2, 1.7], [7.5, 8.1], [13, 1.7], [13, 12]];
+  const roadPts = pts(ROAD.map(([x, y]) => P(x, y, H)));
+  const road = el('g', { class: 'sc-road' }, world);
+  const roadLines = [
+    el('polyline', { points: roadPts, fill: 'none', stroke: COL.ink, 'stroke-width': 30, 'stroke-linejoin': 'round' }, road),
+    el('polyline', { points: roadPts, fill: 'none', stroke: COL.white, 'stroke-width': 26, 'stroke-linejoin': 'round' }, road)
+  ];
+  const lane = el('polyline', { points: roadPts, fill: 'none', stroke: COL.green, 'stroke-width': 2.2, 'stroke-dasharray': '8 9', 'stroke-linejoin': 'round', class: 'sc-lane' }, road);
+
+  /* ---------- Mの上に置くもの（奥から順に描く） ---------- */
+  const items = [];
+  const put = (x, y, draw) => items.push({ x, y, draw });
+  const at = (x, y, z = H, cls = '') => {
+    const [px, py] = P(x, y, z);
+    const outer = el('g', { transform: `translate(${px.toFixed(1)} ${py.toFixed(1)})` }, world);
+    return el('g', { class: cls }, outer);
+  };
+  // 木
+  const tree = (x, y, r = 1) => put(x, y, () => window.MeguruDraw.tree(at(x, y, H, 'sc-tree'), r, pat.dotsW));
+  tree(7.5, 11.3, .75);
+  [[0.8, 1.0], [3.3, 1.1], [11.8, 1.1], [14.2, 1.0], [0.7, 11.3, .8], [14.3, 11.3, .8], [3.4, 11.4, .7], [11.7, 11.4, .7]].forEach(([x, y, r]) => tree(x, y, r));
+
+  // LINEのお店（左の脚）
+  put(0.75, 8.6, () => {
+    const g = el('g', { class: 'sc-shop' }, world);
+    box(0.2, 6.8, 1.4, 10.4, H, H + 1.4, { top: COL.white, left: COL.white, right: '#eef7f1' }, g);
+    box(0.05, 6.65, 1.6, 10.55, H + 1.4, H + 1.6, { top: COL.deep, left: COL.green, right: COL.deep }, g);
+    // 入口と、緑のひさし（+x の面）
+    el('polygon', { points: pts([P(1.4, 8.0, H), P(1.4, 9.2, H), P(1.4, 9.2, H + .9), P(1.4, 8.0, H + .9)]), fill: COL.pale, stroke: COL.ink, 'stroke-width': 2 }, g);
+    for (let i = 0; i < 6; i++) {
+      const y0 = 6.8 + i * 0.6;
+      el('polygon', { points: pts([P(1.4, y0, H + 1.15), P(1.4, y0 + .6, H + 1.15), P(1.85, y0 + .6, H + .95), P(1.85, y0, H + .95)]), fill: i % 2 ? COL.white : COL.green, stroke: COL.ink, 'stroke-width': 1.5, 'stroke-linejoin': 'round' }, g);
+    }
+    // 屋根の上の吹き出し看板
+    const [sx, sy] = P(0.8, 8.6, H + 1.6);
+    const sign = el('g', { transform: `translate(${sx.toFixed(1)} ${sy.toFixed(1)})` }, g);
+    const bob = el('g', { class: 'sc-sign' }, sign);
+    line(bob, 'M0 0 L0 -14', 3);
+    el('path', { d: 'M-30 -50 h60 a10 10 0 0 1 10 10 v12 a10 10 0 0 1 -10 10 h-24 l-6 7 l-6 -7 h-24 a10 10 0 0 1 -10 -10 v-12 a10 10 0 0 1 10 -10z', fill: COL.green, stroke: COL.ink, 'stroke-width': 2, 'stroke-linejoin': 'round' }, bob);
+    const t = el('text', { x: 0, y: -29, 'text-anchor': 'middle', fill: '#fff', 'font-size': 15, 'font-weight': 700, 'font-family': 'Fredoka, sans-serif', 'letter-spacing': 1 }, bob);
+    t.textContent = 'LINE';
+    // 吹き出しから出てくるハート
+    [0, 1, 2].forEach(i => {
+      const h = el('path', { d: 'M0 3 C-6 -3 -4 -8 0 -5 C4 -8 6 -3 0 3Z', fill: COL.pop, stroke: COL.ink, 'stroke-width': 1.2, class: 'sc-heart', style: `--k:${i}` }, sign);
+      h.setAttribute('transform', `translate(${18 + i * 6} -56)`);
+    });
+  });
+  put(3.2, 9.6, () => person(at(3.2, 9.6, H, 'sc-wave'), { shirt: COL.white, arms: 'phone' }));
+  put(3.1, 7.4, () => {
+    const g = at(3.1, 7.4, H);
+    person(g, { shirt: COL.pop });
+    el('rect', { x: 7, y: -16, width: 8, height: 7, rx: 1.5, fill: COL.green, stroke: COL.ink, 'stroke-width': 1.5 }, g);
+  });
+
+  // パソコンとAI（左の斜め）
+  put(5.0, 3.0, () => person(at(5.0, 3.0, H, 'sc-type'), { shirt: COL.deep, arms: 'front', legs: 'sit' }));
+  put(5.5, 3.6, () => {
+    const g = el('g', {}, world);
+    box(5.1, 3.2, 6.3, 4.1, H, H + .65, { top: COL.white, left: COL.pale, right: COL.green }, g);
+    const [lx, ly] = P(5.7, 3.6, H + .65);
+    const lap = el('g', { transform: `translate(${lx.toFixed(1)} ${ly.toFixed(1)})` }, g);
+    el('path', { d: 'M-14 0 L-10 -18 L10 -18 L14 0 Z', fill: COL.ink, stroke: COL.ink, 'stroke-width': 2, 'stroke-linejoin': 'round' }, lap);
+    el('path', { d: 'M-10 -3 L-7 -15 L7 -15 L10 -3 Z', fill: COL.pale, class: 'sc-screen' }, lap);
+    // AIの吹き出し
+    const ai = el('g', { class: 'sc-ai', transform: 'translate(-34 -46)' }, lap);
+    el('rect', { x: -18, y: -14, width: 36, height: 26, rx: 13, fill: COL.white, stroke: COL.ink, 'stroke-width': 2 }, ai);
+    const t = el('text', { x: 0, y: 5, 'text-anchor': 'middle', fill: COL.deep, 'font-size': 14, 'font-weight': 700, 'font-family': 'Fredoka, sans-serif' }, ai);
+    t.textContent = 'AI';
+    el('path', { d: 'M22 -16 l2 6 l6 2 l-6 2 l-2 6 l-2 -6 l-6 -2 l6 -2z', fill: COL.pop, stroke: COL.ink, 'stroke-width': 1.2, class: 'sc-spark' }, ai);
+  });
+
+  // ダンス（右の斜め）
+  put(9.9, 3.3, () => {
+    const g = at(9.9, 3.3, H);
+    el('ellipse', { cx: 0, cy: 0, rx: 16, ry: 8, fill: COL.pop, stroke: COL.ink, 'stroke-width': 2 }, g);
+    person(el('g', { class: 'sc-dance' }, g), { shirt: COL.green, arms: 'v', legs: 'wide' });
+    ['♪', '♫'].forEach((n, i) => {
+      const t = el('text', { x: 16 + i * 10, y: -40 - i * 8, 'font-size': 16, fill: COL.deep, class: 'sc-note', style: `--k:${i}` }, g);
+      t.textContent = n;
+    });
+  });
+  put(8.6, 2.5, () => {
+    const g = at(8.6, 2.5, H);
+    el('rect', { x: -9, y: -18, width: 18, height: 18, rx: 3, fill: COL.ink }, g);
+    el('circle', { cx: 0, cy: -9, r: 5, fill: COL.pale, class: 'sc-speaker' }, g);
+  });
+
+  // トレーニング（右の脚）
+  put(14.2, 7.6, () => {
+    const g = at(14.2, 7.6, H);
+    el('ellipse', { cx: 0, cy: 0, rx: 20, ry: 9, fill: COL.deep, stroke: COL.ink, 'stroke-width': 2 }, g);
+    const lift = el('g', { class: 'sc-squat' }, g);
+    person(lift, { shirt: COL.white, arms: 'up', legs: 'wide' });
+    line(lift, 'M-22 -33 L22 -33', 3);
+    el('rect', { x: -26, y: -42, width: 6, height: 18, rx: 2, fill: COL.green, stroke: COL.ink, 'stroke-width': 2 }, lift);
+    el('rect', { x: 20, y: -42, width: 6, height: 18, rx: 2, fill: COL.green, stroke: COL.ink, 'stroke-width': 2 }, lift);
+  });
+  put(11.8, 9.8, () => {
+    const g = el('g', {}, world);
+    box(11.3, 9.4, 12.2, 10.6, H, H + .35, { top: COL.ink, left: COL.deep, right: COL.ink }, g);
+    const p = at(11.75, 10.0, H + .35, 'sc-curl');
+    person(p, { shirt: COL.pop, arms: 'front', legs: 'sit' });
+    el('rect', { x: 7, y: -16, width: 9, height: 5, rx: 2, fill: COL.ink }, p);
+  });
+  put(14.3, 4.6, () => {
+    const g = at(14.3, 4.6, H);
+    [0, 1, 2].forEach(i => el('rect', { x: -12 + i * 2, y: -6 - i * 6, width: 22 - i * 4, height: 6, rx: 2, fill: i % 2 ? COL.green : COL.deep, stroke: COL.ink, 'stroke-width': 1.5 }, g));
+  });
+
+  // 1つずつ <g class="sc-drop"> に包む（読み込み時に順番に降ってくる）
+  items.sort((a, b) => depthOf(a.x, a.y) - depthOf(b.x, b.y)).forEach(it => {
+    const before = world.childNodes.length;
+    it.draw();
+    const added = [...world.childNodes].slice(before);
+    const ride = el('g', {}, world);
+    const drop = el('g', { class: 'sc-drop', style: `--k:${(it.x / 15 * 6 + Math.random() * 2).toFixed(2)}` }, ride);
+    added.forEach(n => drop.appendChild(n));
+    (PIECES[pieceOf(it.x, it.y)].riders ||= []).push(ride);
+  });
+
+  /* ---------- 車とバイク ---------- */
+  const seg = [];
+  let total = 0;
+  for (let i = 0; i < ROAD.length - 1; i++) {
+    const [a, b] = [ROAD[i], ROAD[i + 1]];
+    const len = Math.hypot(b[0] - a[0], b[1] - a[1]);
+    seg.push({ a, b, len, from: total });
+    total += len;
+  }
+  const along = t => {
+    const d = Math.min(total - 0.001, Math.max(0, t * total));
+    const s = seg.find(s => d >= s.from && d <= s.from + s.len) || seg[seg.length - 1];
+    const k = (d - s.from) / s.len;
+    const x = s.a[0] + (s.b[0] - s.a[0]) * k;
+    const y = s.a[1] + (s.b[1] - s.a[1]) * k;
+    const [p0] = P(...s.a), [p1] = P(...s.b);
+    return { x, y, flip: p1 < p0 };
+  };
+
+  const vehicle = draw => {
+    const outer = el('g', {}, world);
+    const flip = el('g', {}, outer);
+    const body = el('g', { class: 'sc-ride' }, flip);
+    draw(body);
+    return { outer, flip };
+  };
+  const car = vehicle(g => {
+    el('path', { d: 'M-24 -6 L-24 -16 Q-22 -20 -16 -20 L-10 -30 Q-8 -32 -4 -32 L10 -32 Q14 -32 16 -28 L20 -20 Q26 -19 26 -14 L26 -6 Z', fill: COL.pop, stroke: COL.ink, 'stroke-width': 2, 'stroke-linejoin': 'round' }, g);
+    el('path', { d: 'M-7 -21 L-3 -28 L4 -28 L4 -21 Z M8 -21 L8 -28 L12 -28 L16 -21 Z', fill: COL.pale, stroke: COL.ink, 'stroke-width': 1.5, 'stroke-linejoin': 'round' }, g);
+    [-14, 15].forEach(cx => {
+      el('circle', { cx, cy: -6, r: 6, fill: COL.ink }, g);
+      el('circle', { cx, cy: -6, r: 2.2, fill: '#fff' }, g);
+    });
+    el('circle', { cx: 23, cy: -14, r: 2, fill: '#fff', stroke: COL.ink, 'stroke-width': 1 }, g);
+  });
+  const bike = vehicle(g => {
+    [-12, 12].forEach(cx => {
+      el('circle', { cx, cy: -7, r: 7, fill: '#fff', stroke: COL.ink, 'stroke-width': 3 }, g);
+    });
+    line(g, 'M-12 -7 L-4 -18 L8 -18 L12 -7 M8 -18 L11 -26 L15 -26', 3);
+    el('path', { d: 'M-8 -18 L8 -18 L6 -24 L-6 -24 Z', fill: COL.green, stroke: COL.ink, 'stroke-width': 2, 'stroke-linejoin': 'round' }, g);
+    const rider = el('g', { transform: 'translate(0 -18) scale(.85)' }, g);
+    person(rider, { shirt: COL.deep, arms: 'front', legs: 'sit' });
+    el('path', { d: 'M-8 -34 Q-8 -45 0 -45 Q8 -45 8 -34 Z', fill: COL.pop, stroke: COL.ink, 'stroke-width': 2 }, rider);
+  });
+
+  const place = (v, t) => {
+    const { x, y, flip } = along(t);
+    const [px, py] = P(x, y, H);
+    v.outer.setAttribute('transform', `translate(${px.toFixed(1)} ${py.toFixed(1)})`);
+    v.flip.setAttribute('transform', flip ? 'scale(-1 1)' : '');
+  };
+
+  // 0〜1 の進み具合で動かす
+  //   0.00〜0.50：パーツが四方から集まる（少しずつ時間差）
+  //   0.48〜0.62：道が引かれる
+  //   0.60〜1.00：車とバイクが走る
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const easeOut = t => 1 - Math.pow(1 - t, 3);
+  const narrow = matchMedia('(max-width: 800px)');
+  const order = ['legL', 'armL', 'stem', 'armR', 'legR'];
+  const roadLen = roadLines[0].getTotalLength ? roadLines[0].getTotalLength() : 2000;
+  [...roadLines, lane].forEach(l => { l.style.strokeDasharray = l === lane ? '' : `${roadLen} ${roadLen}`; });
+
+  const setProgress = p => {
+    let done = true;
+    order.forEach((key, i) => {
+      const pc = PIECES[key];
+      const k = easeOut(clamp((p - i * 0.05) / 0.3));
+      if (k < 1) done = false;
+      const spread = narrow.matches ? 0.55 : 1;      // スマホでは散らばる距離を短く
+      const tx = (pc.from[0] * spread * (1 - k)).toFixed(1), ty = (pc.from[1] * spread * (1 - k)).toFixed(1);
+      const tr = `translate(${tx} ${ty})`;
+      pc.g.setAttribute('transform', tr);
+      (pc.riders || []).forEach(r => r.setAttribute('transform', tr));
+    });
+    whole.style.display = done ? '' : 'none';
+    parts.style.display = done ? 'none' : '';
+    shadow.setAttribute('opacity', (clamp((p - 0.3) / 0.2) * .7).toFixed(2));
+
+    const r = clamp((p - 0.48) / 0.14);
+    roadLines.forEach(l => { l.style.strokeDashoffset = (roadLen * (1 - r)).toFixed(1); });
+    lane.style.opacity = r >= 1 ? 1 : 0;
+
+    const t = clamp((p - 0.6) / 0.4);
+    const show = r >= 1 ? '' : 'none';
+    car.outer.style.display = bike.outer.style.display = show;
+    place(car, 0.04 + t * 0.9);
+    place(bike, 0.96 - t * 0.9);
+  };
+  setProgress(matchMedia('(prefers-reduced-motion: reduce)').matches ? 1 : 0);
+  window.meguruScene = { setProgress };
+})();

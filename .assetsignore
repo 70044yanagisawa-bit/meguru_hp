@@ -8,3 +8,4 @@ wrangler.jsonc
 .wrangler
 node_modules
 deploy.sh
+wp-theme

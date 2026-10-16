@@ -13,6 +13,8 @@
   - 写真は「わたしのこと」の `hp/images/me.jpg`（縦長）と、`hp/images/ogp.jpg`（1200×630）だけ
   - `hp/` は単体でも動く（画像・favicon をフォルダ内に持っている）。独自ドメイン用に、`hp/` だけを配信する2つ目の Worker「meguru-hp-seisaku」の設定を `hp/wrangler.jsonc` に置いてある
 
+- `wp-theme/` … めぐるHP制作（`hp/`）を WordPress のテーマにしたもの。入れ方は `wp-theme/README.md`。配信はしない
+
 ## めぐるHP制作を独自ドメインで公開する（2つ目の Worker）
 
 1. Cloudflare の Workers & Pages → Create → Import a repository で、このリポジトリを選ぶ

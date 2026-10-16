@@ -1,0 +1,14 @@
+/*
+Theme Name: めぐるHP制作
+Theme URI: https://meguru-hp-seisaku.mgr-lab.workers.dev/
+Author: 柳沢恵瑠（Meguru Yanagisawa）
+Description: 「めぐるHP制作」のサイトを WordPress のテーマにしたもの。見た目と動きは静的版（hp/）と同じで、「これまでにつくったもの」は管理画面の「実績」から追加・編集できる。
+Version: 1.0.0
+Requires at least: 6.0
+Requires PHP: 7.4
+License: All rights reserved
+Text Domain: meguru
+*/
+
+/* 本体の CSS は assets/css/main.css（hp/style.css のコピー）。
+   WordPress 用の追加分は assets/css/wp.css。 */
