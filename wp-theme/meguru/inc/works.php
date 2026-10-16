@@ -27,12 +27,27 @@ function meguru_register_work_type() {
 		),
 		'public'        => false,
 		'show_ui'       => true,
+		'show_in_rest'  => true, // ブロックエディタの「実績の一覧」で使う
 		'menu_icon'     => 'dashicons-portfolio',
 		'menu_position' => 20,
 		'supports'      => array( 'title', 'thumbnail', 'page-attributes' ),
 	) );
 }
 add_action( 'init', 'meguru_register_work_type' );
+
+// ブロックエディタから種類・URLを読めるように
+add_action( 'init', function () {
+	foreach ( array( '_meguru_meta', '_meguru_url' ) as $key ) {
+		register_post_meta( 'meguru_work', $key, array(
+			'type'          => 'string',
+			'single'        => true,
+			'show_in_rest'  => true,
+			'auth_callback' => function () {
+				return current_user_can( 'edit_posts' );
+			},
+		) );
+	}
+} );
 
 /* ---------- 種類・URL の入力欄 ---------- */
 add_action( 'add_meta_boxes', function () {

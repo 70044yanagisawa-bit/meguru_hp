@@ -1,0 +1,64 @@
+/* ==========================================================
+   ブロックエディタの中だけの調整
+   （画面に貼りつく・スクロールで動く部分を、編集しやすい形にする）
+   ========================================================== */
+
+/* めぐるのブロックは、横いっぱい・すき間なしで並べる */
+[data-type^="meguru/"] { max-width: none !important; margin-top: 0 !important; margin-bottom: 0 !important; }
+.is-root-container > :where(:not([data-type^="meguru/"])) { max-width: 760px; margin-left: auto; margin-right: auto; }
+
+/* ファーストビュー：高さを抑えて、動くイラストの場所は枠だけ */
+.hero { height: auto; }
+.hero__sticky { position: relative; height: 640px; }
+.mg-scene {
+  top: 40px; right: 20px;
+  width: 52%; height: 72%;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  border: 2px dashed var(--pale);
+  border-radius: 24px;
+  background: rgba(223, 243, 229, .4);
+  color: var(--mute);
+  font-size: 13px;
+  text-align: center;
+}
+.hero__copy { bottom: 64px; }
+.mg-hint { top: 40px; bottom: auto; max-width: 40%; }
+
+/* 写真の上を通る言葉 */
+.band { height: auto; }
+.band__photo { position: relative; height: 560px; }
+.band__text { bottom: 64px; }
+
+/* 実績：横に流さず、折り返して並べる */
+.works__sticky { position: static; height: auto; padding: 100px 0; }
+.works__track { flex-wrap: wrap; }
+.works .mg-note { color: var(--pale); }
+
+/* 写真の枠：選んでいるときに出るボタン */
+.frame { min-height: 120px; }
+.mg-frame-tools { position: absolute; left: 14px; bottom: 14px; z-index: 5; display: flex; gap: 8px; }
+.mg-empty::after {
+  content: "写真またはイラストを選んでください";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--mute);
+  font-size: 13px;
+}
+.mg-add-photo { opacity: .7; aspect-ratio: 3 / 2 !important; margin-top: 0 !important; }
+
+/* 説明の文字 */
+.mg-note { margin-top: 16px; font-size: 12px; line-height: 1.8; color: var(--mute); }
+.mg-mail { margin-top: 1.2em; }
+
+/* 縦書きの一言は、編集中は貼りつかせない */
+.chapter__word { position: static; }
+
+/* 年表の「＋」 */
+.record__list > .block-list-appender { position: relative; margin-left: -34px; padding-left: 34px; }
+
+/* 文字がせり上がる動きは編集中は使わないので、はみ出しても切らない */
+.mask { overflow: visible; }

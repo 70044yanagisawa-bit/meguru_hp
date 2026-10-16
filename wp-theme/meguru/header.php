@@ -16,14 +16,14 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
-<?php if ( is_front_page() ) : ?>
+<?php if ( meguru_has_hero() ) : ?>
   <!-- オープニング -->
   <div class="opening" aria-hidden="true">
-    <p class="opening__m"><span>M</span></p>
+    <p class="opening__m"><span><?php echo esc_html( mb_substr( meguru_brand( 'meguru_footer_big' ), 0, 1 ) ); ?></span></p>
     <p class="opening__word">
-      <span class="mask"><span>め</span></span><span class="mask"><span>ぐ</span></span><span class="mask"><span>る</span></span>
+      <?php foreach ( preg_split( '//u', meguru_brand( 'meguru_logo' ), -1, PREG_SPLIT_NO_EMPTY ) as $char ) : ?><span class="mask"><span><?php echo esc_html( $char ); ?></span></span><?php endforeach; ?>
     </p>
-    <p class="opening__sub"><span class="mask"><span>HP制作</span></span></p>
+    <p class="opening__sub"><span class="mask"><span><?php echo esc_html( meguru_brand( 'meguru_logo_sub' ) ); ?></span></span></p>
   </div>
 <?php endif; ?>
 

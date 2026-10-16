@@ -487,4 +487,10 @@
     const draw = SCENES[root.dataset.illust];
     draw && draw(root);
   });
+
+  // あとから描くとき用（WordPress のブロックエディタで使う）
+  window.MeguruIllust = (root, name) => {
+    const draw = SCENES[name];
+    draw && draw(root);
+  };
 })();
